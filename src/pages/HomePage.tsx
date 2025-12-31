@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Bell } from "lucide-react";
+import { MapPin, Bell, ShoppingBag } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "@/components/ProductCard";
 import CategoryChip from "@/components/CategoryChip";
 import SearchBar from "@/components/SearchBar";
@@ -42,10 +43,15 @@ const HomePage = () => {
               <span>Jakarta, Indonesia</span>
             </div>
           </div>
-          <button className="relative p-2 rounded-full bg-secondary">
-            <Bell size={20} className="text-foreground" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button className="relative p-2 rounded-full bg-secondary">
+              <ShoppingBag size={20} className="text-foreground" />
+            </button>
+            <button className="relative p-2 rounded-full bg-secondary">
+              <Bell size={20} className="text-foreground" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full" />
+            </button>
+          </div>
         </div>
         <SearchBar value={searchQuery} onChange={setSearchQuery} />
       </motion.header>
