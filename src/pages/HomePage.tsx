@@ -41,7 +41,7 @@ const HomePage = () => {
             </h1>
             <div className="flex items-center gap-1 text-muted-foreground text-sm">
               <MapPin size={14} />
-              <span>Jakarta, Indonesia</span>
+              <span>Bandung, Indonesia</span>
             </div>
           </div>
           <div className="flex items-center gap-2">

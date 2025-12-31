@@ -172,7 +172,7 @@ const ProductDetailPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-card border-t border-border p-4"
+        className="fixed bottom-0 w-full max-w-[480px] bg-card border-t border-border p-4"
       >
         <div className="flex items-center gap-4">
           {/* Quantity Selector */}

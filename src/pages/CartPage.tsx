@@ -181,7 +181,7 @@ const CartPage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-20 left-1/2 -translate-x-1/2 w-full max-w-[200px] p-4 bg-background"
+          className="fixed bottom-20 w-full max-w-[480px] p-4 bg-background"
         >
           <motion.button
             whileTap={{ scale: 0.95 }}
