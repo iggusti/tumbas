@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { MapPin, Bell, ShoppingBag } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import ProductCard from "@/components/ProductCard";
-import CategoryChip from "@/components/CategoryChip";
-import SearchBar from "@/components/SearchBar";
+import { MapPin, Menu, ShoppingCart } from "lucide-react";
+import { categories, products } from "@/data/products";
+
 import BottomNavigation from "@/components/BottomNavigation";
-import { products, categories } from "@/data/products";
+import CategoryChip from "@/components/CategoryChip";
+import ProductCard from "@/components/ProductCard";
+import SearchBar from "@/components/SearchBar";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -45,11 +45,10 @@ const HomePage = () => {
           </div>
           <div className="flex items-center gap-2">
             <button className="relative p-2 rounded-full bg-secondary">
-              <ShoppingBag size={20} className="text-foreground" />
+              <ShoppingCart size={20} className="text-foreground" />
             </button>
             <button className="relative p-2 rounded-full bg-secondary">
-              <Bell size={20} className="text-foreground" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full" />
+              <Menu size={20} className="text-foreground" />
             </button>
           </div>
         </div>
@@ -140,9 +139,7 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <h2 className="section-title">
-              {searchQuery
-                ? `Results for "${searchQuery}"`
-                : activeCategory}
+              {searchQuery ? `Results for "${searchQuery}"` : activeCategory}
             </h2>
             <div className="grid grid-cols-2 gap-4">
               {filteredProducts.map((product, index) => (

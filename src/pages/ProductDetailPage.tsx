@@ -1,10 +1,11 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Heart, Share2, ShoppingBag, Minus, Plus, MapPin } from "lucide-react";
-import { useState } from "react";
+import { Heart, MapPin, Minus, Plus, Share2, ShoppingCart } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import Header from "@/components/Header";
+import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { toast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -53,7 +54,7 @@ const ProductDetailPage = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-        
+
         {/* Action Buttons */}
         <div className="absolute top-20 right-4 flex flex-col gap-2">
           <motion.button
@@ -64,7 +65,9 @@ const ProductDetailPage = () => {
             <Heart
               size={20}
               className={`transition-colors ${
-                isLiked ? "fill-destructive text-destructive" : "text-foreground"
+                isLiked
+                  ? "fill-destructive text-destructive"
+                  : "text-foreground"
               }`}
             />
           </motion.button>
@@ -94,7 +97,7 @@ const ProductDetailPage = () => {
         <h1 className="font-display text-2xl font-bold text-foreground mb-2">
           {product.name}
         </h1>
-        
+
         <div className="flex items-center gap-2 text-muted-foreground mb-4">
           <MapPin size={14} />
           <span className="text-sm">{product.origin}</span>
@@ -137,7 +140,9 @@ const ProductDetailPage = () => {
           </h3>
           <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4">
             {products
-              .filter((p) => p.id !== product.id && p.category === product.category)
+              .filter(
+                (p) => p.id !== product.id && p.category === product.category
+              )
               .slice(0, 3)
               .map((relatedProduct) => (
                 <motion.button
@@ -195,7 +200,7 @@ const ProductDetailPage = () => {
             onClick={handleAddToCart}
             className="flex-1 btn-primary flex items-center justify-center gap-2"
           >
-            <ShoppingBag size={18} />
+            <ShoppingCart size={18} />
             <span>Add to Cart</span>
           </motion.button>
         </div>

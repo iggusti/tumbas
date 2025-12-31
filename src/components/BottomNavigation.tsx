@@ -1,11 +1,12 @@
+import { Bell, Home, Search, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Info, ShoppingBag, User } from "lucide-react";
+
 import { motion } from "framer-motion";
 
 const navItems = [
   { path: "/", icon: Home, label: "Home" },
-  { path: "/about", icon: Info, label: "About" },
-  { path: "/cart", icon: ShoppingBag, label: "Cart" },
+  { path: "/about", icon: Search, label: "Search" },
+  { path: "/cart", icon: Bell, label: "Notification" },
   { path: "/profile", icon: User, label: "Profile" },
 ];
 
@@ -33,6 +34,9 @@ const BottomNavigation = () => {
                   />
                 )}
                 <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+                {Icon === Bell && (
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full" />
+                )}
                 <span className="text-xs font-medium">{item.label}</span>
               </motion.div>
             </Link>
