@@ -35,7 +35,7 @@ const BottomNavigation = () => {
                 )}
                 <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
                 {Icon === Bell && (
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full" />
+                  <span className="absolute top-1 right-4 w-2 h-2 bg-accent rounded-full" />
                 )}
                 <span className="text-xs font-medium">{item.label}</span>
               </motion.div>

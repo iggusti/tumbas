@@ -1,9 +1,10 @@
-import { motion } from "framer-motion";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import Header from "@/components/Header";
+
 import BottomNavigation from "@/components/BottomNavigation";
+import Header from "@/components/Header";
+import { motion } from "framer-motion";
 import { products } from "@/data/products";
+import { useState } from "react";
 
 interface CartItem {
   productId: string;
@@ -39,7 +40,9 @@ const CartPage = () => {
   };
 
   const removeItem = (productId: string) => {
-    setCartItems((items) => items.filter((item) => item.productId !== productId));
+    setCartItems((items) =>
+      items.filter((item) => item.productId !== productId)
+    );
   };
 
   const subtotal = cartItems.reduce((sum, item) => {
@@ -178,7 +181,7 @@ const CartPage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-20 left-1/2 -translate-x-1/2 w-full max-w-[480px] p-4 bg-background"
+          className="fixed bottom-20 left-1/2 -translate-x-1/2 w-full max-w-[200px] p-4 bg-background"
         >
           <motion.button
             whileTap={{ scale: 0.95 }}

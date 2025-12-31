@@ -1,23 +1,32 @@
-import { motion } from "framer-motion";
 import {
-  ChevronRight,
   Bell,
+  ChevronRight,
   CreditCard,
-  MapPin,
+  Heart,
   HelpCircle,
   LogOut,
-  Settings,
-  Heart,
+  MapPin,
   Package,
+  Settings,
 } from "lucide-react";
-import Header from "@/components/Header";
+
 import BottomNavigation from "@/components/BottomNavigation";
+import Header from "@/components/Header";
+import { motion } from "framer-motion";
 
 const menuItems = [
   { icon: Package, label: "My Orders", description: "Track your orders" },
   { icon: Heart, label: "Wishlist", description: "Your favorite items" },
-  { icon: MapPin, label: "Addresses", description: "Manage delivery addresses" },
-  { icon: CreditCard, label: "Payment Methods", description: "Cards & wallets" },
+  {
+    icon: MapPin,
+    label: "Addresses",
+    description: "Manage delivery addresses",
+  },
+  {
+    icon: CreditCard,
+    label: "Payment Methods",
+    description: "Cards & wallets",
+  },
 ];
 
 const settingsItems = [
@@ -46,10 +55,10 @@ const ProfilePage = () => {
             </div>
             <div className="flex-1">
               <h2 className="font-display text-lg font-semibold text-foreground">
-                Fathia Berkah
+                Fatiha Barkah Mubyara
               </h2>
               <p className="text-sm text-muted-foreground">
-                fathia@email.com
+                fbmubyara@gmail.com
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 Member since 2024
@@ -77,7 +86,9 @@ const ProfilePage = () => {
                   key={item.label}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full flex items-center gap-4 p-4 hover:bg-secondary/50 transition-colors ${
-                    index !== menuItems.length - 1 ? "border-b border-border" : ""
+                    index !== menuItems.length - 1
+                      ? "border-b border-border"
+                      : ""
                   }`}
                 >
                   <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">

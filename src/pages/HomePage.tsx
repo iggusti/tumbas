@@ -3,6 +3,7 @@ import { categories, products } from "@/data/products";
 
 import BottomNavigation from "@/components/BottomNavigation";
 import CategoryChip from "@/components/CategoryChip";
+import { Link } from "react-router-dom";
 import ProductCard from "@/components/ProductCard";
 import SearchBar from "@/components/SearchBar";
 import { motion } from "framer-motion";
@@ -45,7 +46,9 @@ const HomePage = () => {
           </div>
           <div className="flex items-center gap-2">
             <button className="relative p-2 rounded-full bg-secondary">
-              <ShoppingCart size={20} className="text-foreground" />
+              <Link to="/cart">
+                <ShoppingCart size={20} className="text-foreground" />
+              </Link>
             </button>
             <button className="relative p-2 rounded-full bg-secondary">
               <Menu size={20} className="text-foreground" />
