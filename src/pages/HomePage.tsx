@@ -1,29 +1,16 @@
-import { MapPin, Menu, ShoppingCart } from "lucide-react";
-import { categories, products } from "@/data/products";
+import { Grid2X2, List, ShoppingBag } from "lucide-react";
+import { products } from "@/data/products";
 
 import BottomNavigation from "@/components/BottomNavigation";
-import CategoryChip from "@/components/CategoryChip";
 import { Link } from "react-router-dom";
 import ProductCard from "@/components/ProductCard";
-import SearchBar from "@/components/SearchBar";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 const HomePage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesCategory =
-      activeCategory === "All" ||
-      product.category === activeCategory ||
-      (activeCategory === "Premium" && product.isPremium);
-    return matchesSearch && matchesCategory;
-  });
-
+  const sellingFast = products.slice(0, 3);
   const premiumProducts = products.filter((p) => p.isPremium);
 
   return (
@@ -32,137 +19,145 @@ const HomePage = () => {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background/80 backdrop-blur-md px-4 py-3"
+        className="px-4 py-3"
       >
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="font-display text-2xl font-bold text-foreground">
-              tumbas.
-            </h1>
-            <div className="flex items-center gap-1 text-muted-foreground text-sm">
-              <MapPin size={14} />
-              <span>Bandung, Indonesia</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="relative p-2 rounded-full bg-secondary">
-              <Link to="/cart">
-                <ShoppingCart size={20} className="text-foreground" />
-              </Link>
-            </button>
-            <button className="relative p-2 rounded-full bg-secondary">
-              <Menu size={20} className="text-foreground" />
-            </button>
-          </div>
+        <div className="flex items-center justify-between">
+          <h1 className="font-display text-2xl font-bold text-foreground">
+            tumbas.
+          </h1>
+          <Link to="/cart" className="relative p-2">
+            <ShoppingBag size={22} className="text-foreground" />
+          </Link>
         </div>
-        <SearchBar value={searchQuery} onChange={setSearchQuery} />
       </motion.header>
 
-      <main className="page-container pt-4">
-        {/* Categories */}
+      <main className="px-4 pb-24">
+        {/* Hero Banner */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex gap-2 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide"
+          className="relative rounded-2xl overflow-hidden mb-4"
         >
-          {categories.map((category) => (
-            <CategoryChip
-              key={category}
-              label={category}
-              isActive={activeCategory === category}
-              onClick={() => setActiveCategory(category)}
+          <div className="aspect-[16/10] relative">
+            <img
+              src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
+              alt="Batik Collection 2025"
+              className="w-full h-full object-cover"
             />
-          ))}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-end p-5">
+              <p className="text-white/80 text-sm font-medium">new era 2025</p>
+              <h2 className="font-display text-2xl font-bold text-white mb-3">
+                collection.
+              </h2>
+              <button className="self-start px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-colors">
+                Shop Now
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Category Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex gap-3 mb-6"
+        >
+          <button className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors">
+            About Thep
+          </button>
+          <button className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors">
+            About Batik Indonesia
+          </button>
         </motion.div>
 
         {/* Selling Fast Section */}
-        {activeCategory === "All" && !searchQuery && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="section-title mb-0">Selling Fast 🔥</h2>
-              <button className="text-sm text-primary font-medium">
-                See all
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-foreground">Selling fast</h2>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`p-1.5 rounded ${viewMode === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+              >
+                <Grid2X2 size={16} />
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={`p-1.5 rounded ${viewMode === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+              >
+                <List size={16} />
               </button>
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4">
-              {products.slice(0, 3).map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  className="min-w-[200px] max-w-[200px]"
-                >
-                  <ProductCard {...product} />
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
-        )}
+          </div>
+          <div className={viewMode === "grid" ? "grid grid-cols-3 gap-3" : "space-y-3"}>
+            {sellingFast.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index }}
+              >
+                <Link to={`/product/${product.id}`}>
+                  <div className="bg-card rounded-xl overflow-hidden shadow-soft">
+                    <div className="aspect-square">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-2">
+                      <h3 className="text-xs font-medium text-foreground line-clamp-1">
+                        {product.name}
+                      </h3>
+                      <div className="mt-1">
+                        <span className="text-[10px] text-muted-foreground line-through">
+                          Rp {(product.price * 1.2).toLocaleString("id-ID")}
+                        </span>
+                        <span className="text-xs font-semibold text-primary ml-1">
+                          Rp {product.price.toLocaleString("id-ID")}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
 
         {/* Premium Section */}
-        {activeCategory === "All" && !searchQuery && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-8"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="section-title mb-0">Premium ✨</h2>
-              <button className="text-sm text-primary font-medium">
-                See all
-              </button>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              {premiumProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                >
-                  <ProductCard {...product} />
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
-        )}
-
-        {/* All Products / Filtered */}
-        {(activeCategory !== "All" || searchQuery) && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h2 className="section-title">
-              {searchQuery ? `Results for "${searchQuery}"` : activeCategory}
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              {filteredProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 * index }}
-                >
-                  <ProductCard {...product} />
-                </motion.div>
-              ))}
-            </div>
-            {filteredProducts.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No products found</p>
-              </div>
-            )}
-          </motion.section>
-        )}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-foreground">Premium</h2>
+            <button className="text-sm text-primary font-medium">See all</button>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {premiumProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index }}
+              >
+                <ProductCard {...product} />
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
       </main>
 
       <BottomNavigation />
