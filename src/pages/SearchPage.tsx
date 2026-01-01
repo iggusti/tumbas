@@ -54,9 +54,9 @@ const SearchPage = () => {
             <h2 className="text-lg font-semibold text-foreground">
               Popular Product
             </h2>
-            <button className="p-2 text-muted-foreground">
+            <Link to="/cart" className="p-2 text-muted-foreground">
               <ShoppingCart size={20} />
-            </button>
+            </Link>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {popularProducts.map((product, index) => (

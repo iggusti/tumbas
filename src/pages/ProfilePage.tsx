@@ -2,14 +2,14 @@ import {
   Bell,
   ChevronRight,
   CreditCard,
-  Heart,
+  Eye,
   Headphones,
+  Heart,
   MapPin,
   Package,
   Percent,
-  User,
-  Eye,
   Phone,
+  User,
 } from "lucide-react";
 
 import BottomNavigation from "@/components/BottomNavigation";
@@ -17,8 +17,16 @@ import { motion } from "framer-motion";
 
 const quickActions = [
   { icon: Package, label: "My Orders", color: "bg-amber-100 text-amber-600" },
-  { icon: Percent, label: "Promo Code", color: "bg-orange-100 text-orange-600" },
-  { icon: Headphones, label: "Customer Service", color: "bg-primary/10 text-primary" },
+  {
+    icon: Percent,
+    label: "Promo Code",
+    color: "bg-orange-100 text-orange-600",
+  },
+  {
+    icon: Headphones,
+    label: "Customer Service",
+    color: "bg-primary/10 text-primary",
+  },
 ];
 
 const generalSettings = [
@@ -52,7 +60,7 @@ const ProfilePage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center mb-6"
+          className="flex items-center mb-6 gap-5"
         >
           <div className="w-20 h-20 rounded-full bg-muted overflow-hidden mb-3">
             <img
@@ -61,13 +69,12 @@ const ProfilePage = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <h2 className="font-display text-lg font-semibold text-foreground">
-            Fatiha Barkah
-          </h2>
-          <h3 className="font-display text-lg font-semibold text-foreground -mt-1">
-            Mubyara
-          </h3>
-          <p className="text-sm text-primary mt-1">fbmubyara@gmail.com</p>
+          <div className="flex flex-col items-left mb-6">
+            <h2 className="font-display text-lg font-semibold text-foreground">
+              Fatiha Barkah Mubyara
+            </h2>
+            <p className="text-sm text-primary mt-1">fbmubyara@gmail.com</p>
+          </div>
         </motion.div>
 
         {/* Quick Actions */}
@@ -80,8 +87,13 @@ const ProfilePage = () => {
           {quickActions.map((action, index) => {
             const Icon = action.icon;
             return (
-              <button key={action.label} className="flex flex-col items-center gap-2">
-                <div className={`w-14 h-14 rounded-full ${action.color} flex items-center justify-center`}>
+              <button
+                key={action.label}
+                className="flex flex-col items-center gap-2"
+              >
+                <div
+                  className={`w-14 h-14 rounded-full ${action.color} flex items-center justify-center`}
+                >
                   <Icon size={22} />
                 </div>
                 <span className="text-xs text-muted-foreground font-medium text-center max-w-[70px]">
@@ -99,7 +111,9 @@ const ProfilePage = () => {
           transition={{ delay: 0.2 }}
           className="mb-6"
         >
-          <h3 className="font-semibold text-foreground mb-3">General Setting</h3>
+          <h3 className="font-semibold text-foreground mb-3">
+            General Setting
+          </h3>
           <div className="space-y-1">
             {generalSettings.map((item) => {
               const Icon = item.icon;
@@ -135,7 +149,14 @@ const ProfilePage = () => {
                   key={activity.label}
                   className={`flex-1 flex flex-col items-center gap-2 py-4 rounded-xl ${activity.color}`}
                 >
-                  <Icon size={20} className={activity.label === "Terakhir Dilihat" ? "text-red-500" : "text-foreground"} />
+                  <Icon
+                    size={20}
+                    className={
+                      activity.label === "Terakhir Dilihat"
+                        ? "text-red-500"
+                        : "text-foreground"
+                    }
+                  />
                   <span className="text-xs font-medium text-foreground">
                     {activity.label}
                   </span>
@@ -154,7 +175,9 @@ const ProfilePage = () => {
           <h3 className="font-semibold text-foreground mb-3">Other</h3>
           <button className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors">
             <Phone size={18} className="text-muted-foreground" />
-            <span className="flex-1 text-left text-sm text-foreground">Contact</span>
+            <span className="flex-1 text-left text-sm text-foreground">
+              Contact
+            </span>
             <ChevronRight size={16} className="text-muted-foreground" />
           </button>
         </motion.section>

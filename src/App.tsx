@@ -1,18 +1,18 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
+
 import AboutShopPage from "./pages/AboutShopPage";
-import SearchPage from "./pages/SearchPage";
-import NotificationPage from "./pages/NotificationPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import ProfilePage from "./pages/ProfilePage";
+import HomePage from "./pages/HomePage";
 import NotFound from "./pages/NotFound";
+import NotificationPage from "./pages/NotificationPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import ProfilePage from "./pages/ProfilePage";
+import SearchPage from "./pages/SearchPage";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +24,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
           <Route path="/about-shop" element={<AboutShopPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/notification" element={<NotificationPage />} />
