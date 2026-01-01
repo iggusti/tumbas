@@ -3,185 +3,161 @@ import {
   ChevronRight,
   CreditCard,
   Heart,
-  HelpCircle,
-  LogOut,
+  Headphones,
   MapPin,
   Package,
-  Settings,
+  Percent,
+  User,
+  Eye,
+  Phone,
 } from "lucide-react";
 
 import BottomNavigation from "@/components/BottomNavigation";
-import Header from "@/components/Header";
 import { motion } from "framer-motion";
 
-const menuItems = [
-  { icon: Package, label: "My Orders", description: "Track your orders" },
-  { icon: Heart, label: "Wishlist", description: "Your favorite items" },
-  {
-    icon: MapPin,
-    label: "Addresses",
-    description: "Manage delivery addresses",
-  },
-  {
-    icon: CreditCard,
-    label: "Payment Methods",
-    description: "Cards & wallets",
-  },
+const quickActions = [
+  { icon: Package, label: "My Orders", color: "bg-amber-100 text-amber-600" },
+  { icon: Percent, label: "Promo Code", color: "bg-orange-100 text-orange-600" },
+  { icon: Headphones, label: "Customer Service", color: "bg-primary/10 text-primary" },
 ];
 
-const settingsItems = [
-  { icon: Bell, label: "Notifications", description: "Manage alerts" },
-  { icon: Settings, label: "Settings", description: "App preferences" },
-  { icon: HelpCircle, label: "Help Center", description: "FAQs & support" },
+const generalSettings = [
+  { icon: User, label: "My account" },
+  { icon: CreditCard, label: "Payment methods" },
+  { icon: MapPin, label: "My Address" },
+  { icon: Bell, label: "Notification" },
+];
+
+const activities = [
+  { icon: Heart, label: "Favorit", color: "bg-muted" },
+  { icon: Eye, label: "Terakhir Dilihat", color: "bg-red-50" },
 ];
 
 const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Header title="tumbas." showBack />
+      {/* Header */}
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="px-4 py-3"
+      >
+        <h1 className="font-display text-2xl font-bold text-foreground">
+          tumbas.
+        </h1>
+      </motion.header>
 
-      <main className="page-container">
+      <main className="px-4 pb-24">
         {/* Profile Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-card rounded-2xl p-6 shadow-soft mb-6"
+          className="flex flex-col items-center mb-6"
         >
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center">
-              <span className="text-2xl font-display font-bold text-primary">
-                FB
-              </span>
-            </div>
-            <div className="flex-1">
-              <h2 className="font-display text-lg font-semibold text-foreground">
-                Fatiha Barkah Mubyara
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                fbmubyara@gmail.com
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Member since 2024
-              </p>
-            </div>
-            <ChevronRight size={20} className="text-muted-foreground" />
+          <div className="w-20 h-20 rounded-full bg-muted overflow-hidden mb-3">
+            <img
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80"
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
           </div>
+          <h2 className="font-display text-lg font-semibold text-foreground">
+            Fatiha Barkah
+          </h2>
+          <h3 className="font-display text-lg font-semibold text-foreground -mt-1">
+            Mubyara
+          </h3>
+          <p className="text-sm text-primary mt-1">fbmubyara@gmail.com</p>
         </motion.div>
 
-        {/* Account Section */}
-        <motion.section
+        {/* Quick Actions */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-6"
+          className="flex justify-center gap-6 mb-8"
         >
-          <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-            Account
-          </h3>
-          <div className="bg-card rounded-2xl overflow-hidden shadow-soft">
-            {menuItems.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <motion.button
-                  key={item.label}
-                  whileTap={{ scale: 0.98 }}
-                  className={`w-full flex items-center gap-4 p-4 hover:bg-secondary/50 transition-colors ${
-                    index !== menuItems.length - 1
-                      ? "border-b border-border"
-                      : ""
-                  }`}
-                >
-                  <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                    <Icon size={18} className="text-primary" />
-                  </div>
-                  <div className="flex-1 text-left">
-                    <p className="font-medium text-foreground">{item.label}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                  <ChevronRight size={18} className="text-muted-foreground" />
-                </motion.button>
-              );
-            })}
-          </div>
-        </motion.section>
+          {quickActions.map((action, index) => {
+            const Icon = action.icon;
+            return (
+              <button key={action.label} className="flex flex-col items-center gap-2">
+                <div className={`w-14 h-14 rounded-full ${action.color} flex items-center justify-center`}>
+                  <Icon size={22} />
+                </div>
+                <span className="text-xs text-muted-foreground font-medium text-center max-w-[70px]">
+                  {action.label}
+                </span>
+              </button>
+            );
+          })}
+        </motion.div>
 
-        {/* General Settings */}
+        {/* General Setting */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="mb-6"
         >
-          <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-            General Setting
-          </h3>
-          <div className="bg-card rounded-2xl overflow-hidden shadow-soft">
-            {settingsItems.map((item, index) => {
+          <h3 className="font-semibold text-foreground mb-3">General Setting</h3>
+          <div className="space-y-1">
+            {generalSettings.map((item) => {
               const Icon = item.icon;
               return (
-                <motion.button
+                <button
                   key={item.label}
-                  whileTap={{ scale: 0.98 }}
-                  className={`w-full flex items-center gap-4 p-4 hover:bg-secondary/50 transition-colors ${
-                    index !== settingsItems.length - 1
-                      ? "border-b border-border"
-                      : ""
-                  }`}
+                  className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                    <Icon size={18} className="text-primary" />
-                  </div>
-                  <div className="flex-1 text-left">
-                    <p className="font-medium text-foreground">{item.label}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                  <ChevronRight size={18} className="text-muted-foreground" />
-                </motion.button>
+                  <Icon size={18} className="text-muted-foreground" />
+                  <span className="flex-1 text-left text-sm text-foreground">
+                    {item.label}
+                  </span>
+                  <ChevronRight size={16} className="text-muted-foreground" />
+                </button>
               );
             })}
           </div>
         </motion.section>
 
-        {/* Other Section */}
+        {/* Aktivitas Saya */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
+          className="mb-6"
         >
-          <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-            Other
-          </h3>
-          <div className="bg-card rounded-2xl overflow-hidden shadow-soft">
-            <motion.button
-              whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center gap-4 p-4 hover:bg-destructive/5 transition-colors"
-            >
-              <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center">
-                <LogOut size={18} className="text-destructive" />
-              </div>
-              <div className="flex-1 text-left">
-                <p className="font-medium text-destructive">Log Out</p>
-                <p className="text-xs text-muted-foreground">
-                  Sign out of your account
-                </p>
-              </div>
-            </motion.button>
+          <h3 className="font-semibold text-foreground mb-3">Aktivitas Saya</h3>
+          <div className="flex gap-4">
+            {activities.map((activity) => {
+              const Icon = activity.icon;
+              return (
+                <button
+                  key={activity.label}
+                  className={`flex-1 flex flex-col items-center gap-2 py-4 rounded-xl ${activity.color}`}
+                >
+                  <Icon size={20} className={activity.label === "Terakhir Dilihat" ? "text-red-500" : "text-foreground"} />
+                  <span className="text-xs font-medium text-foreground">
+                    {activity.label}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </motion.section>
 
-        {/* App Version */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+        {/* Other */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-center text-xs text-muted-foreground mt-8"
         >
-          tumbas. v1.0.0
-        </motion.p>
+          <h3 className="font-semibold text-foreground mb-3">Other</h3>
+          <button className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors">
+            <Phone size={18} className="text-muted-foreground" />
+            <span className="flex-1 text-left text-sm text-foreground">Contact</span>
+            <ChevronRight size={16} className="text-muted-foreground" />
+          </button>
+        </motion.section>
       </main>
 
       <BottomNavigation />
