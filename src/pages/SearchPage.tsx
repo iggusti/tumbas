@@ -1,8 +1,9 @@
-import { Search, ShoppingBag } from "lucide-react";
-import { motion } from "framer-motion";
+import { Search, ShoppingCart } from "lucide-react";
+
 import BottomNavigation from "@/components/BottomNavigation";
-import { products } from "@/data/products";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { products } from "@/data/products";
 
 const categories = [
   { id: 1, name: "Man" },
@@ -19,7 +20,9 @@ const SearchPage = () => {
       <div className="page-content pb-24">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-4 pb-2">
-          <h1 className="text-2xl font-display font-bold text-foreground">Search</h1>
+          <h1 className="text-2xl font-display font-bold text-foreground">
+            Search
+          </h1>
           <button className="p-2 text-muted-foreground">
             <Search size={20} />
           </button>
@@ -27,7 +30,9 @@ const SearchPage = () => {
 
         {/* Categories */}
         <div className="px-4 mt-4">
-          <h2 className="text-sm font-semibold text-foreground mb-3">Categories</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-3">
+            Categories
+          </h2>
           <div className="space-y-2">
             {categories.map((category, index) => (
               <motion.button
@@ -46,9 +51,11 @@ const SearchPage = () => {
         {/* Popular Products */}
         <div className="px-4 mt-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Popular Product</h2>
+            <h2 className="text-lg font-semibold text-foreground">
+              Popular Product
+            </h2>
             <button className="p-2 text-muted-foreground">
-              <ShoppingBag size={20} />
+              <ShoppingCart size={20} />
             </button>
           </div>
           <div className="grid grid-cols-2 gap-3">

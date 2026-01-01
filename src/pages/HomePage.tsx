@@ -1,10 +1,10 @@
-import { Grid2X2, List, ShoppingBag } from "lucide-react";
-import { products } from "@/data/products";
+import { Grid2X2, List, Menu, ShoppingCart } from "lucide-react";
 
 import BottomNavigation from "@/components/BottomNavigation";
 import { Link } from "react-router-dom";
 import ProductCard from "@/components/ProductCard";
 import { motion } from "framer-motion";
+import { products } from "@/data/products";
 import { useState } from "react";
 
 const HomePage = () => {
@@ -25,9 +25,14 @@ const HomePage = () => {
           <h1 className="font-display text-2xl font-bold text-foreground">
             tumbas.
           </h1>
-          <Link to="/cart" className="relative p-2">
-            <ShoppingBag size={22} className="text-foreground" />
-          </Link>
+          <div className="flex items-center gap-0.25">
+            <Link to="/cart" className="relative p-2">
+              <ShoppingCart size={22} className="text-foreground" />
+            </Link>
+            <button className="relative p-2">
+              <Menu size={20} className="text-foreground" />
+            </button>
+          </div>
         </div>
       </motion.header>
 
@@ -47,11 +52,13 @@ const HomePage = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-end p-5">
-              <p className="text-white/80 text-sm font-medium">new era 2025</p>
-              <h2 className="font-display text-2xl font-bold text-white mb-3">
+              <p className="text-white/80 text-center text-sm font-medium">
+                new era 2025
+              </p>
+              <h2 className="font-display text-center text-2xl font-bold text-white mb-3">
                 collection.
               </h2>
-              <button className="self-start px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-colors">
+              <button className="self-center px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-colors">
                 Shop Now
               </button>
             </div>
@@ -65,10 +72,13 @@ const HomePage = () => {
           transition={{ delay: 0.2 }}
           className="flex gap-3 mb-6"
         >
-          <Link to="/about-shop" className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors text-center">
+          <Link
+            to="/about-shop"
+            className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
+          >
             About Shop
           </Link>
-          <button className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors">
+          <button className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground">
             About Batik Indonesia
           </button>
         </motion.div>
@@ -81,23 +91,48 @@ const HomePage = () => {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Selling fast</h2>
+            <div className="flex items-center gap-1">
+              <h2 className="text-lg font-semibold text-foreground">
+                Selling fast
+              </h2>
+              <div className="flex items-center gap-1">
+                <button className="text-sm size-6 rounded bg-primary text-primary-foreground">
+                  12
+                </button>
+                :
+                <button className="text-sm size-6 rounded bg-primary text-primary-foreground">
+                  12
+                </button>
+              </div>
+            </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-1.5 rounded ${viewMode === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+                className={`p-1.5 rounded ${
+                  viewMode === "grid"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground"
+                }`}
               >
                 <Grid2X2 size={16} />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-1.5 rounded ${viewMode === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+                className={`p-1.5 rounded ${
+                  viewMode === "list"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground"
+                }`}
               >
                 <List size={16} />
               </button>
             </div>
           </div>
-          <div className={viewMode === "grid" ? "grid grid-cols-3 gap-3" : "space-y-3"}>
+          <div
+            className={
+              viewMode === "grid" ? "grid grid-cols-3 gap-3" : "space-y-3"
+            }
+          >
             {sellingFast.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -143,7 +178,9 @@ const HomePage = () => {
         >
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-foreground">Premium</h2>
-            <button className="text-sm text-primary font-medium">See all</button>
+            <button className="text-sm text-primary font-medium">
+              See all
+            </button>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {premiumProducts.map((product, index) => (
