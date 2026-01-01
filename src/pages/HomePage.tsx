@@ -65,9 +65,9 @@ const HomePage = () => {
           transition={{ delay: 0.2 }}
           className="flex gap-3 mb-6"
         >
-          <button className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors">
-            About Thep
-          </button>
+          <Link to="/about-shop" className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors text-center">
+            About Shop
+          </Link>
           <button className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors">
             About Batik Indonesia
           </button>
