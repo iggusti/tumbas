@@ -1,4 +1,11 @@
-import { ArrowLeft, ChevronRight, HandCoins, MapPin, Tag, Truck } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronRight,
+  HandCoins,
+  MapPin,
+  Tag,
+  Truck,
+} from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
@@ -67,12 +74,12 @@ const CheckoutPage = () => {
             </div>
             <div className="flex-1">
               <h3 className="font-semibold text-foreground text-sm">
-                Fatiha Barkah
+                Fatiha Barkah Mubyara
               </h3>
               <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                Jln. Siliwangi Blok A, No.50,
+                Jln. Siliwangi, Blok Kluwut, No.50, RT 03, RW 01, Desa Haurkolot
                 <br />
-                Haurgeulis, Indramayu
+                Kec. Haurgeulis, Kab. Indramayu
               </p>
             </div>
             <ChevronRight size={18} className="text-muted-foreground" />
@@ -212,10 +219,16 @@ const CheckoutPage = () => {
               {formatPrice(total)}
             </p>
           </div>
-          <button className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium text-sm flex items-center justify-center gap-2">
-            <HandCoins size={22} />
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            className="w-50 rounded-sm btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <HandCoins
+              size={22}
+              className="transform scale-y-[-1] -rotate-[50deg]"
+            />
             Beli Sekarang
-          </button>
+          </motion.button>
         </div>
       </motion.div>
 

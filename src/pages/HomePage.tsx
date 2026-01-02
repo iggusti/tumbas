@@ -77,13 +77,14 @@ const HomePage = () => {
         >
           <Link
             to="/about-shop"
-            className="flex-1 py-3 px-4 bg-card border border-border rounded-sm text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
+            className="flex-1 py-3 px-4 rounded-sm text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center text-center"
           >
             About Shop
           </Link>
+
           <Link
             to="/about-batik-indramayu"
-            className="flex-1 py-3 px-4 bg-card border border-border rounded-sm text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
+            className="flex-1 py-3 px-4 rounded-sm text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center text-center"
           >
             About Batik Indramayu
           </Link>

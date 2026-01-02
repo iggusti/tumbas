@@ -88,22 +88,27 @@ const ProfilePage = () => {
           transition={{ delay: 0.1 }}
           className="flex justify-center gap-6 mb-8"
         >
-          {quickActions.map((action, index) => {
+          {quickActions.map((action) => {
             const Icon = action.icon;
+
             return (
-              <button
+              <motion.button
                 key={action.label}
+                whileHover={{ y: -4, scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="flex flex-col items-center gap-2"
               >
                 <div
-                  className={`w-20 h-20 rounded-sm ${action.color} flex flex-col items-center justify-top p-3 gap-1`}
+                  className={`w-20 h-20 rounded-sm ${action.color}
+                      flex flex-col items-center justify-start p-3 gap-1 transition-shadow hover:shadow-md`}
                 >
                   <Icon size={22} />
                   <span className="text-xs text-muted-foreground font-medium text-center max-w-[70px] leading-tight">
                     {action.label}
                   </span>
                 </div>
-              </button>
+              </motion.button>
             );
           })}
         </motion.div>
@@ -145,13 +150,20 @@ const ProfilePage = () => {
           className="mb-6"
         >
           <h3 className="font-semibold text-foreground mb-3">Aktivitas Saya</h3>
+
           <div className="flex gap-4">
             {activities.map((activity) => {
               const Icon = activity.icon;
+
               return (
-                <button
+                <motion.button
                   key={activity.label}
-                  className={`flex-1 flex flex-col items-center gap-2 py-4 rounded-xl ${activity.color}`}
+                  whileHover={{ y: -4, scale: 1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className={`flex-1 flex flex-col items-center gap-2 py-4 rounded-xl
+                      ${activity.color}
+                      transition-shadow hover:shadow-md`}
                 >
                   <Icon
                     size={20}
@@ -164,7 +176,7 @@ const ProfilePage = () => {
                   <span className="text-xs font-medium text-foreground">
                     {activity.label}
                   </span>
-                </button>
+                </motion.button>
               );
             })}
           </div>
