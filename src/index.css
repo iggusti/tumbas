@@ -140,7 +140,7 @@
   }
 
   .bottom-nav {
-    @apply fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-card border-t border-border;
+    @apply fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-card border-t border-border z-50;
     height: var(--nav-height);
     box-shadow: 0 -4px 20px hsl(30 20% 50% / 0.08);
   }

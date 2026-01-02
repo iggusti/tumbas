@@ -1,15 +1,37 @@
 import { ArrowLeft, MapPin, Truck, Tag, ChevronRight } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import BottomNavigation from "@/components/BottomNavigation";
 
+interface CheckoutItem {
+  productId: string;
+  quantity: number;
+}
+
 const CheckoutPage = () => {
-  const { id } = useParams();
-  const product = products.find((p) => p.id === id) || products[0];
+  const location = useLocation();
+  const checkoutItems: CheckoutItem[] = location.state?.items || [];
+
+  const getProduct = (productId: string) => {
+    return products.find((p) => p.id === productId);
+  };
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
+  const subtotal = checkoutItems.reduce((sum, item) => {
+    const product = getProduct(item.productId);
+    return sum + (product?.price || 0) * item.quantity;
+  }, 0);
 
   const shippingCost = 18000;
-  const total = product.price + shippingCost;
+  const total = subtotal + shippingCost;
 
   return (
     <div className="min-h-screen bg-background">
@@ -19,7 +41,7 @@ const CheckoutPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
-        <Link to={`/product/${product.id}`} className="p-1">
+        <Link to="/cart" className="p-1">
           <ArrowLeft size={20} className="text-foreground" />
         </Link>
         <div>
@@ -53,40 +75,53 @@ const CheckoutPage = () => {
           </div>
         </motion.div>
 
-        {/* Product */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-card rounded-xl p-4 mb-4 border border-border/50"
-        >
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-xs font-bold text-primary-foreground">t.</span>
-            </div>
-            <span className="text-sm font-medium text-foreground">tumbas.</span>
-          </div>
-          <div className="flex gap-3">
-            <div className="w-20 h-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-foreground text-sm line-clamp-2">
-                {product.name}
-              </h3>
-              <p className="text-xs text-muted-foreground line-through mt-1">
-                Rp {(product.price * 1.2).toLocaleString("id-ID")}
-              </p>
-              <p className="text-sm font-semibold text-primary">
-                Rp {product.price.toLocaleString("id-ID")}
-              </p>
-            </div>
-          </div>
-        </motion.div>
+        {/* Products */}
+        {checkoutItems.map((item, index) => {
+          const product = getProduct(item.productId);
+          if (!product) return null;
+
+          return (
+            <motion.div
+              key={item.productId}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + index * 0.1 }}
+              className="bg-card rounded-xl p-4 mb-4 border border-border/50"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                  <span className="text-xs font-bold text-primary-foreground">t.</span>
+                </div>
+                <span className="text-sm font-medium text-foreground">tumbas.</span>
+              </div>
+              <div className="flex gap-3">
+                <div className="w-20 h-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium text-foreground text-sm line-clamp-2">
+                    {product.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground line-through mt-1">
+                    {formatPrice(product.price * 1.2)}
+                  </p>
+                  <p className="text-sm font-semibold text-primary">
+                    {formatPrice(product.price)}
+                  </p>
+                  {item.quantity > 1 && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Qty: {item.quantity}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
 
         {/* Shipping */}
         <motion.div
@@ -102,13 +137,13 @@ const CheckoutPage = () => {
             <div className="flex-1">
               <h3 className="font-medium text-foreground text-sm">Promosi Pengiriman</h3>
               <p className="text-xs text-muted-foreground mt-1">
-                Nikmatapromo gratis pengiriman hingga Rp10.000 untuk<br />
+                Nikmati promo gratis pengiriman hingga Rp10.000 untuk<br />
                 pesanan Toko lain - Pelayan
               </p>
             </div>
             <div className="text-right">
               <span className="text-sm font-semibold text-foreground">
-                Rp.{shippingCost.toLocaleString("id-ID")}
+                {formatPrice(shippingCost)}
               </span>
             </div>
           </div>
@@ -155,13 +190,13 @@ const CheckoutPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="fixed bottom-16 left-0 right-0 bg-card border-t border-border p-4"
+        className="fixed bottom-16 left-0 right-0 max-w-[480px] mx-auto bg-card border-t border-border p-4"
       >
         <div className="flex items-center justify-between">
           <div>
             <span className="text-xs text-muted-foreground">Total</span>
             <p className="text-lg font-bold text-primary">
-              Rp {total.toLocaleString("id-ID")}
+              {formatPrice(total)}
             </p>
           </div>
           <button className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium text-sm">

@@ -5,9 +5,9 @@ import BottomNavigation from "@/components/BottomNavigation";
 
 const AboutShopPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background max-w-[480px] mx-auto relative">
       {/* Hero with Background - Fixed */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 max-w-[480px] mx-auto left-0 right-0">
         <img
           src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
           alt="Batik Background"
@@ -42,7 +42,7 @@ const AboutShopPage = () => {
         drag="y"
         dragConstraints={{ top: 0, bottom: 300 }}
         dragElastic={0.1}
-        className="fixed inset-x-0 bottom-0 z-30 bg-white rounded-t-3xl min-h-[70vh] shadow-2xl"
+        className="fixed inset-x-0 bottom-0 z-40 bg-card rounded-t-3xl min-h-[70vh] shadow-2xl max-w-[480px] mx-auto"
         style={{ touchAction: "none" }}
       >
         {/* Drag Handle */}
