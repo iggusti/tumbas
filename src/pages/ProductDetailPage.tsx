@@ -221,7 +221,7 @@ const ProductDetailPage = () => {
             onClick={handleAddToCart}
             className="flex-1 btn-primary flex items-center justify-center gap-2"
           >
-            <ShoppingCart size={18} />
+            <ShoppingCart size={22} className="transform scale-x-[-1]" />
             <span>Add to Cart</span>
           </motion.button>
         </div>

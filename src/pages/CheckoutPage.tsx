@@ -1,4 +1,4 @@
-import { ArrowLeft, ChevronRight, MapPin, Tag, Truck } from "lucide-react";
+import { ArrowLeft, ChevronRight, HandCoins, MapPin, Tag, Truck } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
@@ -53,7 +53,7 @@ const CheckoutPage = () => {
         </div>
       </motion.header>
 
-      <main className="px-4 pb-32">
+      <main className="px-4 pb-[11rem]">
         {/* Delivery Address */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -203,7 +203,7 @@ const CheckoutPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="fixed bottom-16 left-0 right-0 max-w-[480px] mx-auto bg-card border-t border-border p-4"
+        className="fixed bottom-[5rem] left-0 right-0 max-w-[480px] mx-auto bg-card border-t border-border p-4"
       >
         <div className="flex items-center justify-between">
           <div>
@@ -212,7 +212,8 @@ const CheckoutPage = () => {
               {formatPrice(total)}
             </p>
           </div>
-          <button className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium text-sm">
+          <button className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium text-sm flex items-center justify-center gap-2">
+            <HandCoins size={22} />
             Beli Sekarang
           </button>
         </div>

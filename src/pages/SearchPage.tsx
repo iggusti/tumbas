@@ -55,7 +55,10 @@ const SearchPage = () => {
               Popular Product
             </h2>
             <Link to="/cart" className="p-2 text-muted-foreground">
-              <ShoppingCart size={20} />
+              <ShoppingCart
+                size={22}
+                className="text-foreground transform scale-x-[-1]"
+              />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-3">

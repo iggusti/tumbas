@@ -27,7 +27,10 @@ const HomePage = () => {
           </h1>
           <div className="flex items-center gap-0.25">
             <Link to="/cart" className="relative p-2">
-              <ShoppingCart size={22} className="text-foreground" />
+              <ShoppingCart
+                size={22}
+                className="text-foreground transform scale-x-[-1]"
+              />
             </Link>
             <button className="relative p-2">
               <Menu size={20} className="text-foreground" />
