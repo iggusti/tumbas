@@ -1,7 +1,7 @@
 import { Grid2X2, List, Menu, ShoppingCart } from "lucide-react";
 
-import BottomNavigation from "@/components/BottomNavigation";
 import { Link } from "react-router-dom";
+import NavLink from "@/components/NavLink";
 import ProductCard from "@/components/ProductCard";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
@@ -200,7 +200,7 @@ const HomePage = () => {
         </motion.section>
       </main>
 
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };

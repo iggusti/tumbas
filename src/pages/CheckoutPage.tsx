@@ -1,8 +1,9 @@
-import { ArrowLeft, MapPin, Truck, Tag, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronRight, MapPin, Tag, Truck } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
-import BottomNavigation from "@/components/BottomNavigation";
 
 interface CheckoutItem {
   productId: string;
@@ -65,9 +66,12 @@ const CheckoutPage = () => {
               <MapPin size={16} className="text-primary" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-foreground text-sm">Fatiha Barkah</h3>
+              <h3 className="font-semibold text-foreground text-sm">
+                Fatiha Barkah
+              </h3>
               <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                Jln. Siliwangi Blok A, No.50,<br />
+                Jln. Siliwangi Blok A, No.50,
+                <br />
                 Haurgeulis, Indramayu
               </p>
             </div>
@@ -90,9 +94,13 @@ const CheckoutPage = () => {
             >
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                  <span className="text-xs font-bold text-primary-foreground">t.</span>
+                  <span className="text-xs font-bold text-primary-foreground">
+                    t.
+                  </span>
                 </div>
-                <span className="text-sm font-medium text-foreground">tumbas.</span>
+                <span className="text-sm font-medium text-foreground">
+                  tumbas.
+                </span>
               </div>
               <div className="flex gap-3">
                 <div className="w-20 h-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
@@ -135,9 +143,12 @@ const CheckoutPage = () => {
               <Truck size={16} className="text-muted-foreground" />
             </div>
             <div className="flex-1">
-              <h3 className="font-medium text-foreground text-sm">Promosi Pengiriman</h3>
+              <h3 className="font-medium text-foreground text-sm">
+                Promosi Pengiriman
+              </h3>
               <p className="text-xs text-muted-foreground mt-1">
-                Nikmati promo gratis pengiriman hingga Rp10.000 untuk<br />
+                Nikmati promo gratis pengiriman hingga Rp10.000 untuk
+                <br />
                 pesanan Toko lain - Pelayan
               </p>
             </div>
@@ -162,7 +173,9 @@ const CheckoutPage = () => {
               <span className="text-sm text-foreground">Voucher Produk</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Gunakan Voucher kode</span>
+              <span className="text-xs text-muted-foreground">
+                Gunakan Voucher kode
+              </span>
               <ChevronRight size={16} className="text-muted-foreground" />
             </div>
           </button>
@@ -205,7 +218,7 @@ const CheckoutPage = () => {
         </div>
       </motion.div>
 
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };

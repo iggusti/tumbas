@@ -1,8 +1,15 @@
-import { Heart, MapPin, Minus, Plus, Share2, ShoppingCart } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  ArrowLeft,
+  Heart,
+  MapPin,
+  Minus,
+  Plus,
+  Share2,
+  ShoppingCart,
+} from "lucide-react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import BottomNavigation from "@/components/BottomNavigation";
-import Header from "@/components/Header";
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { toast } from "@/hooks/use-toast";
@@ -41,7 +48,20 @@ const ProductDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-background pb-40">
-      <Header showBack transparent />
+      {/* Container */}
+      <div className="fixed inset-x-0 top-0 z-20 mx-auto w-full max-w-[480px]">
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 px-4 py-4"
+        >
+          <Link to="/" className="p-1">
+            <ArrowLeft size={20} className="text-white" />
+          </Link>
+          <span className="text-white/80 text-sm">tumbas.</span>
+        </motion.header>
+      </div>
 
       {/* Product Image */}
       <motion.div
@@ -207,7 +227,7 @@ const ProductDetailPage = () => {
         </div>
       </motion.div>
 
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };

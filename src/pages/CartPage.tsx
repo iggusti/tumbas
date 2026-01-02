@@ -1,11 +1,18 @@
-import { Minus, Plus, Trash2, Tag, ChevronRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import BottomNavigation from "@/components/BottomNavigation";
-import Header from "@/components/Header";
+import {
+  ArrowLeft,
+  ChevronRight,
+  Minus,
+  Plus,
+  Tag,
+  Trash2,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 
 interface CartItem {
   productId: string;
@@ -80,7 +87,22 @@ const CartPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header title="Keranjang Saya" showBack />
+      {/* Header */}
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
+      >
+        <Link to="/" className="p-1">
+          <ArrowLeft size={20} className="text-foreground" />
+        </Link>
+        <div>
+          <span className="text-muted-foreground text-sm">tumbas.</span>
+          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
+            Keranjang Saya
+          </h1>
+        </div>
+      </motion.header>
 
       <main className="page-container pb-64">
         {cartItems.length === 0 ? (
@@ -129,9 +151,13 @@ const CartPage = () => {
                         />
                         <div className="flex items-center gap-2">
                           <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                            <span className="text-[10px] font-bold text-primary-foreground">t.</span>
+                            <span className="text-[10px] font-bold text-primary-foreground">
+                              t.
+                            </span>
                           </div>
-                          <span className="text-sm font-medium text-foreground">tumbas.</span>
+                          <span className="text-sm font-medium text-foreground">
+                            tumbas.
+                          </span>
                         </div>
                       </div>
                       <button
@@ -185,11 +211,18 @@ const CartPage = () => {
                     <div className="flex items-center justify-between mt-3 ml-7 pt-3 border-t border-border">
                       <div className="flex items-center gap-2">
                         <Tag size={14} className="text-muted-foreground" />
-                        <span className="text-xs text-foreground">Voucher Produk</span>
+                        <span className="text-xs text-foreground">
+                          Voucher Produk
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <span className="text-xs text-muted-foreground">Gunakan Maksimal kode</span>
-                        <ChevronRight size={14} className="text-muted-foreground" />
+                        <span className="text-xs text-muted-foreground">
+                          Gunakan Maksimal kode
+                        </span>
+                        <ChevronRight
+                          size={14}
+                          className="text-muted-foreground"
+                        />
                       </div>
                     </div>
                   </motion.div>
@@ -209,7 +242,9 @@ const CartPage = () => {
               </h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Subtotal ({checkedItems.length} item)</span>
+                  <span className="text-muted-foreground">
+                    Subtotal ({checkedItems.length} item)
+                  </span>
                   <span className="text-foreground font-medium">
                     {formatPrice(subtotal)}
                   </span>
@@ -251,7 +286,7 @@ const CartPage = () => {
         </motion.div>
       )}
 
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { Search, ShoppingCart } from "lucide-react";
 
-import BottomNavigation from "@/components/BottomNavigation";
 import { Link } from "react-router-dom";
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 
@@ -80,7 +80,7 @@ const SearchPage = () => {
           </div>
         </div>
       </div>
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };

@@ -12,7 +12,7 @@ import {
   User,
 } from "lucide-react";
 
-import BottomNavigation from "@/components/BottomNavigation";
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 
 const quickActions = [
@@ -187,7 +187,7 @@ const ProfilePage = () => {
         </motion.section>
       </main>
 
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };

@@ -1,6 +1,7 @@
+import { Bell, Package, Percent } from "lucide-react";
+
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
-import { Percent, Package, Bell } from "lucide-react";
-import BottomNavigation from "@/components/BottomNavigation";
 
 const notifications = [
   {
@@ -35,7 +36,8 @@ const notifications = [
     type: "order",
     icon: Package,
     title: "Pesanan Tiba",
-    description: "Pesanan #00011106047 dengan nomor #0000010 akan tiba 0-1 hari.",
+    description:
+      "Pesanan #00011106047 dengan nomor #0000010 akan tiba 0-1 hari.",
     time: "2d ago",
     isNew: false,
   },
@@ -65,7 +67,9 @@ const NotificationPage = () => {
       <div className="page-content pb-24">
         {/* Header */}
         <div className="px-4 pt-4 pb-2">
-          <h1 className="text-2xl font-display font-bold text-foreground">Notification</h1>
+          <h1 className="text-2xl font-display font-bold text-foreground">
+            Notification
+          </h1>
         </div>
 
         {/* Status Section */}
@@ -109,7 +113,7 @@ const NotificationPage = () => {
           </div>
         </div>
       </div>
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };

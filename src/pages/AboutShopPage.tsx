@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
-import BottomNavigation from "@/components/BottomNavigation";
 import { Link } from "react-router-dom";
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 
 const AboutShopPage = () => {
@@ -97,7 +97,7 @@ const AboutShopPage = () => {
         </div>
       </motion.div>
 
-      <BottomNavigation />
+      <NavLink />
     </div>
   );
 };
