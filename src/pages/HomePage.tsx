@@ -58,7 +58,7 @@ const HomePage = () => {
               <h2 className="font-display text-center text-2xl font-bold text-white mb-3">
                 collection.
               </h2>
-              <button className="self-center px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-colors">
+              <button className="self-center px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-sm text-white text-sm font-medium hover:bg-white/30 transition-colors">
                 Shop Now
               </button>
             </div>
@@ -74,13 +74,13 @@ const HomePage = () => {
         >
           <Link
             to="/about-shop"
-            className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
+            className="flex-1 py-3 px-4 bg-card border border-border rounded-sm text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
           >
             About Shop
           </Link>
           <Link
             to="/about-batik-indramayu"
-            className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
+            className="flex-1 py-3 px-4 bg-card border border-border rounded-sm text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
           >
             About Batik Indramayu
           </Link>
@@ -94,16 +94,16 @@ const HomePage = () => {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <h2 className="text-lg font-semibold text-foreground">
                 Selling fast
               </h2>
               <div className="flex items-center gap-1">
-                <button className="text-sm size-6 rounded bg-primary text-primary-foreground">
+                <button className="text-sm size-[28px] rounded bg-primary text-primary-foreground">
                   12
                 </button>
                 :
-                <button className="text-sm size-6 rounded bg-primary text-primary-foreground">
+                <button className="text-sm size-[28px] rounded bg-primary text-primary-foreground">
                   12
                 </button>
               </div>

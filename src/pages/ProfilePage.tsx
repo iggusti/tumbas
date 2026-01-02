@@ -1,12 +1,12 @@
 import {
   Bell,
   ChevronRight,
+  ClipboardList,
+  Clock4,
   CreditCard,
-  Eye,
   Headphones,
   Heart,
   MapPin,
-  Package,
   Percent,
   Phone,
   User,
@@ -16,7 +16,11 @@ import BottomNavigation from "@/components/BottomNavigation";
 import { motion } from "framer-motion";
 
 const quickActions = [
-  { icon: Package, label: "My Orders", color: "bg-amber-100 text-amber-600" },
+  {
+    icon: ClipboardList,
+    label: "My Orders",
+    color: "bg-amber-100 text-amber-600",
+  },
   {
     icon: Percent,
     label: "Promo Code",
@@ -38,7 +42,7 @@ const generalSettings = [
 
 const activities = [
   { icon: Heart, label: "Favorit", color: "bg-muted" },
-  { icon: Eye, label: "Terakhir Dilihat", color: "bg-red-50" },
+  { icon: Clock4, label: "Terakhir Dilihat", color: "bg-red-50" },
 ];
 
 const ProfilePage = () => {
@@ -60,7 +64,7 @@ const ProfilePage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center mb-6 gap-5"
+          className="flex items-center mt-1.5 mb-3 gap-5"
         >
           <div className="w-20 h-20 rounded-full bg-muted overflow-hidden mb-3">
             <img
@@ -92,13 +96,13 @@ const ProfilePage = () => {
                 className="flex flex-col items-center gap-2"
               >
                 <div
-                  className={`w-14 h-14 rounded-full ${action.color} flex items-center justify-center`}
+                  className={`w-20 h-20 rounded-sm ${action.color} flex flex-col items-center justify-top p-3 gap-1`}
                 >
                   <Icon size={22} />
+                  <span className="text-xs text-muted-foreground font-medium text-center max-w-[70px] leading-tight">
+                    {action.label}
+                  </span>
                 </div>
-                <span className="text-xs text-muted-foreground font-medium text-center max-w-[70px]">
-                  {action.label}
-                </span>
               </button>
             );
           })}
