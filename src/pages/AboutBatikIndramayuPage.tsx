@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import BottomNavigation from "@/components/BottomNavigation";
 
-const AboutShopPage = () => {
+const AboutBatikIndramayuPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero with Background - Fixed */}
       <div className="fixed inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
-          alt="Batik Background"
+          alt="Batik Indramayu Background"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/40" />
@@ -31,7 +31,7 @@ const AboutShopPage = () => {
       {/* Title - Fixed */}
       <div className="fixed top-16 left-0 right-0 z-10 px-6 pt-4">
         <h1 className="font-display text-4xl font-bold text-white leading-tight">
-          About<br />Shop
+          About<br />Batik<br />Indramayu
         </h1>
       </div>
 
@@ -54,41 +54,43 @@ const AboutShopPage = () => {
         <div className="px-6 pb-32 overflow-y-auto max-h-[60vh]">
           <div className="space-y-4 text-foreground/80 text-sm leading-relaxed">
             <p>
-              <strong className="text-foreground">Tumbas</strong> adalah platform digital yang hadir sebagai 
-              jembatan modern untuk memadukan dan melestarikan batik 
-              khas kekayaan. Nama Tumbas, yang dalam Bahasa 
-              Jawa berarti "membeli," diolah untuk menggambarkan 
-              semangat dalam mendukung produk lokal sekaligus 
-              mempromosikan aksesi masyarakat terhadap salah satu 
-              budaya Indonesia, khususnya batik pesisir (batanogan).
+              <strong className="text-foreground">Batik Indramayu</strong> juga dikenal dengan nama Batik 
+              Pesisiran, merupakan salah satu kekhasan budaya pesisir 
+              utara Pulau Jawa yang lahir dari seni batik tersendiri. 
+              Berkat asal Kabupaten Indramayu, batik ini terkenal 
+              dengan coraknya yang lugas, penuh warna, dan 
+              menggambarkan kehidupan masyarakat pesisir, alam 
+              sekitar, serta nilai-nilai kota yang diwariskan turun 
+              temurun.
             </p>
 
             <p>
-              Berbeda dari diajarkan oleh banyak kalangan pada sisi 
-              skill, Tumbas juga didedikasikan untuk tidak sekedar 
-              berfokus membuat budaya yang berkembang dalam 
-              setiap daerah lokal. Tumbas memungkinkan dan 
-              pengrajin batik lokal dari berbagai desa di Indonesia 
-              untuk mengenalkan produk-produk terbaik tanpa perlu 
-              akses internet tradisional, mulai dari pengendalian hingga 
-              pemasaran darat.
+              Salah satu <strong className="text-foreground">keunikan Batik Indramayu</strong> terletak pada 
+              proses pembuatannya yang dikerjakan secara manual 
+              (batik tulis), dengan gaya yang lebih bebas dan ekspresif 
+              dibandingkan batik dari daerah lain. Motif-motifnya 
+              banyak terinspirasi dari unsur laut, tumbuhan, keseluruhan, 
+              hingga cerita rakyat. Beberapa motif ikonik antara lain 
+              Kapal Kandas, Khupu Sewu, Karang Jahe, dan Kembang 
+              Gunda, yang masing-masing memiliki makna filosofi dan 
+              sejarah mendalam.
             </p>
 
             <p>
-              Melalui Tumbas, pengguna tidak hanya bisa membeli 
-              batik dengan aman, praktis, tetapi juga dapat memahami 
-              filosofi motif, mengenal asal daerah, serta melalui proses 
-              pembuatannya secara transparan. Kami percaya bahwa 
-              batik bukan sekadar kain, melainkan warisan budaya 
-              yang perlu dijaga, dan melalui pendekatan berbasis 
-              Tumbas ingin berkontribusi agar pelestarian batik menjadi 
-              mudah dan inklusif.
+              Tidak hanya kaya secara visual, Batik Indramayu juga 
+              merepresentasikan kreativitas masyarakat pesisir yang 
+              tangguh, terbuka, dan berkarakter. Corak warna yang berani 
+              dan garis-garis yang tegas menunjukkan keberanian 
+              berekspresi yang menjadi karakter utama batik ini. 
+              Keaslian dan nilai budaya itulah yang menjadikan batik.
             </p>
 
             <p>
-              Dengan mengusung prinsip keberlanjutan dan 
-              pemberdayaan UMKM, Tumbas berkomitmen menjadi 
-              rumah digital bagi pengrajin batik di seluruh Indonesia.
+              Melalui Tumbas, kami berkomitmen untuk terus 
+              melestarikan dan memperkenalkan keindahan Batik 
+              Indramayu ke seluruh Indonesia dan dunia. Setiap helai 
+              kain yang kami hadirkan adalah hasil karya pengrajin 
+              lokal yang penuh dedikasi.
             </p>
           </div>
         </div>
@@ -99,4 +101,4 @@ const AboutShopPage = () => {
   );
 };
 
-export default AboutShopPage;
+export default AboutBatikIndramayuPage;

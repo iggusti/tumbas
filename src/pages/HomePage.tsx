@@ -78,9 +78,12 @@ const HomePage = () => {
           >
             About Shop
           </Link>
-          <button className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground">
-            About Batik Indonesia
-          </button>
+          <Link
+            to="/about-batik-indramayu"
+            className="flex-1 py-3 px-4 bg-card border border-border rounded-full text-sm font-medium text-foreground hover:bg-accent/10 transition-colors flex items-center justify-center text-center bg-primary text-primary-foreground"
+          >
+            About Batik Indramayu
+          </Link>
         </motion.div>
 
         {/* Selling Fast Section */}
