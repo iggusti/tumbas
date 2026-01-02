@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
+import BottomNavigation from "@/components/BottomNavigation";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import BottomNavigation from "@/components/BottomNavigation";
 
 const AboutShopPage = () => {
   return (
@@ -16,23 +16,28 @@ const AboutShopPage = () => {
         <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* Header - Fixed */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="fixed top-0 left-0 right-0 z-20 flex items-center gap-3 px-4 py-4"
-      >
-        <Link to="/" className="p-1">
-          <ArrowLeft size={20} className="text-white" />
-        </Link>
-        <span className="text-white/80 text-sm">tumbas.</span>
-      </motion.header>
+      {/* Container */}
+      <div className="fixed inset-x-0 top-0 z-20 mx-auto w-full max-w-[480px]">
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 px-4 py-4"
+        >
+          <Link to="/" className="p-1">
+            <ArrowLeft size={20} className="text-white" />
+          </Link>
+          <span className="text-white/80 text-sm">tumbas.</span>
+        </motion.header>
 
-      {/* Title - Fixed */}
-      <div className="fixed top-16 left-0 right-0 z-10 px-6 pt-4">
-        <h1 className="font-display text-4xl font-bold text-white leading-tight">
-          About<br />Shop
-        </h1>
+        {/* Title */}
+        <div className="px-6 pt-4">
+          <h1 className="font-display text-4xl font-bold text-white leading-tight">
+            About
+            <br />
+            Shop
+          </h1>
+        </div>
       </div>
 
       {/* Draggable Content Sheet */}
@@ -47,48 +52,46 @@ const AboutShopPage = () => {
       >
         {/* Drag Handle */}
         <div className="flex justify-center pt-3 pb-4">
-          <div className="w-12 h-1 bg-muted-foreground/30 rounded-full" />
+          <div className="w-12 h-1 bg-muted-foreground/30 rounded-full cursor-pointer" />
         </div>
 
         {/* Content */}
         <div className="px-6 pb-32 overflow-y-auto max-h-[60vh]">
           <div className="space-y-4 text-foreground/80 text-sm leading-relaxed">
             <p>
-              <strong className="text-foreground">Tumbas</strong> adalah platform digital yang hadir sebagai 
-              jembatan modern untuk memadukan dan melestarikan batik 
-              khas kekayaan. Nama Tumbas, yang dalam Bahasa 
-              Jawa berarti "membeli," diolah untuk menggambarkan 
-              semangat dalam mendukung produk lokal sekaligus 
-              mempromosikan aksesi masyarakat terhadap salah satu 
-              budaya Indonesia, khususnya batik pesisir (batanogan).
+              <strong className="text-foreground">Tumbas</strong> adalah
+              platform digital yang hadir sebagai jembatan modern untuk
+              memadukan dan melestarikan batik khas kekayaan. Nama Tumbas, yang
+              dalam Bahasa Jawa berarti "membeli," diolah untuk menggambarkan
+              semangat dalam mendukung produk lokal sekaligus mempromosikan
+              aksesi masyarakat terhadap salah satu budaya Indonesia, khususnya
+              batik pesisir (batanogan).
             </p>
 
             <p>
-              Berbeda dari diajarkan oleh banyak kalangan pada sisi 
-              skill, Tumbas juga didedikasikan untuk tidak sekedar 
-              berfokus membuat budaya yang berkembang dalam 
-              setiap daerah lokal. Tumbas memungkinkan dan 
-              pengrajin batik lokal dari berbagai desa di Indonesia 
-              untuk mengenalkan produk-produk terbaik tanpa perlu 
-              akses internet tradisional, mulai dari pengendalian hingga 
+              Berbeda dari diajarkan oleh banyak kalangan pada sisi skill,
+              Tumbas juga didedikasikan untuk tidak sekedar berfokus membuat
+              budaya yang berkembang dalam setiap daerah lokal. Tumbas
+              memungkinkan dan pengrajin batik lokal dari berbagai desa di
+              Indonesia untuk mengenalkan produk-produk terbaik tanpa perlu
+              akses internet tradisional, mulai dari pengendalian hingga
               pemasaran darat.
             </p>
 
             <p>
-              Melalui Tumbas, pengguna tidak hanya bisa membeli 
-              batik dengan aman, praktis, tetapi juga dapat memahami 
-              filosofi motif, mengenal asal daerah, serta melalui proses 
-              pembuatannya secara transparan. Kami percaya bahwa 
-              batik bukan sekadar kain, melainkan warisan budaya 
-              yang perlu dijaga, dan melalui pendekatan berbasis 
-              Tumbas ingin berkontribusi agar pelestarian batik menjadi 
-              mudah dan inklusif.
+              Melalui Tumbas, pengguna tidak hanya bisa membeli batik dengan
+              aman, praktis, tetapi juga dapat memahami filosofi motif, mengenal
+              asal daerah, serta melalui proses pembuatannya secara transparan.
+              Kami percaya bahwa batik bukan sekadar kain, melainkan warisan
+              budaya yang perlu dijaga, dan melalui pendekatan berbasis Tumbas
+              ingin berkontribusi agar pelestarian batik menjadi mudah dan
+              inklusif.
             </p>
 
             <p>
-              Dengan mengusung prinsip keberlanjutan dan 
-              pemberdayaan UMKM, Tumbas berkomitmen menjadi 
-              rumah digital bagi pengrajin batik di seluruh Indonesia.
+              Dengan mengusung prinsip keberlanjutan dan pemberdayaan UMKM,
+              Tumbas berkomitmen menjadi rumah digital bagi pengrajin batik di
+              seluruh Indonesia.
             </p>
           </div>
         </div>
