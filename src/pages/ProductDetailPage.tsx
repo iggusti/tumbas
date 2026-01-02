@@ -1,6 +1,7 @@
 import { Heart, MapPin, Minus, Plus, Share2, ShoppingCart } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import BottomNavigation from "@/components/BottomNavigation";
 import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
@@ -39,7 +40,7 @@ const ProductDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background pb-40">
       <Header showBack transparent />
 
       {/* Product Image */}
@@ -172,7 +173,7 @@ const ProductDetailPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="fixed bottom-0 w-full max-w-[480px] bg-card border-t border-border p-4"
+        className="fixed bottom-16 w-full max-w-[480px] bg-card border-t border-border p-4"
       >
         <div className="flex items-center gap-4">
           {/* Quantity Selector */}
@@ -205,6 +206,8 @@ const ProductDetailPage = () => {
           </motion.button>
         </div>
       </motion.div>
+
+      <BottomNavigation />
     </div>
   );
 };

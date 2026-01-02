@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import AboutBatikIndramayuPage from "./pages/AboutBatikIndramayuPage";
 import AboutShopPage from "./pages/AboutShopPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -25,6 +26,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about-shop" element={<AboutShopPage />} />
+          <Route path="/about-batik-indramayu" element={<AboutBatikIndramayuPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/notification" element={<NotificationPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
