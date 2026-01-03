@@ -69,7 +69,10 @@ const ProductDetailPage = () => {
                 whileTap={{ scale: 0.9 }}
                 className="p-2 rounded-full bg-card/30 backdrop-blur-sm"
               >
-                <ShoppingCart size={18} className="text-primary-foreground transform scale-x-[-1]" />
+                <ShoppingCart
+                  size={18}
+                  className="text-primary-foreground transform scale-x-[-1]"
+                />
               </motion.button>
             </Link>
             <motion.button
@@ -110,9 +113,15 @@ const ProductDetailPage = () => {
 
         {/* Add Button on Image */}
         <motion.button
+          whileHover={{
+            scale: 1.05,
+            y: -1,
+            boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+          }}
           whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 260, damping: 18 }}
           onClick={handleAddToCart}
-          className="absolute bottom-10 right-4 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-sm shadow-lg"
+          className="absolute bottom-10 right-4 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-sm"
         >
           <Plus size={16} />
           <span className="text-sm font-medium">Add</span>

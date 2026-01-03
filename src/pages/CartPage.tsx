@@ -1,11 +1,4 @@
-import {
-  ArrowLeft,
-  ChevronRight,
-  Coins,
-  Minus,
-  Plus,
-  Tag,
-} from "lucide-react";
+import { ArrowLeft, ChevronRight, Coins, Minus, Plus, Tag } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -67,7 +60,7 @@ const CartPage = () => {
         </div>
       </motion.header>
 
-      <main className="page-container pb-64">
+      <main className="page-container pb-[11rem]">
         {cartItems.length === 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
