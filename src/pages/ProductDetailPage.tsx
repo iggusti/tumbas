@@ -1,12 +1,12 @@
-import { ArrowLeft, Heart, Share2, ShoppingCart, Check } from "lucide-react";
+import { ArrowLeft, Heart, Plus, Share2, ShoppingCart } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
 import { useCart } from "@/contexts/CartContext";
+import { useState } from "react";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -41,9 +41,10 @@ const ProductDetailPage = () => {
     });
   };
 
-  const shortDescription = product.description.length > 80 
-    ? product.description.slice(0, 80) + "..." 
-    : product.description;
+  const shortDescription =
+    product.description.length > 80
+      ? product.description.slice(0, 80) + "..."
+      : product.description;
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -58,9 +59,19 @@ const ProductDetailPage = () => {
             <Link to="/" className="p-1">
               <ArrowLeft size={20} className="text-primary-foreground" />
             </Link>
-            <span className="text-primary-foreground/80 text-sm font-medium">tumbas.</span>
+            <span className="text-primary-foreground/80 text-sm font-medium">
+              tumbas.
+            </span>
           </div>
           <div className="flex items-center gap-2">
+            <Link to="/cart">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className="p-2 rounded-full bg-card/30 backdrop-blur-sm"
+              >
+                <ShoppingCart size={18} className="text-primary-foreground transform scale-x-[-1]" />
+              </motion.button>
+            </Link>
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsLiked(!isLiked)}
@@ -96,14 +107,14 @@ const ProductDetailPage = () => {
           alt={product.name}
           className="w-full h-full object-cover"
         />
-        
+
         {/* Add Button on Image */}
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={handleAddToCart}
-          className="absolute bottom-4 right-4 flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-full shadow-lg"
+          className="absolute bottom-10 right-4 flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-sm shadow-lg"
         >
-          <Check size={16} />
+          <Plus size={16} />
           <span className="text-sm font-medium">Add</span>
         </motion.button>
       </motion.div>
