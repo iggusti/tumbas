@@ -1,12 +1,4 @@
-import {
-  ArrowLeft,
-  Heart,
-  MapPin,
-  Minus,
-  Plus,
-  Share2,
-  ShoppingCart,
-} from "lucide-react";
+import { ArrowLeft, Heart, Share2, ShoppingCart, Check } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
@@ -14,12 +6,14 @@ import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
   const [isLiked, setIsLiked] = useState(false);
+  const [showMoreDetail, setShowMoreDetail] = useState(false);
 
   const product = products.find((p) => p.id === id);
 
@@ -40,100 +34,126 @@ const ProductDetailPage = () => {
   };
 
   const handleAddToCart = () => {
+    addToCart(product.id, 1);
     toast({
       title: "Added to cart!",
-      description: `${quantity}x ${product.name} has been added to your cart.`,
+      description: `${product.name} has been added to your cart.`,
     });
   };
 
+  const shortDescription = product.description.length > 80 
+    ? product.description.slice(0, 80) + "..." 
+    : product.description;
+
   return (
-    <div className="min-h-screen bg-background pb-40">
-      {/* Container */}
-      <div className="fixed inset-x-0 top-0 z-20 mx-auto w-full max-w-[480px]">
-        {/* Header */}
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 px-4 py-4"
-        >
-          <Link to="/" className="p-1">
-            <ArrowLeft size={20} className="text-white" />
-          </Link>
-          <span className="text-white/80 text-sm">tumbas.</span>
-        </motion.header>
-      </div>
+    <div className="min-h-screen bg-background pb-24">
+      {/* Fixed Header */}
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-[480px]"
+      >
+        <div className="flex items-center justify-between px-4 py-4">
+          <div className="flex items-center gap-3">
+            <Link to="/" className="p-1">
+              <ArrowLeft size={20} className="text-primary-foreground" />
+            </Link>
+            <span className="text-primary-foreground/80 text-sm font-medium">tumbas.</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsLiked(!isLiked)}
+              className="p-2 rounded-full bg-card/30 backdrop-blur-sm"
+            >
+              <Heart
+                size={18}
+                className={`transition-colors ${
+                  isLiked
+                    ? "fill-destructive text-destructive"
+                    : "text-primary-foreground"
+                }`}
+              />
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              className="p-2 rounded-full bg-card/30 backdrop-blur-sm"
+            >
+              <Share2 size={18} className="text-primary-foreground" />
+            </motion.button>
+          </div>
+        </div>
+      </motion.header>
 
       {/* Product Image */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative aspect-[4/5] -mt-14"
+        className="relative aspect-square"
       >
         <img
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-
-        {/* Action Buttons */}
-        <div className="absolute top-20 right-4 flex flex-col gap-2">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsLiked(!isLiked)}
-            className="p-3 rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
-          >
-            <Heart
-              size={20}
-              className={`transition-colors ${
-                isLiked
-                  ? "fill-destructive text-destructive"
-                  : "text-foreground"
-              }`}
-            />
-          </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            className="p-3 rounded-full bg-card/80 backdrop-blur-sm shadow-soft"
-          >
-            <Share2 size={20} className="text-foreground" />
-          </motion.button>
-        </div>
-
-        {/* Category Badge */}
-        <div className="absolute bottom-6 left-4">
-          <span className="px-4 py-1.5 text-sm font-medium bg-card/90 backdrop-blur-sm rounded-full text-foreground">
-            {product.category}
-          </span>
-        </div>
+        
+        {/* Add Button on Image */}
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={handleAddToCart}
+          className="absolute bottom-4 right-4 flex items-center gap-2 bg-accent text-accent-foreground px-4 py-2 rounded-full shadow-lg"
+        >
+          <Check size={16} />
+          <span className="text-sm font-medium">Add</span>
+        </motion.button>
       </motion.div>
 
-      {/* Product Details */}
+      {/* Product Details Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="px-4 -mt-2"
+        className="bg-card rounded-t-3xl -mt-6 relative z-10 px-5 pt-6 pb-4"
       >
-        <h1 className="font-display text-2xl font-bold text-foreground mb-2">
-          {product.name}
-        </h1>
-
-        <div className="flex items-center gap-2 text-muted-foreground mb-4">
-          <MapPin size={14} />
-          <span className="text-sm">{product.origin}</span>
+        {/* Title and Price Row */}
+        <div className="flex items-start justify-between mb-1">
+          <div className="flex-1">
+            <h1 className="font-display text-xl font-bold text-foreground leading-tight">
+              {product.name.split(" ").slice(0, 2).join(" ")}
+              <br />
+              {product.name.split(" ").slice(2).join(" ")}
+            </h1>
+            <p className="text-xs text-muted-foreground mt-1">limited offer</p>
+          </div>
+          <div className="text-right">
+            {product.originalPrice && (
+              <p className="text-sm text-muted-foreground line-through">
+                {formatPrice(product.originalPrice)}
+              </p>
+            )}
+            <p className="text-lg font-display font-bold text-primary">
+              {formatPrice(product.price)}
+            </p>
+          </div>
         </div>
 
-        <p className="text-2xl font-display font-bold text-primary mb-6">
-          {formatPrice(product.price)}
+        {/* Short Description */}
+        <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
+          {showMoreDetail ? product.description : shortDescription}
         </p>
 
-        <p className="text-muted-foreground leading-relaxed mb-6">
-          {product.description}
-        </p>
+        {/* More Detail Toggle */}
+        {product.description.length > 80 && (
+          <button
+            onClick={() => setShowMoreDetail(!showMoreDetail)}
+            className="text-sm text-primary font-medium mt-2 hover:underline"
+          >
+            {showMoreDetail ? "Show less" : "More detail"}
+          </button>
+        )}
 
-        {/* Product Info */}
-        <div className="bg-card rounded-2xl p-4 shadow-soft space-y-3 mb-6">
+        {/* Product Info Card */}
+        <div className="bg-secondary/50 rounded-2xl p-4 mt-6 space-y-3">
           <div className="flex justify-between">
             <span className="text-muted-foreground text-sm">Material</span>
             <span className="text-foreground text-sm font-medium">
@@ -155,16 +175,16 @@ const ProductDetailPage = () => {
         </div>
 
         {/* Related Products */}
-        <section>
+        <section className="mt-8">
           <h3 className="font-display text-lg font-semibold text-foreground mb-4">
             You May Also Like
           </h3>
-          <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4">
+          <div className="flex gap-3 overflow-x-auto pb-4 -mx-5 px-5">
             {products
               .filter(
                 (p) => p.id !== product.id && p.category === product.category
               )
-              .slice(0, 3)
+              .slice(0, 4)
               .map((relatedProduct) => (
                 <motion.button
                   key={relatedProduct.id}
@@ -186,45 +206,6 @@ const ProductDetailPage = () => {
               ))}
           </div>
         </section>
-      </motion.div>
-
-      {/* Bottom Action Bar */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="fixed bottom-16 w-full max-w-[480px] bg-card border-t border-border p-4"
-      >
-        <div className="flex items-center gap-4">
-          {/* Quantity Selector */}
-          <div className="flex items-center gap-3 bg-secondary rounded-full px-4 py-2">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="p-1 hover:bg-muted rounded-full transition-colors"
-            >
-              <Minus size={16} className="text-foreground" />
-            </button>
-            <span className="font-medium text-foreground w-6 text-center">
-              {quantity}
-            </span>
-            <button
-              onClick={() => setQuantity(quantity + 1)}
-              className="p-1 hover:bg-muted rounded-full transition-colors"
-            >
-              <Plus size={16} className="text-foreground" />
-            </button>
-          </div>
-
-          {/* Add to Cart Button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleAddToCart}
-            className="flex-1 btn-primary flex items-center justify-center gap-2"
-          >
-            <ShoppingCart size={22} className="transform scale-x-[-1]" />
-            <span>Add to Cart</span>
-          </motion.button>
-        </div>
       </motion.div>
 
       <NavLink />
