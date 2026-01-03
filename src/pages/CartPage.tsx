@@ -5,7 +5,6 @@ import {
   Minus,
   Plus,
   Tag,
-  Trash2,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,21 +12,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
-import { useState } from "react";
-
-interface CartItem {
-  productId: string;
-  quantity: number;
-  checked: boolean;
-}
+import { useCart } from "@/contexts/CartContext";
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { productId: "1", quantity: 2, checked: true },
-    { productId: "4", quantity: 1, checked: true },
-    { productId: "2", quantity: 1, checked: true },
-  ]);
+  const { cartItems, updateQuantity, removeItem, toggleCheck } = useCart();
 
   const getProduct = (productId: string) => {
     return products.find((p) => p.id === productId);
@@ -41,32 +30,6 @@ const CartPage = () => {
     }).format(price);
   };
 
-  const updateQuantity = (productId: string, delta: number) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.productId === productId
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
-      )
-    );
-  };
-
-  const removeItem = (productId: string) => {
-    setCartItems((items) =>
-      items.filter((item) => item.productId !== productId)
-    );
-  };
-
-  const toggleCheck = (productId: string) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.productId === productId
-          ? { ...item, checked: !item.checked }
-          : item
-      )
-    );
-  };
-
   const checkedItems = cartItems.filter((item) => item.checked);
 
   const subtotal = checkedItems.reduce((sum, item) => {
@@ -78,7 +41,6 @@ const CartPage = () => {
   const total = subtotal + shippingCost;
 
   const handleCheckout = () => {
-    // Pass checked items to checkout via state
     const checkoutItems = checkedItems.map((item) => ({
       productId: item.productId,
       quantity: item.quantity,
