@@ -19,9 +19,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["League Gothic", "serif"],
+        display: ["League Spartan", "sans-serif"],
         body: ["Inter", "sans-serif"],
       },
+
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
