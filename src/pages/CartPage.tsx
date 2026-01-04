@@ -116,12 +116,18 @@ const CartPage = () => {
                           </span>
                         </div>
                       </div>
-                      <button
-                        onClick={() => removeItem(item.productId)}
-                        className="text-xs text-muted-foreground hover:text-destructive transition-colors"
-                      >
-                        Ubah
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                          Ubah
+                        </button>
+                        <span className="text-muted-foreground">|</span>
+                        <button
+                          onClick={() => removeItem(item.productId)}
+                          className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+                        >
+                          Hapus
+                        </button>
+                      </div>
                     </div>
 
                     {/* Product Info */}

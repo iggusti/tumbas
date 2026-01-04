@@ -73,9 +73,14 @@ const CheckoutPage = () => {
               <MapPin size={16} className="text-primary" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-foreground text-sm">
-                Fatiha Barkah Mubyara
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-foreground text-sm">
+                  Fatiha Barkah Mubyara
+                </h3>
+                <span className="text-xs text-muted-foreground">
+                  +62 812-3456-7890
+                </span>
+              </div>
               <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                 Jln. Siliwangi, Blok Kluwut, No.50, RT 03, RW 01, Desa Haurkolot
                 <br />
