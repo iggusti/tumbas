@@ -1,20 +1,35 @@
-import { ChevronLeft, ChevronRight, Grid2X2, List, Menu, ShoppingCart } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Grid2X2,
+  List,
+  Menu,
+  ShoppingCart,
+} from "lucide-react";
 
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import ProductCard from "@/components/ProductCard";
+import heroBanner from "@/assets/hero-banner.png";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useState } from "react";
 
 const ITEMS_PER_PAGE = 4;
 
-const PremiumSection = ({ products }: { products: typeof import("@/data/products").products }) => {
+const PremiumSection = ({
+  products,
+}: {
+  products: typeof import("@/data/products").products;
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
-  
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentProducts = products.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const currentProducts = products.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
 
   return (
     <motion.section
@@ -38,7 +53,7 @@ const PremiumSection = ({ products }: { products: typeof import("@/data/products
           </motion.div>
         ))}
       </div>
-      
+
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-6">
@@ -49,7 +64,7 @@ const PremiumSection = ({ products }: { products: typeof import("@/data/products
           >
             <ChevronLeft size={16} />
           </button>
-          
+
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
@@ -63,7 +78,7 @@ const PremiumSection = ({ products }: { products: typeof import("@/data/products
               {page}
             </button>
           ))}
-          
+
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
@@ -92,7 +107,7 @@ const HomePage = () => {
         className="px-4 py-3"
       >
         <div className="flex items-center justify-between">
-          <h1 className="font-display text-2xl font-bold text-foreground">
+          <h1 className="font-display text-2xl font-bold text-[#783429]">
             tumbas.
           </h1>
           <div className="flex items-center gap-0.25">
@@ -119,7 +134,7 @@ const HomePage = () => {
         >
           <div className="aspect-[16/10] relative">
             <img
-              src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
+              src={heroBanner}
               alt="Batik Collection 2025"
               className="w-full h-full object-cover"
             />
