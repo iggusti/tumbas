@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
+import aboutShop from "@/assets/about-shop.png";
 import { motion } from "framer-motion";
 
 const AboutShopPage = () => {
@@ -9,11 +10,11 @@ const AboutShopPage = () => {
       {/* Hero with Background - Fixed */}
       <div className="fixed inset-0 z-0 max-w-[480px] mx-auto left-0 right-0">
         <img
-          src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
+          src={aboutShop}
           alt="Batik Background"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0" />
       </div>
 
       {/* Container */}
@@ -29,15 +30,6 @@ const AboutShopPage = () => {
           </Link>
           <span className="text-white/80 text-sm">tumbas.</span>
         </motion.header>
-
-        {/* Title */}
-        <div className="px-6 pt-4">
-          <h1 className="font-display text-4xl font-bold text-white leading-tight">
-            About
-            <br />
-            Shop
-          </h1>
-        </div>
       </div>
 
       {/* Draggable Content Sheet */}

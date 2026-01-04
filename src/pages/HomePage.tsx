@@ -98,7 +98,7 @@ const HomePage = () => {
         className="px-4 py-3"
       >
         <div className="flex items-center justify-between">
-          <h1 className="font-display text-2xl font-bold text-[#783429]">
+          <h1 className="font-display text-2xl font-bold text-[#9d3530]">
             tumbas.
           </h1>
           <div className="flex items-center gap-0.25">
