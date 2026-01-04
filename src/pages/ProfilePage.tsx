@@ -12,9 +12,9 @@ import {
   User,
 } from "lucide-react";
 
+import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 
 const quickActions = [
   {
@@ -128,7 +128,7 @@ const ProfilePage = () => {
             {generalSettings.map((item) => {
               const Icon = item.icon;
               const isNotification = item.label === "Notification";
-              
+
               const content = (
                 <>
                   <Icon size={18} className="text-muted-foreground" />
@@ -138,19 +138,19 @@ const ProfilePage = () => {
                   <ChevronRight size={16} className="text-muted-foreground" />
                 </>
               );
-              
+
               if (isNotification) {
                 return (
                   <Link
                     key={item.label}
-                    to="/notifications"
+                    to="/notification"
                     className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
                   >
                     {content}
                   </Link>
                 );
               }
-              
+
               return (
                 <button
                   key={item.label}
