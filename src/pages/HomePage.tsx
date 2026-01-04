@@ -1,9 +1,4 @@
-import {
-  ChevronLeft,
-  ChevronRight,
-  Menu,
-  ShoppingCart,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, ShoppingCart } from "lucide-react";
 
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
@@ -218,8 +213,12 @@ const HomePage = () => {
                         <span className="text-[10px] text-muted-foreground line-through">
                           Rp {(product.price * 1.2).toLocaleString("id-ID")}
                         </span>
-                        <span className="text-xs font-semibold text-primary ml-1">
+                        <br />
+                        <span className="text-xs font-semibold text-primary block">
                           Rp {product.price.toLocaleString("id-ID")}
+                        </span>
+                        <span className="text-[8px] font-semibold text-primary block -mt-[2px]">
+                          limited offer
                         </span>
                       </div>
                     </div>
