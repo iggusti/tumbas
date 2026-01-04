@@ -17,6 +17,7 @@ export interface Product {
   description: string;
   origin: string;
   material: string;
+  dyeingProcess: string;
   isPremium?: boolean;
 }
 
@@ -31,8 +32,8 @@ export const products: Product[] = [
     description:
       "Premium quality fabric that is soft and comfortable. This motif depicts a dancing peacock or 'ngibing', a Javanese word that means dancing performed at traditional ceremonies. The intricate details showcase the masterful craftsmanship of Indramayu artisans who have passed down their skills through generations.",
     origin: "Indramayu, West Java",
-    material: "Premium cotton, natural dye",
-    isPremium: true,
+    material: "Premium cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "2",
@@ -42,8 +43,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "The kawung pattern represents the fruit of the aren palm, symbolizing hope and purity.",
-    origin: "Yogyakarta",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "3",
@@ -53,8 +55,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "One of the oldest batik patterns, Parang Rusak was once exclusive to Javanese royalty. The diagonal lines represent waves crashing against rocks, symbolizing power and perseverance.",
-    origin: "Surakarta",
-    material: "Silk, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Silk",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -65,19 +68,21 @@ export const products: Product[] = [
     category: "Batik Pesisir",
     description:
       "Cloud pattern from Cirebon representing calmness and patience.",
-    origin: "Cirebon, West Java",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "5",
     name: "Motif Tapak Sikil Merak",
-    price: 780000,
+    price: 1100000,
     image: motifTapakSikilMerak,
     category: "Batik Tulis",
     description:
       "Traditional brown-toned batik representing wisdom and maturity.",
-    origin: "Solo, Central Java",
-    material: "Cotton, natural soga dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Soga Dye",
     isPremium: true,
   },
   {
@@ -89,8 +94,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Flower of the universe pattern symbolizing beauty and diversity.",
-    origin: "Pekalongan",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "7",
@@ -100,20 +106,21 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "Truntum means to bloom again. This pattern symbolizes eternal love and guidance, traditionally worn by parents during wedding ceremonies.",
-    origin: "Solo, Central Java",
-    material: "Premium cotton, natural dye",
-    isPremium: true,
+    origin: "Indramayu, West Java",
+    material: "Premium cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "8",
     name: "Motif Godong Kembang Trompet",
-    price: 750000,
+    price: 1750000,
     image: motifGodongKembangTrompet,
     category: "Batik Tulis",
     description:
       "Sidomukti represents prosperity and noble status. Often worn during important ceremonies.",
-    origin: "Yogyakarta",
-    material: "Silk blend, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Silk blend",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -125,8 +132,9 @@ export const products: Product[] = [
     category: "Batik Pesisir",
     description:
       "Lasem batik combines Javanese and Chinese influences, featuring vibrant red colors and floral motifs.",
-    origin: "Lasem, Central Java",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "10",
@@ -137,33 +145,35 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Geometric patterns representing order, harmony, and balance in the universe.",
-    origin: "Pekalongan",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "11",
     name: "Motif Merak Mabur",
-    price: 950000,
+    price: 1950000,
     image: motifMerakMabur,
     category: "Batik Tulis",
     description:
       "The diagonal rain pattern symbolizes fertility and continuous blessings from above.",
-    origin: "Surakarta",
-    material: "Silk, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Silk",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
     id: "12",
     name: "Motif Wahyu Tumurun",
-    price: 1100000,
+    price: 850000,
     image:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80",
     category: "Batik Tulis",
     description:
       "Divine revelation pattern, representing blessings descending from heaven. Reserved for noble ceremonies.",
-    origin: "Yogyakarta",
-    material: "Silk, natural dye",
-    isPremium: true,
+    origin: "Indramayu, West Java",
+    material: "Silk",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "13",
@@ -174,8 +184,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Bright floral patterns typical of coastal Pekalongan style, influenced by various cultures.",
-    origin: "Pekalongan",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "14",
@@ -186,8 +197,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "Featuring the mythical Garuda bird, symbolizing strength, courage, and noble values.",
-    origin: "Solo, Central Java",
-    material: "Silk, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Silk",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -199,8 +211,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "The chain pattern represents eternal bonds and unbreakable connections between people.",
-    origin: "Surakarta",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "16",
@@ -211,8 +224,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "Double ikat batik from Bali, believed to protect the wearer from evil and illness. Extremely rare and valuable.",
-    origin: "Tenganan, Bali",
-    material: "Hand-spun cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Hand-spun cotton",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -224,8 +238,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Intricate dotted pattern resembling woven fabric, inspired by Indian patola cloth.",
-    origin: "Yogyakarta",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "18",
@@ -236,8 +251,9 @@ export const products: Product[] = [
     category: "Batik Pesisir",
     description:
       "Bold yellow and red colors characteristic of Madura island batik, reflecting the vibrant local culture.",
-    origin: "Madura, East Java",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "19",
@@ -248,8 +264,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Seven variations pattern representing the diversity and richness of Indonesian culture.",
-    origin: "Pekalongan",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "20",
@@ -260,8 +277,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "Royal palace batik featuring exclusive motifs once reserved only for the Sultan and his family.",
-    origin: "Kraton Yogyakarta",
-    material: "Fine silk, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Fine silk",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -274,7 +292,8 @@ export const products: Product[] = [
     description:
       "Classic Indramayu coastal batik with marine-inspired motifs reflecting the fishing community heritage.",
     origin: "Indramayu, West Java",
-    material: "Cotton, natural dye",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "22",
@@ -285,8 +304,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Bouquet flower pattern influenced by Dutch colonial era, representing beauty and romance.",
-    origin: "Pekalongan",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "23",
@@ -297,8 +317,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "Named after the legendary warrior, this pattern symbolizes bravery and heroism.",
-    origin: "Solo, Central Java",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -310,8 +331,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "Featuring wings of Garuda, this pattern was exclusive to Javanese royalty in ancient times.",
-    origin: "Yogyakarta",
-    material: "Silk, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Silk",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -323,8 +345,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Star-shaped geometric pattern influenced by Indian textile traditions.",
-    origin: "Pekalongan",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "26",
@@ -335,8 +358,9 @@ export const products: Product[] = [
     category: "Batik Pesisir",
     description:
       "Banana leaf motif representing prosperity and abundance in Balinese culture.",
-    origin: "Bali",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "27",
@@ -347,8 +371,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "Red garden pattern featuring lush floral designs symbolizing paradise on earth.",
-    origin: "Surabaya, East Java",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "28",
@@ -359,8 +384,9 @@ export const products: Product[] = [
     category: "Batik Tulis",
     description:
       "The largest parang pattern, reserved for royalty. Represents immense power and leadership.",
-    origin: "Surakarta",
-    material: "Silk, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Silk",
+    dyeingProcess: "Natural Dye",
     isPremium: true,
   },
   {
@@ -372,8 +398,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Patchwork-style batik believed to have healing properties and bring good fortune.",
-    origin: "Yogyakarta",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "30",
@@ -384,8 +411,9 @@ export const products: Product[] = [
     category: "Batik Pesisir",
     description:
       "Fragrant garden pattern from Cirebon featuring Chinese-influenced botanical designs.",
-    origin: "Cirebon, West Java",
-    material: "Cotton, natural dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
   },
   {
     id: "31",
@@ -396,8 +424,9 @@ export const products: Product[] = [
     category: "Batik Cap",
     description:
       "Curling vine pattern symbolizing continuous growth and life energy.",
-    origin: "Pekalongan",
-    material: "Cotton, synthetic dye",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Synthetic Dye",
   },
 ];
 

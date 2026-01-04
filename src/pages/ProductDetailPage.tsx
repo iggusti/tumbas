@@ -181,9 +181,11 @@ const ProductDetailPage = () => {
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground text-sm">Origin</span>
+            <span className="text-muted-foreground text-sm">
+              Dyeing Process
+            </span>
             <span className="text-foreground text-sm font-medium">
-              {product.origin}
+              {product.dyeingProcess}
             </span>
           </div>
           <div className="flex justify-between">
@@ -199,7 +201,7 @@ const ProductDetailPage = () => {
           <h3 className="font-display text-lg font-semibold text-foreground mb-4">
             You May Also Like
           </h3>
-          <div className="flex gap-3 overflow-x-auto pb-4 -mx-5 px-5">
+          <div className="flex items-start gap-3 overflow-x-auto pb-4 -mx-5 px-5">
             {products
               .filter(
                 (p) => p.id !== product.id && p.category === product.category
