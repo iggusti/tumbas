@@ -14,6 +14,7 @@ import {
 
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const quickActions = [
   {
@@ -126,16 +127,36 @@ const ProfilePage = () => {
           <div className="space-y-1">
             {generalSettings.map((item) => {
               const Icon = item.icon;
-              return (
-                <button
-                  key={item.label}
-                  className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
-                >
+              const isNotification = item.label === "Notification";
+              
+              const content = (
+                <>
                   <Icon size={18} className="text-muted-foreground" />
                   <span className="flex-1 text-left text-sm text-foreground">
                     {item.label}
                   </span>
                   <ChevronRight size={16} className="text-muted-foreground" />
+                </>
+              );
+              
+              if (isNotification) {
+                return (
+                  <Link
+                    key={item.label}
+                    to="/notifications"
+                    className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
+                  >
+                    {content}
+                  </Link>
+                );
+              }
+              
+              return (
+                <button
+                  key={item.label}
+                  className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
+                >
+                  {content}
                 </button>
               );
             })}

@@ -1,4 +1,4 @@
-import { Grid2X2, List, Menu, ShoppingCart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Grid2X2, List, Menu, ShoppingCart } from "lucide-react";
 
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
@@ -6,6 +6,76 @@ import ProductCard from "@/components/ProductCard";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useState } from "react";
+
+const ITEMS_PER_PAGE = 4;
+
+const PremiumSection = ({ products }: { products: typeof import("@/data/products").products }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+  
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const currentProducts = products.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4 }}
+      className="mb-8"
+    >
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-foreground">Premium</h2>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {currentProducts.map((product, index) => (
+          <motion.div
+            key={product.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 * index }}
+          >
+            <ProductCard {...product} />
+          </motion.div>
+        ))}
+      </div>
+      
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-6">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="p-2 rounded-full bg-secondary text-foreground disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft size={16} />
+          </button>
+          
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`w-8 h-8 rounded-full text-sm font-medium transition-colors ${
+                currentPage === page
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-foreground hover:bg-secondary/80"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="p-2 rounded-full bg-secondary text-foreground disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      )}
+    </motion.section>
+  );
+};
 
 const HomePage = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -177,31 +247,7 @@ const HomePage = () => {
         </motion.section>
 
         {/* Premium Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mb-8"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Premium</h2>
-            <button className="text-sm text-primary font-medium">
-              See all
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {premiumProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
-              >
-                <ProductCard {...product} />
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+        <PremiumSection products={premiumProducts} />
       </main>
 
       <NavLink />
