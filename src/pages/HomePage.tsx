@@ -1,8 +1,6 @@
 import {
   ChevronLeft,
   ChevronRight,
-  Grid2X2,
-  List,
   Menu,
   ShoppingCart,
 } from "lucide-react";
@@ -93,9 +91,7 @@ const PremiumSection = ({
 };
 
 const HomePage = () => {
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-
-  const sellingFast = products.slice(0, 3);
+  const sellingFast = products.slice(0, 4);
   const premiumProducts = products.filter((p) => p.isPremium);
 
   return (
@@ -183,54 +179,27 @@ const HomePage = () => {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-foreground">
-                Selling fast
-              </h2>
-              <div className="flex items-center gap-1">
-                <button className="text-sm size-[28px] rounded bg-primary text-primary-foreground">
-                  12
-                </button>
-                :
-                <button className="text-sm size-[28px] rounded bg-primary text-primary-foreground">
-                  12
-                </button>
-              </div>
-            </div>
+            <h2 className="text-lg font-semibold text-foreground">
+              Selling fast
+            </h2>
             <div className="flex items-center gap-1">
-              <button
-                onClick={() => setViewMode("grid")}
-                className={`p-1.5 rounded ${
-                  viewMode === "grid"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground"
-                }`}
-              >
-                <Grid2X2 size={16} />
-              </button>
-              <button
-                onClick={() => setViewMode("list")}
-                className={`p-1.5 rounded ${
-                  viewMode === "list"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground"
-                }`}
-              >
-                <List size={16} />
-              </button>
+              <span className="text-sm size-[28px] rounded bg-primary text-primary-foreground flex items-center justify-center">
+                12
+              </span>
+              <span className="text-foreground">:</span>
+              <span className="text-sm size-[28px] rounded bg-primary text-primary-foreground flex items-center justify-center">
+                12
+              </span>
             </div>
           </div>
-          <div
-            className={
-              viewMode === "grid" ? "grid grid-cols-3 gap-3" : "space-y-3"
-            }
-          >
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
             {sellingFast.map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index }}
+                className="flex-shrink-0 w-[120px]"
               >
                 <Link to={`/product/${product.id}`}>
                   <div className="bg-card rounded-xl overflow-hidden shadow-soft">
