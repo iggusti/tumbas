@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 const quickActions = [
   {
@@ -69,7 +70,7 @@ const ProfilePage = () => {
         >
           <div className="w-20 h-20 rounded-full bg-muted overflow-hidden mb-3">
             <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80"
+              src={profilePhoto}
               alt="Profile"
               className="w-full h-full object-cover"
             />
