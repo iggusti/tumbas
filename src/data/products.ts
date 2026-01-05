@@ -30,7 +30,7 @@ export const products: Product[] = [
     image: motifKapalSelam,
     category: "Batik Tulis",
     description:
-      "Premium quality fabric that is soft and comfortable. This motif depicts a dancing peacock or 'ngibing', a Javanese word that means dancing performed at traditional ceremonies. The intricate details showcase the masterful craftsmanship of Indramayu artisans who have passed down their skills through generations.",
+      "A distinctive coastal motif inspired by maritime life, featuring stylized submarines and ocean elements. This design reflects the strong relationship between Indramayu society and the sea, expressed through detailed hand-drawn lines and refined craftsmanship.",
     origin: "Indramayu, West Java",
     material: "Premium cotton",
     dyeingProcess: "Natural Dye",
@@ -44,7 +44,7 @@ export const products: Product[] = [
     image: motifGodong,
     category: "Batik Pesisir",
     description:
-      "Cloud pattern from Cirebon representing calmness and patience.",
+      "A simple yet meaningful leaf motif symbolizing growth, balance, and harmony with nature. Commonly found in Indramayu batik, this pattern represents everyday life and the closeness of the community to their natural surroundings.",
     origin: "Indramayu, West Java",
     material: "Cotton",
     dyeingProcess: "Natural Dye",
@@ -57,7 +57,7 @@ export const products: Product[] = [
     image: motifMerakNgibing,
     category: "Batik Cap",
     description:
-      "The kawung pattern represents the fruit of the aren palm, symbolizing hope and purity.",
+      "Depicting a dancing peacock, this motif symbolizes beauty, confidence, and joy. The dynamic movement of the peacock reflects cultural celebrations and artistic expression rooted in Indramayu traditions.",
     origin: "Indramayu, West Java",
     material: "Cotton",
     dyeingProcess: "Synthetic Dye",
@@ -71,7 +71,7 @@ export const products: Product[] = [
     image: motifManggaKapalIwakEtong,
     category: "Batik Tulis",
     description:
-      "One of the oldest batik patterns, Parang Rusak was once exclusive to Javanese royalty. The diagonal lines represent waves crashing against rocks, symbolizing power and perseverance.",
+      "A rich narrative motif combining mangoes, boats, and local fish, illustrating the agricultural and maritime identity of Indramayu. This design tells a story of livelihood, abundance, and coastal culture.",
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
@@ -85,7 +85,7 @@ export const products: Product[] = [
     image: motifGodongCilik,
     category: "Batik Tulis",
     description:
-      "Truntum means to bloom again. This pattern symbolizes eternal love and guidance, traditionally worn by parents during wedding ceremonies.",
+      "A delicate small-leaf pattern that conveys simplicity, refinement, and continuity. The repetitive leaf elements create a subtle elegance suitable for both formal and everyday wear.",
     origin: "Indramayu, West Java",
     material: "Premium cotton",
     dyeingProcess: "Natural Dye",
@@ -98,7 +98,7 @@ export const products: Product[] = [
     image: motifTapakSikilMerak,
     category: "Batik Tulis",
     description:
-      "Traditional brown-toned batik representing wisdom and maturity.",
+      "Inspired by peacock footprints, this motif represents grace, direction, and life’s journey. Earthy tones enhance its traditional character while maintaining a strong visual identity.",
     origin: "Indramayu, West Java",
     material: "Cotton",
     dyeingProcess: "Natural Soga Dye",
@@ -111,7 +111,7 @@ export const products: Product[] = [
     image: motifGodongKembangTrompet,
     category: "Batik Tulis",
     description:
-      "Sidomukti represents prosperity and noble status. Often worn during important ceremonies.",
+      "A harmonious combination of leaves and trumpet flowers symbolizing hope, vitality, and prosperity. This motif highlights the richness of coastal flora interpreted through expressive batik lines.",
     origin: "Indramayu, West Java",
     material: "Silk blend",
     dyeingProcess: "Natural Dye",
@@ -124,7 +124,7 @@ export const products: Product[] = [
     image: motifMerakMabur,
     category: "Batik Tulis",
     description:
-      "The diagonal rain pattern symbolizes fertility and continuous blessings from above.",
+      "Featuring flying peacocks, this motif symbolizes freedom, ambition, and elegance. The composition reflects movement and openness, inspired by the vast coastal landscape of Indramayu.",
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
@@ -138,7 +138,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1543874835-ad7d64196a07?w=400&q=80",
     category: "Batik Tulis",
     description:
-      "Featuring the mythical Garuda bird, symbolizing strength, courage, and noble values.",
+      "A floral motif representing beauty, freshness, and new beginnings. Flowers are a recurring element in Indramayu batik, symbolizing harmony between humans and nature.",
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
@@ -151,7 +151,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1761516659524-ca3a6a33f105?w=400&q=80",
     category: "Batik Tulis",
     description:
-      "Double ikat batik from Bali, believed to protect the wearer from evil and illness. Extremely rare and valuable.",
+      "An expressive motif inspired by local plants, reflecting resilience and adaptability. Its bold yet simple forms make it a distinctive representation of coastal batik aesthetics.",
     origin: "Indramayu, West Java",
     material: "Hand-spun cotton",
     dyeingProcess: "Natural Dye",
@@ -164,7 +164,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1761515315429-152455a20f21?w=400&q=80",
     category: "Batik Tulis",
     description:
-      "Royal palace batik featuring exclusive motifs once reserved only for the Sultan and his family.",
+      "A circular pattern symbolizing unity, continuity, and balance. The rounded shapes create a calm visual rhythm rooted in traditional Indramayu design philosophy.",
     origin: "Indramayu, West Java",
     material: "Fine silk",
     dyeingProcess: "Natural Dye",
@@ -177,7 +177,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1762111067760-1f0fc2aa2866?w=400&q=80",
     category: "Batik Tulis",
     description:
-      "Named after the legendary warrior, this pattern symbolizes bravery and heroism.",
+      "A strong and bold motif inspired by folklore and heroic values. The pattern conveys courage, determination, and inner strength through firm and expressive lines.",
     origin: "Indramayu, West Java",
     material: "Cotton",
     dyeingProcess: "Natural Dye",
@@ -190,7 +190,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1761517099251-bc0e5963bf30?w=400&q=80",
     category: "Batik Tulis",
     description:
-      "Featuring wings of Garuda, this pattern was exclusive to Javanese royalty in ancient times.",
+      "A dynamic wing-inspired motif symbolizing protection, power, and dignity. Its symmetrical form reflects authority while maintaining a graceful coastal batik character.",
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
@@ -203,7 +203,7 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1762111067847-4d5bb602354e?w=400&q=80",
     category: "Batik Tulis",
     description:
-      "The largest parang pattern, reserved for royalty. Represents immense power and leadership.",
+      "A dotted pattern that represents diversity, simplicity, and balance. The repeated dots create a timeless design commonly found in everyday Indramayu batik.",
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
