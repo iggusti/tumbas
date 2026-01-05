@@ -25,8 +25,8 @@ export const products: Product[] = [
   {
     id: "1",
     name: "Motif Kapal Selam",
-    price: 300000,
-    originalPrice: 450000,
+    price: 2300000,
+    originalPrice: 2450000,
     image: motifKapalSelam,
     category: "Batik Tulis",
     description:
@@ -34,12 +34,26 @@ export const products: Product[] = [
     origin: "Indramayu, West Java",
     material: "Premium cotton",
     dyeingProcess: "Natural Dye",
+    isPremium: true,
   },
   {
     id: "2",
+    name: "Motif Godong",
+    price: 850000,
+    originalPrice: 950000,
+    image: motifGodong,
+    category: "Batik Pesisir",
+    description:
+      "Cloud pattern from Cirebon representing calmness and patience.",
+    origin: "Indramayu, West Java",
+    material: "Cotton",
+    dyeingProcess: "Natural Dye",
+  },
+  {
+    id: "3",
     name: "Motif Merak Ngibing",
-    price: 450000,
-    originalPrice: 600000,
+    price: 1450000,
+    originalPrice: 1600000,
     image: motifMerakNgibing,
     category: "Batik Cap",
     description:
@@ -47,9 +61,10 @@ export const products: Product[] = [
     origin: "Indramayu, West Java",
     material: "Cotton",
     dyeingProcess: "Synthetic Dye",
+    isPremium: true,
   },
   {
-    id: "3",
+    id: "4",
     name: "Motif Mangga, Kapal, Iwak Etong",
     price: 1200000,
     originalPrice: 1500000,
@@ -63,20 +78,21 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "4",
-    name: "Motif Godong",
-    price: 650000,
-    originalPrice: 800000,
-    image: motifGodong,
-    category: "Batik Pesisir",
+    id: "5",
+    name: "Motif Godong Cilik",
+    price: 1890000,
+    originalPrice: 2000000,
+    image: motifGodongCilik,
+    category: "Batik Tulis",
     description:
-      "Cloud pattern from Cirebon representing calmness and patience.",
+      "Truntum means to bloom again. This pattern symbolizes eternal love and guidance, traditionally worn by parents during wedding ceremonies.",
     origin: "Indramayu, West Java",
-    material: "Cotton",
+    material: "Premium cotton",
     dyeingProcess: "Natural Dye",
+    isPremium: true,
   },
   {
-    id: "5",
+    id: "6",
     name: "Motif Tapak Sikil Merak",
     price: 1100000,
     image: motifTapakSikilMerak,
@@ -90,18 +106,6 @@ export const products: Product[] = [
   },
   {
     id: "7",
-    name: "Motif Godong Cilik",
-    price: 890000,
-    image: motifGodongCilik,
-    category: "Batik Tulis",
-    description:
-      "Truntum means to bloom again. This pattern symbolizes eternal love and guidance, traditionally worn by parents during wedding ceremonies.",
-    origin: "Indramayu, West Java",
-    material: "Premium cotton",
-    dyeingProcess: "Natural Dye",
-  },
-  {
-    id: "8",
     name: "Motif Godong Kembang Trompet",
     price: 1750000,
     image: motifGodongKembangTrompet,
@@ -114,7 +118,7 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "11",
+    id: "8",
     name: "Motif Merak Mabur",
     price: 1950000,
     image: motifMerakMabur,
@@ -127,9 +131,9 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "14",
+    id: "9",
     name: "Motif Kembang",
-    price: 1350000,
+    price: 350000,
     image:
       "https://images.unsplash.com/photo-1543874835-ad7d64196a07?w=400&q=80",
     category: "Batik Tulis",
@@ -138,12 +142,11 @@ export const products: Product[] = [
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
-    isPremium: true,
   },
   {
-    id: "16",
+    id: "10",
     name: "Motif Clengkuwek",
-    price: 2500000,
+    price: 500000,
     image:
       "https://images.unsplash.com/photo-1761516659524-ca3a6a33f105?w=400&q=80",
     category: "Batik Tulis",
@@ -152,12 +155,11 @@ export const products: Product[] = [
     origin: "Indramayu, West Java",
     material: "Hand-spun cotton",
     dyeingProcess: "Natural Dye",
-    isPremium: true,
   },
   {
-    id: "20",
+    id: "11",
     name: "Motif Bunder",
-    price: 1650000,
+    price: 650000,
     image:
       "https://images.unsplash.com/photo-1761515315429-152455a20f21?w=400&q=80",
     category: "Batik Tulis",
@@ -166,10 +168,9 @@ export const products: Product[] = [
     origin: "Indramayu, West Java",
     material: "Fine silk",
     dyeingProcess: "Natural Dye",
-    isPremium: true,
   },
   {
-    id: "23",
+    id: "12",
     name: "Motif Pringgondani",
     price: 870000,
     image:
@@ -182,7 +183,7 @@ export const products: Product[] = [
     dyeingProcess: "Natural Dye",
   },
   {
-    id: "24",
+    id: "13",
     name: "Motif Sawat",
     price: 980000,
     image:
@@ -195,9 +196,9 @@ export const products: Product[] = [
     dyeingProcess: "Natural Dye",
   },
   {
-    id: "28",
+    id: "14",
     name: "Motif Totol Totol",
-    price: 1450000,
+    price: 450000,
     image:
       "https://images.unsplash.com/photo-1762111067847-4d5bb602354e?w=400&q=80",
     category: "Batik Tulis",
@@ -206,7 +207,6 @@ export const products: Product[] = [
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
-    isPremium: true,
   },
 ];
 
