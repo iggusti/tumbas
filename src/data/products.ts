@@ -42,7 +42,7 @@ export const products: Product[] = [
     price: 850000,
     originalPrice: 950000,
     image: motifGodong,
-    category: "Batik Pesisir",
+    category: "Batik Cap",
     description:
       "A simple yet meaningful leaf motif symbolizing growth, balance, and harmony with nature. Commonly found in Indramayu batik, this pattern represents everyday life and the closeness of the community to their natural surroundings.",
     origin: "Indramayu, West Java",
@@ -55,7 +55,7 @@ export const products: Product[] = [
     price: 1450000,
     originalPrice: 1600000,
     image: motifMerakNgibing,
-    category: "Batik Cap",
+    category: "Batik Tulis",
     description:
       "Depicting a dancing peacock, this motif symbolizes beauty, confidence, and joy. The dynamic movement of the peacock reflects cultural celebrations and artistic expression rooted in Indramayu traditions.",
     origin: "Indramayu, West Java",
@@ -69,7 +69,7 @@ export const products: Product[] = [
     price: 1200000,
     originalPrice: 1500000,
     image: motifManggaKapalIwakEtong,
-    category: "Batik Tulis",
+    category: "Batik Cap",
     description:
       "A rich narrative motif combining mangoes, boats, and local fish, illustrating the agricultural and maritime identity of Indramayu. This design tells a story of livelihood, abundance, and coastal culture.",
     origin: "Indramayu, West Java",
@@ -96,7 +96,7 @@ export const products: Product[] = [
     name: "Motif Tapak Sikil Merak",
     price: 1100000,
     image: motifTapakSikilMerak,
-    category: "Batik Tulis",
+    category: "Batik Cap",
     description:
       "Inspired by peacock footprints, this motif represents grace, direction, and life’s journey. Earthy tones enhance its traditional character while maintaining a strong visual identity.",
     origin: "Indramayu, West Java",
@@ -122,7 +122,7 @@ export const products: Product[] = [
     name: "Motif Merak Mabur",
     price: 1950000,
     image: motifMerakMabur,
-    category: "Batik Tulis",
+    category: "Batik Cap",
     description:
       "Featuring flying peacocks, this motif symbolizes freedom, ambition, and elegance. The composition reflects movement and openness, inspired by the vast coastal landscape of Indramayu.",
     origin: "Indramayu, West Java",
@@ -149,7 +149,7 @@ export const products: Product[] = [
     price: 500000,
     image:
       "https://images.unsplash.com/photo-1761516659524-ca3a6a33f105?w=400&q=80",
-    category: "Batik Tulis",
+    category: "Batik Cap",
     description:
       "An expressive motif inspired by local plants, reflecting resilience and adaptability. Its bold yet simple forms make it a distinctive representation of coastal batik aesthetics.",
     origin: "Indramayu, West Java",
@@ -175,7 +175,7 @@ export const products: Product[] = [
     price: 870000,
     image:
       "https://images.unsplash.com/photo-1762111067760-1f0fc2aa2866?w=400&q=80",
-    category: "Batik Tulis",
+    category: "Batik Cap",
     description:
       "A strong and bold motif inspired by folklore and heroic values. The pattern conveys courage, determination, and inner strength through firm and expressive lines.",
     origin: "Indramayu, West Java",
@@ -201,7 +201,7 @@ export const products: Product[] = [
     price: 450000,
     image:
       "https://images.unsplash.com/photo-1762111067847-4d5bb602354e?w=400&q=80",
-    category: "Batik Tulis",
+    category: "Batik Cap",
     description:
       "A dotted pattern that represents diversity, simplicity, and balance. The repeated dots create a timeless design commonly found in everyday Indramayu batik.",
     origin: "Indramayu, West Java",
