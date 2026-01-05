@@ -210,7 +210,7 @@ const HomePage = () => {
                       </h3>
                       <div className="mt-1">
                         <span className="text-[10px] text-muted-foreground line-through">
-                          Rp {(product.price * 1.2).toLocaleString("id-ID")}
+                          Rp {product.originalPrice.toLocaleString("id-ID")}
                         </span>
                         <br />
                         <span className="text-xs font-semibold text-primary block">

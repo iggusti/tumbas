@@ -39,6 +39,7 @@ export const products: Product[] = [
     id: "2",
     name: "Motif Merak Ngibing",
     price: 450000,
+    originalPrice: 600000,
     image: motifMerakNgibing,
     category: "Batik Cap",
     description:
@@ -51,6 +52,7 @@ export const products: Product[] = [
     id: "3",
     name: "Motif Mangga, Kapal, Iwak Etong",
     price: 1200000,
+    originalPrice: 1500000,
     image: motifManggaKapalIwakEtong,
     category: "Batik Tulis",
     description:
@@ -64,6 +66,7 @@ export const products: Product[] = [
     id: "4",
     name: "Motif Godong",
     price: 650000,
+    originalPrice: 800000,
     image: motifGodong,
     category: "Batik Pesisir",
     description:
@@ -84,19 +87,6 @@ export const products: Product[] = [
     material: "Cotton",
     dyeingProcess: "Natural Soga Dye",
     isPremium: true,
-  },
-  {
-    id: "6",
-    name: "Motif Sekar Jagad",
-    price: 520000,
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Flower of the universe pattern symbolizing beauty and diversity.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
   },
   {
     id: "7",
@@ -124,32 +114,6 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "9",
-    name: "Motif Lasem Kembang",
-    price: 680000,
-    image:
-      "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&q=80",
-    category: "Batik Pesisir",
-    description:
-      "Lasem batik combines Javanese and Chinese influences, featuring vibrant red colors and floral motifs.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Natural Dye",
-  },
-  {
-    id: "10",
-    name: "Motif Ceplok Geometris",
-    price: 420000,
-    image:
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Geometric patterns representing order, harmony, and balance in the universe.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
-  },
-  {
     id: "11",
     name: "Motif Merak Mabur",
     price: 1950000,
@@ -163,37 +127,11 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "12",
-    name: "Motif Wahyu Tumurun",
-    price: 850000,
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80",
-    category: "Batik Tulis",
-    description:
-      "Divine revelation pattern, representing blessings descending from heaven. Reserved for noble ceremonies.",
-    origin: "Indramayu, West Java",
-    material: "Silk",
-    dyeingProcess: "Natural Dye",
-  },
-  {
-    id: "13",
-    name: "Motif Pekalongan Bunga",
-    price: 380000,
-    image:
-      "https://images.unsplash.com/photo-1559613431-7a0f4e1d4a59?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Bright floral patterns typical of coastal Pekalongan style, influenced by various cultures.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
-  },
-  {
     id: "14",
-    name: "Motif Garuda Mukti",
+    name: "Motif Kembang",
     price: 1350000,
     image:
-      "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=400&q=80",
+      "https://images.unsplash.com/photo-1543874835-ad7d64196a07?w=400&q=80",
     category: "Batik Tulis",
     description:
       "Featuring the mythical Garuda bird, symbolizing strength, courage, and noble values.",
@@ -203,24 +141,11 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "15",
-    name: "Motif Semen Rante",
-    price: 720000,
-    image:
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80",
-    category: "Batik Tulis",
-    description:
-      "The chain pattern represents eternal bonds and unbreakable connections between people.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Natural Dye",
-  },
-  {
     id: "16",
-    name: "Motif Gringsing",
+    name: "Motif Clengkuwek",
     price: 2500000,
     image:
-      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=80",
+      "https://images.unsplash.com/photo-1761516659524-ca3a6a33f105?w=400&q=80",
     category: "Batik Tulis",
     description:
       "Double ikat batik from Bali, believed to protect the wearer from evil and illness. Extremely rare and valuable.",
@@ -230,50 +155,11 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "17",
-    name: "Motif Nitik Cakar",
-    price: 560000,
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Intricate dotted pattern resembling woven fabric, inspired by Indian patola cloth.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
-  },
-  {
-    id: "18",
-    name: "Motif Madura Kuning",
-    price: 620000,
-    image:
-      "https://images.unsplash.com/photo-1506634572416-48cdfe530110?w=400&q=80",
-    category: "Batik Pesisir",
-    description:
-      "Bold yellow and red colors characteristic of Madura island batik, reflecting the vibrant local culture.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Natural Dye",
-  },
-  {
-    id: "19",
-    name: "Motif Tujuh Rupa",
-    price: 480000,
-    image:
-      "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Seven variations pattern representing the diversity and richness of Indonesian culture.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
-  },
-  {
     id: "20",
-    name: "Motif Kraton Jogja",
+    name: "Motif Bunder",
     price: 1650000,
     image:
-      "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&q=80",
+      "https://images.unsplash.com/photo-1761515315429-152455a20f21?w=400&q=80",
     category: "Batik Tulis",
     description:
       "Royal palace batik featuring exclusive motifs once reserved only for the Sultan and his family.",
@@ -283,104 +169,37 @@ export const products: Product[] = [
     isPremium: true,
   },
   {
-    id: "21",
-    name: "Motif Indramayu Dermayon",
-    price: 550000,
-    image:
-      "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=400&q=80",
-    category: "Batik Pesisir",
-    description:
-      "Classic Indramayu coastal batik with marine-inspired motifs reflecting the fishing community heritage.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Natural Dye",
-  },
-  {
-    id: "22",
-    name: "Motif Buketan",
-    price: 440000,
-    image:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Bouquet flower pattern influenced by Dutch colonial era, representing beauty and romance.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
-  },
-  {
     id: "23",
     name: "Motif Pringgondani",
     price: 870000,
     image:
-      "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&q=80",
+      "https://images.unsplash.com/photo-1762111067760-1f0fc2aa2866?w=400&q=80",
     category: "Batik Tulis",
     description:
       "Named after the legendary warrior, this pattern symbolizes bravery and heroism.",
     origin: "Indramayu, West Java",
     material: "Cotton",
     dyeingProcess: "Natural Dye",
-    isPremium: true,
   },
   {
     id: "24",
     name: "Motif Sawat",
     price: 980000,
     image:
-      "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&q=80",
+      "https://images.unsplash.com/photo-1761517099251-bc0e5963bf30?w=400&q=80",
     category: "Batik Tulis",
     description:
       "Featuring wings of Garuda, this pattern was exclusive to Javanese royalty in ancient times.",
     origin: "Indramayu, West Java",
     material: "Silk",
     dyeingProcess: "Natural Dye",
-    isPremium: true,
-  },
-  {
-    id: "25",
-    name: "Motif Jlamprang",
-    price: 390000,
-    image:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Star-shaped geometric pattern influenced by Indian textile traditions.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
-  },
-  {
-    id: "26",
-    name: "Motif Pisang Bali",
-    price: 510000,
-    image:
-      "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&q=80",
-    category: "Batik Pesisir",
-    description:
-      "Banana leaf motif representing prosperity and abundance in Balinese culture.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Natural Dye",
-  },
-  {
-    id: "27",
-    name: "Motif Kebon Rojo",
-    price: 670000,
-    image:
-      "https://images.unsplash.com/photo-1501196354995-cbb51c65adc4?w=400&q=80",
-    category: "Batik Tulis",
-    description:
-      "Red garden pattern featuring lush floral designs symbolizing paradise on earth.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Natural Dye",
   },
   {
     id: "28",
-    name: "Motif Parang Barong",
+    name: "Motif Totol Totol",
     price: 1450000,
     image:
-      "https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=400&q=80",
+      "https://images.unsplash.com/photo-1762111067847-4d5bb602354e?w=400&q=80",
     category: "Batik Tulis",
     description:
       "The largest parang pattern, reserved for royalty. Represents immense power and leadership.",
@@ -388,45 +207,6 @@ export const products: Product[] = [
     material: "Silk",
     dyeingProcess: "Natural Dye",
     isPremium: true,
-  },
-  {
-    id: "29",
-    name: "Motif Tambal",
-    price: 530000,
-    image:
-      "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Patchwork-style batik believed to have healing properties and bring good fortune.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
-  },
-  {
-    id: "30",
-    name: "Motif Cirebon Taman Arum",
-    price: 760000,
-    image:
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80",
-    category: "Batik Pesisir",
-    description:
-      "Fragrant garden pattern from Cirebon featuring Chinese-influenced botanical designs.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Natural Dye",
-  },
-  {
-    id: "31",
-    name: "Motif Lung Lungan",
-    price: 410000,
-    image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80",
-    category: "Batik Cap",
-    description:
-      "Curling vine pattern symbolizing continuous growth and life energy.",
-    origin: "Indramayu, West Java",
-    material: "Cotton",
-    dyeingProcess: "Synthetic Dye",
   },
 ];
 
