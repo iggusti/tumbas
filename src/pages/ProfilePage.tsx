@@ -129,6 +129,7 @@ const ProfilePage = () => {
             {generalSettings.map((item) => {
               const Icon = item.icon;
               const isNotification = item.label === "Notification";
+              const isMyAddress = item.label === "My Address";
 
               const content = (
                 <>
@@ -145,6 +146,18 @@ const ProfilePage = () => {
                   <Link
                     key={item.label}
                     to="/notification"
+                    className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
+                  >
+                    {content}
+                  </Link>
+                );
+              }
+
+              if (isMyAddress) {
+                return (
+                  <Link
+                    key={item.label}
+                    to="/my-address"
                     className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
                   >
                     {content}

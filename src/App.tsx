@@ -7,6 +7,7 @@ import AboutShopPage from "./pages/AboutShopPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import HomePage from "./pages/HomePage";
+import MyAddressPage from "./pages/MyAddressPage";
 import NotFound from "./pages/NotFound";
 import NotificationPage from "./pages/NotificationPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/my-address" element={<MyAddressPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
