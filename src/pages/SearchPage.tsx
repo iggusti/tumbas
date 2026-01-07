@@ -1,10 +1,11 @@
-import { Search, ShoppingCart, X } from "lucide-react";
-import { useState, useMemo } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Eraser, Search, ShoppingCart, X } from "lucide-react";
+import { useMemo, useState } from "react";
+
+import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
-import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
-import { Input } from "@/components/ui/input";
 
 const categories = [
   { id: 1, name: "Man" },
@@ -16,9 +17,9 @@ const categories = [
 const SearchPage = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const popularProducts = products.slice(0, 4);
-  
+
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const query = searchQuery.toLowerCase();
@@ -49,7 +50,10 @@ const SearchPage = () => {
                 exit={{ opacity: 0, width: 0 }}
                 className="flex-1 relative"
               >
-                <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Search
+                  size={18}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
                 <Input
                   type="text"
                   placeholder="Search products..."
@@ -63,7 +67,7 @@ const SearchPage = () => {
                     onClick={() => setSearchQuery("")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                   >
-                    <X size={18} />
+                    <Eraser size={18} />
                   </button>
                 )}
               </motion.div>
@@ -80,7 +84,9 @@ const SearchPage = () => {
             )}
           </AnimatePresence>
           <button
-            onClick={() => isSearching ? handleClearSearch() : setIsSearching(true)}
+            onClick={() =>
+              isSearching ? handleClearSearch() : setIsSearching(true)
+            }
             className="p-2 text-muted-foreground shrink-0"
           >
             {isSearching ? <X size={20} /> : <Search size={20} />}
@@ -131,7 +137,10 @@ const SearchPage = () => {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <Search size={48} className="mx-auto text-muted-foreground/50 mb-4" />
+                  <Search
+                    size={48}
+                    className="mx-auto text-muted-foreground/50 mb-4"
+                  />
                   <p className="text-muted-foreground">No products found</p>
                 </div>
               )}
