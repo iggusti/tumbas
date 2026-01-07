@@ -7,9 +7,11 @@ import AboutShopPage from "./pages/AboutShopPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import HomePage from "./pages/HomePage";
+import MyAccountPage from "./pages/MyAccountPage";
 import MyAddressPage from "./pages/MyAddressPage";
 import NotFound from "./pages/NotFound";
 import NotificationPage from "./pages/NotificationPage";
+import PaymentMethodsPage from "./pages/PaymentMethodsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
@@ -50,7 +52,9 @@ const App = () => {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/my-account" element={<MyAccountPage />} />
               <Route path="/my-address" element={<MyAddressPage />} />
+              <Route path="/payment-methods" element={<PaymentMethodsPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

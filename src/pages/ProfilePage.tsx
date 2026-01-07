@@ -128,8 +128,6 @@ const ProfilePage = () => {
           <div className="space-y-1">
             {generalSettings.map((item) => {
               const Icon = item.icon;
-              const isNotification = item.label === "Notification";
-              const isMyAddress = item.label === "My Address";
 
               const content = (
                 <>
@@ -141,23 +139,20 @@ const ProfilePage = () => {
                 </>
               );
 
-              if (isNotification) {
-                return (
-                  <Link
-                    key={item.label}
-                    to="/notification"
-                    className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
-                  >
-                    {content}
-                  </Link>
-                );
-              }
+              const routes: Record<string, string> = {
+                "My account": "/my-account",
+                "Payment methods": "/payment-methods",
+                "My Address": "/my-address",
+                "Notification": "/notification",
+              };
 
-              if (isMyAddress) {
+              const route = routes[item.label];
+
+              if (route) {
                 return (
                   <Link
                     key={item.label}
-                    to="/my-address"
+                    to={route}
                     className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
                   >
                     {content}
