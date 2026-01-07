@@ -22,16 +22,19 @@ const quickActions = [
     icon: ClipboardList,
     label: "My Orders",
     color: "bg-amber-100 text-amber-600",
+    route: "/my-orders",
   },
   {
     icon: Percent,
     label: "Promo Code",
     color: "bg-orange-100 text-orange-600",
+    route: "/promo-code",
   },
   {
     icon: Headphones,
     label: "Customer Service",
     color: "bg-primary/10 text-primary",
+    route: "/customer-service",
   },
 ];
 
@@ -94,23 +97,24 @@ const ProfilePage = () => {
             const Icon = action.icon;
 
             return (
-              <motion.button
-                key={action.label}
-                whileHover={{ y: -4, scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="flex flex-col items-center gap-2"
-              >
-                <div
-                  className={`w-20 h-20 rounded-sm ${action.color}
-                      flex flex-col items-center justify-start p-3 gap-1 transition-shadow hover:shadow-md`}
+              <Link key={action.label} to={action.route}>
+                <motion.div
+                  whileHover={{ y: -4, scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="flex flex-col items-center gap-2"
                 >
-                  <Icon size={22} />
-                  <span className="text-xs text-muted-foreground font-medium text-center max-w-[70px] leading-tight">
-                    {action.label}
-                  </span>
-                </div>
-              </motion.button>
+                  <div
+                    className={`w-20 h-20 rounded-sm ${action.color}
+                        flex flex-col items-center justify-start p-3 gap-1 transition-shadow hover:shadow-md`}
+                  >
+                    <Icon size={22} />
+                    <span className="text-xs text-muted-foreground font-medium text-center max-w-[70px] leading-tight">
+                      {action.label}
+                    </span>
+                  </div>
+                </motion.div>
+              </Link>
             );
           })}
         </motion.div>
@@ -219,13 +223,16 @@ const ProfilePage = () => {
           transition={{ delay: 0.4 }}
         >
           <h3 className="font-semibold text-foreground mb-3">Other</h3>
-          <button className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors">
+          <Link
+            to="/contact"
+            className="w-full flex items-center gap-3 py-3 hover:bg-accent/5 transition-colors"
+          >
             <Phone size={18} className="text-muted-foreground" />
             <span className="flex-1 text-left text-sm text-foreground">
               Contact
             </span>
             <ChevronRight size={16} className="text-muted-foreground" />
-          </button>
+          </Link>
         </motion.section>
       </main>
 
