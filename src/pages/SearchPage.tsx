@@ -5,9 +5,9 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
-import { products } from "@/data/products";
+import { products, ProductTag } from "@/data/products";
 
-const categories = [
+const categories: { id: number; name: ProductTag }[] = [
   { id: 1, name: "Man" },
   { id: 2, name: "Woman" },
   { id: 3, name: "Batik Fabric" },
@@ -17,6 +17,7 @@ const categories = [
 const SearchPage = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<ProductTag | null>(null);
 
   const popularProducts = products.slice(0, 4);
 
@@ -30,6 +31,19 @@ const SearchPage = () => {
         product.description.toLowerCase().includes(query)
     );
   }, [searchQuery]);
+
+  const categoryResults = useMemo(() => {
+    if (!selectedCategory) return [];
+    return products.filter((product) => product.tags.includes(selectedCategory));
+  }, [selectedCategory]);
+
+  const handleCategoryClick = (categoryName: ProductTag) => {
+    setSelectedCategory(categoryName);
+  };
+
+  const handleBackToCategories = () => {
+    setSelectedCategory(null);
+  };
 
   const handleClearSearch = () => {
     setSearchQuery("");
@@ -152,60 +166,121 @@ const SearchPage = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              {/* Categories */}
-              <div className="px-4 mt-4">
-                <h2 className="text-sm font-semibold text-foreground mb-3">
-                  Categories
-                </h2>
-                <div className="space-y-2">
-                  {categories.map((category, index) => (
-                    <motion.button
-                      key={category.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="w-full p-4 bg-card rounded-xl text-left text-foreground font-medium hover:bg-accent/10 transition-colors border border-border/50"
+              {selectedCategory ? (
+                /* Category Results */
+                <div className="px-4 mt-4">
+                  <div className="flex items-center gap-2 mb-4">
+                    <button
+                      onClick={handleBackToCategories}
+                      className="p-2 -ml-2 text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      {category.name}
-                    </motion.button>
-                  ))}
+                      <X size={20} />
+                    </button>
+                    <h2 className="text-lg font-semibold text-foreground">
+                      {selectedCategory}
+                    </h2>
+                    <span className="text-sm text-muted-foreground">
+                      ({categoryResults.length} products)
+                    </span>
+                  </div>
+                  {categoryResults.length > 0 ? (
+                    <div className="grid grid-cols-2 gap-3">
+                      {categoryResults.map((product, index) => (
+                        <motion.div
+                          key={product.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                        >
+                          <Link to={`/product/${product.id}`}>
+                            <div className="aspect-square rounded-xl overflow-hidden bg-muted">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="mt-2">
+                              <p className="text-sm font-medium text-foreground line-clamp-1">
+                                {product.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                Rp {product.price.toLocaleString("id-ID")}
+                              </p>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <Search
+                        size={48}
+                        className="mx-auto text-muted-foreground/50 mb-4"
+                      />
+                      <p className="text-muted-foreground">No products in this category</p>
+                    </div>
+                  )}
                 </div>
-              </div>
+              ) : (
+                <>
+                  {/* Categories */}
+                  <div className="px-4 mt-4">
+                    <h2 className="text-sm font-semibold text-foreground mb-3">
+                      Categories
+                    </h2>
+                    <div className="space-y-2">
+                      {categories.map((category, index) => (
+                        <motion.button
+                          key={category.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          onClick={() => handleCategoryClick(category.name)}
+                          className="w-full p-4 bg-card rounded-xl text-left text-foreground font-medium hover:bg-accent/10 transition-colors border border-border/50"
+                        >
+                          {category.name}
+                        </motion.button>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Popular Products */}
-              <div className="px-4 mt-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-foreground">
-                    Popular Product
-                  </h2>
-                  <Link to="/cart" className="p-2 text-muted-foreground">
-                    <ShoppingCart
-                      size={22}
-                      className="text-foreground transform scale-x-[-1]"
-                    />
-                  </Link>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  {popularProducts.map((product, index) => (
-                    <motion.div
-                      key={product.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 + index * 0.1 }}
-                    >
-                      <Link to={`/product/${product.id}`}>
-                        <div className="aspect-square rounded-xl overflow-hidden bg-muted">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
+                  {/* Popular Products */}
+                  <div className="px-4 mt-8">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-lg font-semibold text-foreground">
+                        Popular Product
+                      </h2>
+                      <Link to="/cart" className="p-2 text-muted-foreground">
+                        <ShoppingCart
+                          size={22}
+                          className="text-foreground transform scale-x-[-1]"
+                        />
                       </Link>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {popularProducts.map((product, index) => (
+                        <motion.div
+                          key={product.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 + index * 0.1 }}
+                        >
+                          <Link to={`/product/${product.id}`}>
+                            <div className="aspect-square rounded-xl overflow-hidden bg-muted">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
