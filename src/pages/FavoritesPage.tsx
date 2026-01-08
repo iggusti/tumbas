@@ -1,9 +1,10 @@
 import { ArrowLeft, Heart } from "lucide-react";
+
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import NavLink from "@/components/NavLink";
-import { useFavorites } from "@/contexts/FavoritesContext";
+import { motion } from "framer-motion";
 import { products } from "@/data/products";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 const FavoritesPage = () => {
   const { favorites, toggleFavorite } = useFavorites();

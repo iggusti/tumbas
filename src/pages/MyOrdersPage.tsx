@@ -1,4 +1,5 @@
-import { ChevronLeft, Package, Truck, CheckCircle, Clock } from "lucide-react";
+import { CheckCircle, ChevronLeft, Clock, Package, Truck } from "lucide-react";
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
@@ -62,7 +63,8 @@ const MyOrdersPage = () => {
         {/* Orders List */}
         <div className="px-4 mt-4 space-y-4">
           {orders.map((order, index) => {
-            const status = statusConfig[order.status as keyof typeof statusConfig];
+            const status =
+              statusConfig[order.status as keyof typeof statusConfig];
             const StatusIcon = status.icon;
 
             return (
@@ -79,7 +81,9 @@ const MyOrdersPage = () => {
                     <p className="text-sm font-semibold text-foreground">
                       {order.id}
                     </p>
-                    <p className="text-xs text-muted-foreground">{order.date}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {order.date}
+                    </p>
                   </div>
                   <div
                     className={`flex items-center gap-1.5 px-3 py-1 rounded-full ${status.color}`}

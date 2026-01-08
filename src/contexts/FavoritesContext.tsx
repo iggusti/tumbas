@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 interface FavoritesContextType {
   favorites: string[];
@@ -8,7 +8,9 @@ interface FavoritesContextType {
   isFavorite: (productId: string) => boolean;
 }
 
-const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
+const FavoritesContext = createContext<FavoritesContextType | undefined>(
+  undefined
+);
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   // Default 3 favorites

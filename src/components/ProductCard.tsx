@@ -1,6 +1,6 @@
+import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 
 interface ProductCardProps {
@@ -11,7 +11,13 @@ interface ProductCardProps {
   category?: string;
 }
 
-const ProductCard = ({ id, name, price, image, category }: ProductCardProps) => {
+const ProductCard = ({
+  id,
+  name,
+  price,
+  image,
+  category,
+}: ProductCardProps) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const isLiked = isFavorite(id);
 
@@ -48,7 +54,9 @@ const ProductCard = ({ id, name, price, image, category }: ProductCardProps) => 
             <Heart
               size={18}
               className={`transition-colors ${
-                isLiked ? "fill-destructive text-destructive" : "text-muted-foreground"
+                isLiked
+                  ? "fill-destructive text-destructive"
+                  : "text-muted-foreground"
               }`}
             />
           </button>

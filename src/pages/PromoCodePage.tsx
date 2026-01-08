@@ -1,4 +1,5 @@
-import { ChevronLeft, Percent, Copy, Check, Gift } from "lucide-react";
+import { Check, ChevronLeft, Copy, Gift, Percent } from "lucide-react";
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";

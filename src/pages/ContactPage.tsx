@@ -1,13 +1,14 @@
 import {
   ChevronLeft,
-  MapPin,
-  Phone,
-  Mail,
   Clock,
-  Instagram,
   Facebook,
   Globe,
+  Instagram,
+  Mail,
+  MapPin,
+  Phone,
 } from "lucide-react";
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -103,7 +104,9 @@ const ContactPage = () => {
                     <Icon size={18} className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">{item.label}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.label}
+                    </p>
                     <p className="text-sm font-medium text-foreground mt-0.5">
                       {item.value}
                     </p>
@@ -159,7 +162,10 @@ const ContactPage = () => {
           </h3>
           <div className="aspect-video bg-muted rounded-xl flex items-center justify-center border border-border/50">
             <div className="text-center">
-              <MapPin size={32} className="mx-auto text-muted-foreground/50 mb-2" />
+              <MapPin
+                size={32}
+                className="mx-auto text-muted-foreground/50 mb-2"
+              />
               <p className="text-sm text-muted-foreground">Map Preview</p>
             </div>
           </div>

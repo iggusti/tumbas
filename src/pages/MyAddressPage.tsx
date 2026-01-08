@@ -1,7 +1,8 @@
-import { ArrowLeft, Check, ChevronRight, Home, MapPin, Plus } from "lucide-react";
+import { ArrowLeft, Check, Home, MapPin, Plus } from "lucide-react";
+
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import NavLink from "@/components/NavLink";
+import { motion } from "framer-motion";
 
 interface Address {
   id: string;
@@ -79,9 +80,7 @@ const MyAddressPage = () => {
                 <div className="flex items-start gap-3">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      address.isDefault
-                        ? "bg-primary/10"
-                        : "bg-muted"
+                      address.isDefault ? "bg-primary/10" : "bg-muted"
                     }`}
                   >
                     <Icon

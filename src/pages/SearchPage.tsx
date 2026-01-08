@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Eraser, Search, ShoppingCart, X } from "lucide-react";
+import { ProductTag, products } from "@/data/products";
 import { useMemo, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
-import { products, ProductTag } from "@/data/products";
 
 const categories: { id: number; name: ProductTag }[] = [
   { id: 1, name: "Man" },
@@ -17,7 +17,9 @@ const categories: { id: number; name: ProductTag }[] = [
 const SearchPage = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<ProductTag | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<ProductTag | null>(
+    null
+  );
 
   const popularProducts = products.slice(0, 4);
 
@@ -34,7 +36,9 @@ const SearchPage = () => {
 
   const categoryResults = useMemo(() => {
     if (!selectedCategory) return [];
-    return products.filter((product) => product.tags.includes(selectedCategory));
+    return products.filter((product) =>
+      product.tags.includes(selectedCategory)
+    );
   }, [selectedCategory]);
 
   const handleCategoryClick = (categoryName: ProductTag) => {
@@ -218,7 +222,9 @@ const SearchPage = () => {
                         size={48}
                         className="mx-auto text-muted-foreground/50 mb-4"
                       />
-                      <p className="text-muted-foreground">No products in this category</p>
+                      <p className="text-muted-foreground">
+                        No products in this category
+                      </p>
                     </div>
                   )}
                 </div>

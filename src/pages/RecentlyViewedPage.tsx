@@ -1,9 +1,10 @@
 import { ArrowLeft, Clock4 } from "lucide-react";
+
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import NavLink from "@/components/NavLink";
-import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
+import { motion } from "framer-motion";
 import { products } from "@/data/products";
+import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 
 const RecentlyViewedPage = () => {
   const { recentlyViewed } = useRecentlyViewed();

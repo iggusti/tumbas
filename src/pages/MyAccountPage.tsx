@@ -1,9 +1,17 @@
-import { ArrowLeft, Camera, ChevronRight, Mail, Phone, User } from "lucide-react";
+import {
+  ArrowLeft,
+  Camera,
+  ChevronRight,
+  Mail,
+  Phone,
+  User,
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import profilePhoto from "@/assets/profile-photo.jpg";
-import { Button } from "@/components/ui/button";
 
 const MyAccountPage = () => {
   const accountDetails = [
@@ -47,7 +55,9 @@ const MyAccountPage = () => {
               <Camera size={16} className="text-primary-foreground" />
             </button>
           </div>
-          <p className="text-sm text-muted-foreground mt-3">Tap untuk ganti foto</p>
+          <p className="text-sm text-muted-foreground mt-3">
+            Tap untuk ganti foto
+          </p>
         </motion.div>
 
         {/* Account Details */}
@@ -65,15 +75,21 @@ const MyAccountPage = () => {
                 <button
                   key={item.label}
                   className={`w-full flex items-center gap-3 p-4 hover:bg-accent/5 transition-colors ${
-                    index !== accountDetails.length - 1 ? "border-b border-border" : ""
+                    index !== accountDetails.length - 1
+                      ? "border-b border-border"
+                      : ""
                   }`}
                 >
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                     <Icon size={18} className="text-primary" />
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-xs text-muted-foreground">{item.label}</p>
-                    <p className="text-sm font-medium text-foreground">{item.value}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.label}
+                    </p>
+                    <p className="text-sm font-medium text-foreground">
+                      {item.value}
+                    </p>
                   </div>
                   <ChevronRight size={16} className="text-muted-foreground" />
                 </button>
@@ -93,8 +109,12 @@ const MyAccountPage = () => {
           <div className="bg-card rounded-xl border border-border overflow-hidden">
             <button className="w-full flex items-center gap-3 p-4 hover:bg-accent/5 transition-colors">
               <div className="flex-1 text-left">
-                <p className="text-sm font-medium text-foreground">Ubah Password</p>
-                <p className="text-xs text-muted-foreground">Terakhir diubah 3 bulan lalu</p>
+                <p className="text-sm font-medium text-foreground">
+                  Ubah Password
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Terakhir diubah 3 bulan lalu
+                </p>
               </div>
               <ChevronRight size={16} className="text-muted-foreground" />
             </button>

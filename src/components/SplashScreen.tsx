@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface SplashScreenProps {
   isVisible: boolean;
@@ -44,7 +44,7 @@ const SplashScreen = ({ isVisible }: SplashScreenProps) => {
                   strokeLinecap="round"
                 />
               </svg>
-              
+
               {/* Decorative star/flower */}
               <motion.div
                 initial={{ rotate: 0, opacity: 0 }}

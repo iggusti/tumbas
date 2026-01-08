@@ -1,13 +1,19 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 interface RecentlyViewedContextType {
   recentlyViewed: string[];
   addToRecentlyViewed: (productId: string) => void;
 }
 
-const RecentlyViewedContext = createContext<RecentlyViewedContextType | undefined>(undefined);
+const RecentlyViewedContext = createContext<
+  RecentlyViewedContextType | undefined
+>(undefined);
 
-export const RecentlyViewedProvider = ({ children }: { children: ReactNode }) => {
+export const RecentlyViewedProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   // Default 1 recently viewed
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>(["2"]);
 
@@ -35,7 +41,9 @@ export const RecentlyViewedProvider = ({ children }: { children: ReactNode }) =>
 export const useRecentlyViewed = () => {
   const context = useContext(RecentlyViewedContext);
   if (!context) {
-    throw new Error("useRecentlyViewed must be used within a RecentlyViewedProvider");
+    throw new Error(
+      "useRecentlyViewed must be used within a RecentlyViewedProvider"
+    );
   }
   return context;
 };

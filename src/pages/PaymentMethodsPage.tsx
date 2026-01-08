@@ -1,8 +1,9 @@
 import { ArrowLeft, CreditCard, Plus, Trash2, Wallet } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 
 const PaymentMethodsPage = () => {
   const paymentMethods = [
@@ -54,7 +55,9 @@ const PaymentMethodsPage = () => {
           className="mb-6"
         >
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-foreground">Kartu Debit/Kredit</h3>
+            <h3 className="font-semibold text-foreground">
+              Kartu Debit/Kredit
+            </h3>
             <button className="text-primary text-sm font-medium flex items-center gap-1">
               <Plus size={16} />
               Tambah
@@ -77,15 +80,21 @@ const PaymentMethodsPage = () => {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-foreground">{method.name}</p>
+                        <p className="text-sm font-medium text-foreground">
+                          {method.name}
+                        </p>
                         {method.isDefault && (
                           <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">
                             Default
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-muted-foreground">{method.number}</p>
-                      <p className="text-xs text-muted-foreground">Exp: {method.expiry}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {method.number}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Exp: {method.expiry}
+                      </p>
                     </div>
                   </div>
                   <button className="p-2 hover:bg-destructive/10 rounded-full transition-colors">
@@ -117,9 +126,13 @@ const PaymentMethodsPage = () => {
                   <Wallet size={18} className="text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">{wallet.name}</p>
+                  <p className="text-sm font-medium text-foreground">
+                    {wallet.name}
+                  </p>
                   {wallet.connected && wallet.balance && (
-                    <p className="text-xs text-muted-foreground">Saldo: {wallet.balance}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Saldo: {wallet.balance}
+                    </p>
                   )}
                 </div>
                 {wallet.connected ? (

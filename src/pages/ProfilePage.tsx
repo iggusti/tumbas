@@ -147,7 +147,7 @@ const ProfilePage = () => {
                 "My account": "/my-account",
                 "Payment methods": "/payment-methods",
                 "My Address": "/my-address",
-                "Notification": "/notification",
+                Notification: "/notification",
               };
 
               const route = routes[item.label];
