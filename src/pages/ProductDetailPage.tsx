@@ -1,19 +1,31 @@
 import { ArrowLeft, Heart, Plus, Share2, ShoppingCart } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { toast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
-import { useState } from "react";
+import { useFavorites } from "@/contexts/FavoritesContext";
+import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const [isLiked, setIsLiked] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const { addToRecentlyViewed } = useRecentlyViewed();
   const [showMoreDetail, setShowMoreDetail] = useState(false);
+
+  const isLiked = id ? isFavorite(id) : false;
+
+  // Add to recently viewed when page loads
+  useEffect(() => {
+    if (id) {
+      addToRecentlyViewed(id);
+    }
+  }, [id, addToRecentlyViewed]);
 
   const product = products.find((p) => p.id === id);
 
@@ -77,7 +89,7 @@ const ProductDetailPage = () => {
             </Link>
             <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={() => setIsLiked(!isLiked)}
+              onClick={() => id && toggleFavorite(id)}
               className="p-2 rounded-full bg-card/30 backdrop-blur-sm"
             >
               <Heart

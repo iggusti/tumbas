@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
-import { useState } from "react";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 interface ProductCardProps {
   id: string;
@@ -12,7 +12,8 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ id, name, price, image, category }: ProductCardProps) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const isLiked = isFavorite(id);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -40,7 +41,7 @@ const ProductCard = ({ id, name, price, image, category }: ProductCardProps) => 
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsLiked(!isLiked);
+              toggleFavorite(id);
             }}
             className="absolute top-3 right-3 p-2 rounded-full bg-card/80 backdrop-blur-sm transition-colors hover:bg-card"
           >

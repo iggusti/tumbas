@@ -189,28 +189,36 @@ const ProfilePage = () => {
             {activities.map((activity) => {
               const Icon = activity.icon;
 
+              const routes: Record<string, string> = {
+                Favorit: "/favorites",
+                "Terakhir Dilihat": "/recently-viewed",
+              };
+
+              const route = routes[activity.label];
+
               return (
-                <motion.button
-                  key={activity.label}
-                  whileHover={{ y: -4, scale: 1 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className={`flex-1 flex flex-col items-center gap-2 py-4 rounded-xl
-                      ${activity.color}
-                      transition-shadow hover:shadow-md`}
-                >
-                  <Icon
-                    size={20}
-                    className={
-                      activity.label === "Terakhir Dilihat"
-                        ? "text-red-500"
-                        : "text-foreground"
-                    }
-                  />
-                  <span className="text-xs font-medium text-foreground">
-                    {activity.label}
-                  </span>
-                </motion.button>
+                <Link key={activity.label} to={route} className="flex-1">
+                  <motion.div
+                    whileHover={{ y: -4, scale: 1 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className={`flex flex-col items-center gap-2 py-4 rounded-xl
+                        ${activity.color}
+                        transition-shadow hover:shadow-md`}
+                  >
+                    <Icon
+                      size={20}
+                      className={
+                        activity.label === "Terakhir Dilihat"
+                          ? "text-red-500"
+                          : "text-foreground"
+                      }
+                    />
+                    <span className="text-xs font-medium text-foreground">
+                      {activity.label}
+                    </span>
+                  </motion.div>
+                </Link>
               );
             })}
           </div>
