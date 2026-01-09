@@ -88,34 +88,44 @@ const CheckoutPage = () => {
           className="w-full bg-card rounded-xl p-4 mb-4 border border-border/50 text-left"
         >
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <MapPin size={16} className="text-primary" />
-            </div>
             {selectedAddress ? (
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-foreground text-sm">
-                      {selectedAddress.name}
-                    </h3>
+              <>
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  {(() => {
+                    const Icon = getAddressIcon(selectedAddress.icon);
+                    return <Icon size={16} className="text-primary" />;
+                  })()}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">
                       {selectedAddress.label}
                     </span>
                   </div>
-                  <span className="text-xs text-muted-foreground">
-                    {selectedAddress.phone}
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-foreground text-sm">
+                      {selectedAddress.name}
+                    </h3>
+                    <span className="text-xs text-muted-foreground">
+                      {selectedAddress.phone}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-2">
+                    {selectedAddress.address}
+                  </p>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-2">
-                  {selectedAddress.address}
-                </p>
-              </div>
+              </>
             ) : (
-              <div className="flex-1">
-                <p className="text-sm text-muted-foreground">
-                  Pilih alamat pengiriman
-                </p>
-              </div>
+              <>
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin size={16} className="text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground">
+                    Pilih alamat pengiriman
+                  </p>
+                </div>
+              </>
             )}
             <ChevronRight size={18} className="text-muted-foreground" />
           </div>
