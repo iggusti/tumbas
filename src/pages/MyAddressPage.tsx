@@ -1,33 +1,92 @@
-import { ArrowLeft, Check, Home, MapPin, Plus } from "lucide-react";
-
+import { useState } from "react";
+import { ArrowLeft, Check, Plus, X, Home, Briefcase, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
-import { motion } from "framer-motion";
-
-interface Address {
-  id: string;
-  label: string;
-  name: string;
-  phone: string;
-  address: string;
-  isDefault: boolean;
-  icon: typeof Home | typeof MapPin;
-}
-
-const addresses: Address[] = [
-  {
-    id: "1",
-    label: "Rumah",
-    name: "Fatiha Barkah Mubyara",
-    phone: "+62 812-3456-7890",
-    address:
-      "Jln. Siliwangi, Blok Kluwut, No.50, RT 03, RW 01, Desa Haurkolot, Kec. Haurgeulis, Kab. Indramayu",
-    isDefault: true,
-    icon: Home,
-  },
-];
+import { motion, AnimatePresence } from "framer-motion";
+import { useAddress, getAddressIcon, Address } from "@/contexts/AddressContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const MyAddressPage = () => {
+  const {
+    addresses,
+    addAddress,
+    updateAddress,
+    deleteAddress,
+    setDefaultAddress,
+  } = useAddress();
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingAddress, setEditingAddress] = useState<Address | null>(null);
+  const [formData, setFormData] = useState({
+    label: "",
+    name: "",
+    phone: "",
+    address: "",
+    icon: "home" as "home" | "office" | "other",
+    isDefault: false,
+  });
+
+  const resetForm = () => {
+    setFormData({
+      label: "",
+      name: "",
+      phone: "",
+      address: "",
+      icon: "home",
+      isDefault: false,
+    });
+    setEditingAddress(null);
+  };
+
+  const handleOpenForm = (address?: Address) => {
+    if (address) {
+      setEditingAddress(address);
+      setFormData({
+        label: address.label,
+        name: address.name,
+        phone: address.phone,
+        address: address.address,
+        icon: address.icon,
+        isDefault: address.isDefault,
+      });
+    } else {
+      resetForm();
+    }
+    setIsFormOpen(true);
+  };
+
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+    resetForm();
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingAddress) {
+      updateAddress(editingAddress.id, formData);
+      if (formData.isDefault) {
+        setDefaultAddress(editingAddress.id);
+      }
+    } else {
+      addAddress(formData);
+    }
+    handleCloseForm();
+  };
+
+  const iconOptions = [
+    { value: "home", label: "Rumah", Icon: Home },
+    { value: "office", label: "Kantor", Icon: Briefcase },
+    { value: "other", label: "Lainnya", Icon: MapPin },
+  ] as const;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -54,6 +113,7 @@ const MyAddressPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           whileTap={{ scale: 0.98 }}
+          onClick={() => handleOpenForm()}
           className="w-full flex items-center justify-center gap-2 py-4 mb-4 border-2 border-dashed border-primary/30 rounded-xl text-primary hover:bg-primary/5 transition-colors"
         >
           <Plus size={20} />
@@ -63,7 +123,7 @@ const MyAddressPage = () => {
         {/* Address List */}
         <div className="space-y-3">
           {addresses.map((address, index) => {
-            const Icon = address.icon;
+            const Icon = getAddressIcon(address.icon);
 
             return (
               <motion.div
@@ -115,15 +175,24 @@ const MyAddressPage = () => {
 
                     {/* Actions */}
                     <div className="flex items-center gap-4 mt-3 pt-3 border-t border-border/50">
-                      <button className="text-xs text-primary font-medium hover:underline">
+                      <button
+                        onClick={() => handleOpenForm(address)}
+                        className="text-xs text-primary font-medium hover:underline"
+                      >
                         Edit
                       </button>
                       {!address.isDefault && (
                         <>
-                          <button className="text-xs text-muted-foreground hover:text-foreground">
+                          <button
+                            onClick={() => setDefaultAddress(address.id)}
+                            className="text-xs text-muted-foreground hover:text-foreground"
+                          >
                             Jadikan Default
                           </button>
-                          <button className="text-xs text-red-500 hover:underline">
+                          <button
+                            onClick={() => deleteAddress(address.id)}
+                            className="text-xs text-red-500 hover:underline"
+                          >
                             Hapus
                           </button>
                         </>
@@ -141,7 +210,7 @@ const MyAddressPage = () => {
           })}
         </div>
 
-        {/* Empty State (hidden when addresses exist) */}
+        {/* Empty State */}
         {addresses.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -160,6 +229,120 @@ const MyAddressPage = () => {
           </motion.div>
         )}
       </main>
+
+      {/* Address Form Dialog */}
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <DialogContent className="max-w-[90%] rounded-xl">
+          <DialogHeader>
+            <DialogTitle>
+              {editingAddress ? "Edit Alamat" : "Tambah Alamat Baru"}
+            </DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label>Tipe Alamat</Label>
+              <div className="flex gap-2">
+                {iconOptions.map(({ value, label, Icon }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, icon: value })}
+                    className={`flex-1 flex flex-col items-center gap-1 p-3 rounded-lg border transition-colors ${
+                      formData.icon === value
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border text-muted-foreground hover:border-primary/50"
+                    }`}
+                  >
+                    <Icon size={20} />
+                    <span className="text-xs font-medium">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="label">Label Alamat</Label>
+              <Input
+                id="label"
+                placeholder="cth: Rumah, Kantor"
+                value={formData.label}
+                onChange={(e) =>
+                  setFormData({ ...formData, label: e.target.value })
+                }
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="name">Nama Penerima</Label>
+              <Input
+                id="name"
+                placeholder="Nama lengkap penerima"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone">No. Telepon</Label>
+              <Input
+                id="phone"
+                placeholder="+62 xxx-xxxx-xxxx"
+                value={formData.phone}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="address">Alamat Lengkap</Label>
+              <textarea
+                id="address"
+                placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota/Kabupaten"
+                value={formData.address}
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
+                required
+                className="w-full min-h-[80px] px-3 py-2 text-sm rounded-md border border-input bg-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              />
+            </div>
+
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.isDefault}
+                onChange={(e) =>
+                  setFormData({ ...formData, isDefault: e.target.checked })
+                }
+                className="w-4 h-4 rounded border-border text-primary focus:ring-primary"
+              />
+              <span className="text-sm text-foreground">
+                Jadikan alamat default
+              </span>
+            </label>
+
+            <div className="flex gap-3 pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCloseForm}
+                className="flex-1"
+              >
+                Batal
+              </Button>
+              <Button type="submit" className="flex-1">
+                {editingAddress ? "Simpan" : "Tambah"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <NavLink />
     </div>
