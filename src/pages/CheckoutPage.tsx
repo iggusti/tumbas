@@ -1,5 +1,7 @@
+import { useState } from "react";
 import {
   ArrowLeft,
+  Check,
   ChevronRight,
   HandCoins,
   MapPin,
@@ -7,10 +9,16 @@ import {
   Truck,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-
 import NavLink from "@/components/NavLink";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
+import { useAddress, getAddressIcon } from "@/contexts/AddressContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface CheckoutItem {
   productId: string;
@@ -20,6 +28,11 @@ interface CheckoutItem {
 const CheckoutPage = () => {
   const location = useLocation();
   const checkoutItems: CheckoutItem[] = location.state?.items || [];
+  const { addresses, selectedAddressId, selectAddress, getSelectedAddress } =
+    useAddress();
+  const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
+
+  const selectedAddress = getSelectedAddress();
 
   const getProduct = (productId: string) => {
     return products.find((p) => p.id === productId);
@@ -40,6 +53,11 @@ const CheckoutPage = () => {
 
   const shippingCost = 18000;
   const total = subtotal + shippingCost;
+
+  const handleSelectAddress = (id: string) => {
+    selectAddress(id);
+    setIsAddressDialogOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -62,34 +80,46 @@ const CheckoutPage = () => {
 
       <main className="px-4 pb-[11rem]">
         {/* Delivery Address */}
-        <motion.div
+        <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-card rounded-xl p-4 mb-4 border border-border/50"
+          onClick={() => setIsAddressDialogOpen(true)}
+          className="w-full bg-card rounded-xl p-4 mb-4 border border-border/50 text-left"
         >
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
               <MapPin size={16} className="text-primary" />
             </div>
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-foreground text-sm">
-                  Fatiha Barkah Mubyara
-                </h3>
-                <span className="text-xs text-muted-foreground">
-                  +62 812-3456-7890
-                </span>
+            {selectedAddress ? (
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-foreground text-sm">
+                      {selectedAddress.name}
+                    </h3>
+                    <span className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">
+                      {selectedAddress.label}
+                    </span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {selectedAddress.phone}
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-2">
+                  {selectedAddress.address}
+                </p>
               </div>
-              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                Jln. Siliwangi, Blok Kluwut, No.50, RT 03, RW 01, Desa Haurkolot
-                <br />
-                Kec. Haurgeulis, Kab. Indramayu
-              </p>
-            </div>
+            ) : (
+              <div className="flex-1">
+                <p className="text-sm text-muted-foreground">
+                  Pilih alamat pengiriman
+                </p>
+              </div>
+            )}
             <ChevronRight size={18} className="text-muted-foreground" />
           </div>
-        </motion.div>
+        </motion.button>
 
         {/* Products */}
         {checkoutItems.map((item, index) => {
@@ -209,6 +239,81 @@ const CheckoutPage = () => {
           </button>
         </motion.div>
       </main>
+
+      {/* Address Selection Dialog */}
+      <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
+        <DialogContent className="max-w-[90%] rounded-xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Pilih Alamat Pengiriman</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 mt-2">
+            {addresses.map((address) => {
+              const Icon = getAddressIcon(address.icon);
+              const isSelected = address.id === selectedAddressId;
+
+              return (
+                <button
+                  key={address.id}
+                  onClick={() => handleSelectAddress(address.id)}
+                  className={`w-full text-left p-4 rounded-xl border transition-colors ${
+                    isSelected
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-primary/50"
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        isSelected ? "bg-primary/10" : "bg-muted"
+                      }`}
+                    >
+                      <Icon
+                        size={18}
+                        className={
+                          isSelected ? "text-primary" : "text-muted-foreground"
+                        }
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold text-foreground text-sm">
+                          {address.label}
+                        </span>
+                        {address.isDefault && (
+                          <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded-full font-medium">
+                            Default
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="font-medium text-foreground text-sm">
+                        {address.name}
+                      </h3>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {address.phone}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+                        {address.address}
+                      </p>
+                    </div>
+                    {isSelected && (
+                      <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                        <Check size={14} className="text-primary-foreground" />
+                      </div>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+
+            <Link
+              to="/my-address"
+              className="block w-full text-center py-3 text-primary text-sm font-medium hover:underline"
+            >
+              + Tambah Alamat Baru
+            </Link>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Bottom Total & Button */}
       <motion.div
