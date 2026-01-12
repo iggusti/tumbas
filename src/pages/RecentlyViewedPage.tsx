@@ -1,12 +1,13 @@
 import { ArrowLeft, Clock4 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 
 const RecentlyViewedPage = () => {
+  const navigate = useNavigate();
   const { recentlyViewed } = useRecentlyViewed();
 
   const recentProducts = recentlyViewed
@@ -30,7 +31,14 @@ const RecentlyViewedPage = () => {
         className="px-4 py-3"
       >
         <div className="flex items-center gap-3">
-          <Link to="/profile" className="p-1">
+          <Link
+            to=""
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+            className="p-1"
+          >
             <ArrowLeft size={20} className="text-foreground" />
           </Link>
           <h1 className="font-display text-xl font-bold text-foreground">

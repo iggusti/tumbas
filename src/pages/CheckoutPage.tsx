@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAddressIcon, useAddress } from "@/contexts/AddressContext";
 
 import NavLink from "@/components/NavLink";
@@ -28,6 +28,7 @@ interface CheckoutItem {
 
 const CheckoutPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const checkoutItems: CheckoutItem[] = location.state?.items || [];
   const { addresses, selectedAddressId, selectAddress, getSelectedAddress } =
     useAddress();
@@ -68,7 +69,14 @@ const CheckoutPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
-        <Link to="/cart" className="p-1">
+        <Link
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          className="p-1"
+        >
           <ArrowLeft size={20} className="text-foreground" />
         </Link>
         <div>

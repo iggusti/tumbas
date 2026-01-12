@@ -15,18 +15,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useProfile } from "@/contexts/ProfileContext";
 
 const MyAccountPage = () => {
+  const navigate = useNavigate();
   const { profile, updateProfile, updatePhoto } = useProfile();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -136,7 +137,14 @@ const MyAccountPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm px-4 py-3 flex items-center gap-3 border-b border-border"
       >
-        <Link to="/profile" className="p-1">
+        <Link
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          className="p-1"
+        >
           <ArrowLeft size={20} className="text-foreground" />
         </Link>
         <h1 className="font-display text-lg font-semibold text-foreground">

@@ -1,10 +1,13 @@
+import { Link, useNavigate } from "react-router-dom";
+
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import aboutBatikIndramayu from "@/assets/about-batik-indramayu.png";
 import { motion } from "framer-motion";
 
 const AboutBatikIndramayuPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background max-w-[480px] mx-auto relative">
       {/* Hero with Background - Fixed */}
@@ -25,7 +28,14 @@ const AboutBatikIndramayuPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-3 px-4 py-4"
         >
-          <Link to="/" className="p-1">
+          <Link
+            to=""
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+            className="p-1"
+          >
             <ArrowLeft size={20} className="text-white" />
           </Link>
           <span className="text-white/80 text-sm">tumbas.</span>

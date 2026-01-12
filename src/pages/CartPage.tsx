@@ -49,7 +49,14 @@ const CartPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
-        <Link to="/" className="p-1">
+        <Link
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          className="p-1"
+        >
           <ArrowLeft size={20} className="text-foreground" />
         </Link>
         <div>

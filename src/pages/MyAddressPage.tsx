@@ -14,16 +14,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 const MyAddressPage = () => {
+  const navigate = useNavigate();
   const {
     addresses,
     addAddress,
@@ -104,7 +105,14 @@ const MyAddressPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
-        <Link to="/profile" className="p-1">
+        <Link
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          className="p-1"
+        >
           <ArrowLeft size={20} className="text-foreground" />
         </Link>
         <div>
