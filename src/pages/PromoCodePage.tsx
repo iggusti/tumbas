@@ -3,6 +3,7 @@ import { Check, ChevronLeft, Copy, Gift, Percent } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import NavLink from "@/components/NavLink";
 
 const promoCodes = [
   {
@@ -182,6 +183,8 @@ const PromoCodePage = () => {
           </div>
         </div>
       </div>
+
+      <NavLink />
     </div>
   );
 };

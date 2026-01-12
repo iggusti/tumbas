@@ -8,8 +8,10 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ContactPage from "./pages/ContactPage";
 import CustomerServicePage from "./pages/CustomerServicePage";
+import FAQPage from "./pages/FAQPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import HomePage from "./pages/HomePage";
+import HowToOrderPage from "./pages/HowToOrderPage";
 import MyAccountPage from "./pages/MyAccountPage";
 import MyAddressPage from "./pages/MyAddressPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
@@ -20,6 +22,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ProfilePage from "./pages/ProfilePage";
 import PromoCodePage from "./pages/PromoCodePage";
 import RecentlyViewedPage from "./pages/RecentlyViewedPage";
+import ReturnPolicyPage from "./pages/ReturnPolicyPage";
 import SearchPage from "./pages/SearchPage";
 import SplashScreen from "./components/SplashScreen";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -72,6 +75,9 @@ const App = () => {
                       <Route path="/my-orders" element={<MyOrdersPage />} />
                       <Route path="/promo-code" element={<PromoCodePage />} />
                       <Route path="/customer-service" element={<CustomerServicePage />} />
+                      <Route path="/how-to-order" element={<HowToOrderPage />} />
+                      <Route path="/faq" element={<FAQPage />} />
+                      <Route path="/return-policy" element={<ReturnPolicyPage />} />
                       <Route path="/contact" element={<ContactPage />} />
                       <Route path="/favorites" element={<FavoritesPage />} />
                       <Route path="/recently-viewed" element={<RecentlyViewedPage />} />
