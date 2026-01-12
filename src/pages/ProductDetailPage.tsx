@@ -162,7 +162,11 @@ const ProductDetailPage = () => {
               <br />
               {product.name.split(" ").slice(2).join(" ")}
             </h1>
-            <p className="text-xs text-muted-foreground mt-1">limited offer</p>
+            {product.originalPrice && (
+              <p className="mt-1 text-xs text-muted-foreground">
+                Limited offer
+              </p>
+            )}
           </div>
           <div className="text-right">
             {product.originalPrice && (

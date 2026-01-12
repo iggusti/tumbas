@@ -87,7 +87,7 @@ const ProductSection = ({ title, products }: SectionProps) => {
 };
 
 const HomePage = () => {
-  const sellingFast = products.slice(0, 4);
+  const sellingFast = products.filter((p) => p.originalPrice);
   const premiumProducts = products.filter((p) => p.isPremium);
   const classicProducts = products.filter((p) => !p.isPremium);
 

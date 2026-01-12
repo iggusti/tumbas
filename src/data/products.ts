@@ -88,7 +88,6 @@ export const products: Product[] = [
     id: "5",
     name: "Motif Godong Cilik",
     price: 1890000,
-    originalPrice: 2000000,
     image: motifGodongCilik,
     category: "Batik Tulis",
     tags: ["Woman", "Batik Fabric"],
@@ -215,6 +214,7 @@ export const products: Product[] = [
     id: "14",
     name: "Motif Totol Totol",
     price: 450000,
+    originalPrice: 500000,
     image:
       "https://images.unsplash.com/photo-1762111067847-4d5bb602354e?w=400&q=80",
     category: "Batik Cap",

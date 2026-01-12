@@ -9,6 +9,7 @@ interface ProductCardProps {
   price: number;
   image: string;
   category?: string;
+  originalPrice?: number;
 }
 
 const ProductCard = ({
@@ -17,6 +18,7 @@ const ProductCard = ({
   price,
   image,
   category,
+  originalPrice,
 }: ProductCardProps) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const isLiked = isFavorite(id);
@@ -71,9 +73,19 @@ const ProductCard = ({
         <h3 className="font-medium text-sm text-foreground line-clamp-2 mb-1">
           {name}
         </h3>
+        {originalPrice && (
+          <p className="text-[10px] text-muted-foreground line-through">
+            {formatPrice(originalPrice)}
+          </p>
+        )}
         <p className="font-display font-semibold text-primary">
           {formatPrice(price)}
         </p>
+        {originalPrice && (
+          <p className="text-[10px] text-muted-foreground -mt-[5px]">
+            Limited offer
+          </p>
+        )}
       </div>
     </motion.div>
   );
