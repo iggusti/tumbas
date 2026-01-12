@@ -68,7 +68,14 @@ const ProductDetailPage = () => {
       >
         <div className="flex items-center justify-between px-4 py-4">
           <div className="flex items-center gap-3">
-            <Link to="/" className="p-1">
+            <Link
+              to=""
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+              }}
+              className="p-1"
+            >
               <ArrowLeft size={20} className="text-primary-foreground" />
             </Link>
             <span className="text-primary-foreground/80 text-sm font-medium">
