@@ -8,8 +8,8 @@ import {
   Phone,
   ShieldCheck,
 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 
@@ -68,12 +68,21 @@ const contactMethods = [
 ];
 
 const CustomerServicePage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
         {/* Header */}
         <div className="flex items-center gap-3 px-4 pt-4 pb-2">
-          <Link to="/profile" className="p-2 -ml-2">
+          <Link
+            to=""
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+            className="p-2 -ml-2"
+          >
             <ChevronLeft size={24} className="text-foreground" />
           </Link>
           <h1 className="text-xl font-display font-bold text-foreground">
