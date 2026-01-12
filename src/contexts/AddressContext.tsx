@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import { Home, MapPin, Briefcase } from "lucide-react";
 
 export interface Address {
@@ -58,7 +58,7 @@ export const AddressProvider = ({ children }: { children: ReactNode }) => {
       ...address,
       id: Date.now().toString(),
     };
-    
+
     if (address.isDefault) {
       setAddresses((prev) =>
         prev.map((a) => ({ ...a, isDefault: false })).concat(newAddress)

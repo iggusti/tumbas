@@ -1,7 +1,15 @@
-import { ChevronLeft, AlertCircle, CheckCircle, XCircle, Clock, Package } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle,
+  ChevronLeft,
+  Clock,
+  Package,
+  XCircle,
+} from "lucide-react";
+
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import NavLink from "@/components/NavLink";
+import { motion } from "framer-motion";
 
 const acceptedReasons = [
   "Produk cacat atau rusak saat diterima",
@@ -22,7 +30,8 @@ const returnSteps = [
   {
     step: 1,
     title: "Ajukan Pengembalian",
-    description: "Hubungi customer service melalui WhatsApp dan lampirkan foto produk serta bukti pembelian.",
+    description:
+      "Hubungi customer service melalui WhatsApp dan lampirkan foto produk serta bukti pembelian.",
   },
   {
     step: 2,
@@ -32,12 +41,14 @@ const returnSteps = [
   {
     step: 3,
     title: "Kirim Produk",
-    description: "Kirim produk ke alamat kami dengan packing yang aman. Ongkir ditanggung pembeli untuk retur non-cacat.",
+    description:
+      "Kirim produk ke alamat kami dengan packing yang aman. Ongkir ditanggung pembeli untuk retur non-cacat.",
   },
   {
     step: 4,
     title: "Proses Refund",
-    description: "Setelah produk diterima dan diverifikasi, refund akan diproses dalam 3-5 hari kerja.",
+    description:
+      "Setelah produk diterima dan diverifikasi, refund akan diproses dalam 3-5 hari kerja.",
   },
 ];
 
@@ -67,7 +78,9 @@ const ReturnPolicyPage = () => {
               Perhatian
             </h3>
             <p className="text-xs text-amber-700">
-              Pengajuan pengembalian harus dilakukan maksimal 7 hari setelah produk diterima. Pastikan produk dalam kondisi asli dan belum digunakan.
+              Pengajuan pengembalian harus dilakukan maksimal 7 hari setelah
+              produk diterima. Pastikan produk dalam kondisi asli dan belum
+              digunakan.
             </p>
           </div>
         </motion.div>
@@ -104,7 +117,10 @@ const ReturnPolicyPage = () => {
           >
             {acceptedReasons.map((reason, index) => (
               <div key={index} className="flex items-start gap-2">
-                <CheckCircle size={14} className="text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle
+                  size={14}
+                  className="text-green-600 shrink-0 mt-0.5"
+                />
                 <span className="text-sm text-green-800">{reason}</span>
               </div>
             ))}

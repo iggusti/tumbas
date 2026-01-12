@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import NavLink from "@/components/NavLink";
+import { motion } from "framer-motion";
 
 const helpTopics = [
   {

@@ -1,29 +1,30 @@
-import { useState, useRef } from "react";
 import {
   ArrowLeft,
   Camera,
   ChevronRight,
-  Mail,
-  Phone,
-  User,
   Eye,
   EyeOff,
   Lock,
+  Mail,
+  Phone,
+  User,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
-import NavLink from "@/components/NavLink";
-import { motion } from "framer-motion";
-import { useProfile } from "@/contexts/ProfileContext";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useRef, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
+import NavLink from "@/components/NavLink";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { useProfile } from "@/contexts/ProfileContext";
 
 const MyAccountPage = () => {
   const { profile, updateProfile, updatePhoto } = useProfile();
@@ -53,7 +54,12 @@ const MyAccountPage = () => {
   });
 
   const accountDetails = [
-    { icon: User, label: "Nama Lengkap", value: profile.fullName, key: "fullName" },
+    {
+      icon: User,
+      label: "Nama Lengkap",
+      value: profile.fullName,
+      key: "fullName",
+    },
     { icon: Mail, label: "Email", value: profile.email, key: "email" },
     { icon: Phone, label: "No. Telepon", value: profile.phone, key: "phone" },
   ];
@@ -317,7 +323,10 @@ const MyAccountPage = () => {
       </Dialog>
 
       {/* Change Password Dialog */}
-      <Dialog open={isChangePasswordOpen} onOpenChange={setIsChangePasswordOpen}>
+      <Dialog
+        open={isChangePasswordOpen}
+        onOpenChange={setIsChangePasswordOpen}
+      >
         <DialogContent className="max-w-[90%] rounded-xl">
           <DialogHeader>
             <DialogTitle>Ubah Password</DialogTitle>
@@ -385,7 +394,9 @@ const MyAccountPage = () => {
                   {showPasswords.new ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground">Minimal 8 karakter</p>
+              <p className="text-xs text-muted-foreground">
+                Minimal 8 karakter
+              </p>
             </div>
 
             <div className="space-y-2">

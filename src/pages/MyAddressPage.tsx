@@ -1,18 +1,27 @@
-import { useState } from "react";
-import { ArrowLeft, Check, Plus, X, Home, Briefcase, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
-import NavLink from "@/components/NavLink";
-import { motion, AnimatePresence } from "framer-motion";
-import { useAddress, getAddressIcon, Address } from "@/contexts/AddressContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Address, getAddressIcon, useAddress } from "@/contexts/AddressContext";
+import {
+  ArrowLeft,
+  Briefcase,
+  Check,
+  Home,
+  MapPin,
+  Plus,
+  X,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
+import NavLink from "@/components/NavLink";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const MyAddressPage = () => {
   const {

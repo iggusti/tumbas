@@ -1,7 +1,3 @@
-import { ChevronLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import NavLink from "@/components/NavLink";
 import {
   Accordion,
   AccordionContent,
@@ -9,21 +5,29 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router-dom";
+import NavLink from "@/components/NavLink";
+import { motion } from "framer-motion";
+
 const faqCategories = [
   {
     category: "Pemesanan",
     items: [
       {
         question: "Bagaimana cara memesan produk?",
-        answer: "Pilih produk yang diinginkan, tambahkan ke keranjang, lalu lakukan checkout. Anda dapat memilih alamat pengiriman dan metode pembayaran sebelum menyelesaikan pesanan.",
+        answer:
+          "Pilih produk yang diinginkan, tambahkan ke keranjang, lalu lakukan checkout. Anda dapat memilih alamat pengiriman dan metode pembayaran sebelum menyelesaikan pesanan.",
       },
       {
         question: "Apakah bisa memesan dalam jumlah besar (grosir)?",
-        answer: "Ya, kami menerima pesanan dalam jumlah besar. Silakan hubungi customer service kami melalui WhatsApp untuk mendapatkan penawaran khusus.",
+        answer:
+          "Ya, kami menerima pesanan dalam jumlah besar. Silakan hubungi customer service kami melalui WhatsApp untuk mendapatkan penawaran khusus.",
       },
       {
         question: "Apakah bisa custom desain batik?",
-        answer: "Ya, kami menerima pesanan custom untuk desain batik. Silakan hubungi kami untuk konsultasi lebih lanjut mengenai desain, harga, dan waktu pengerjaan.",
+        answer:
+          "Ya, kami menerima pesanan custom untuk desain batik. Silakan hubungi kami untuk konsultasi lebih lanjut mengenai desain, harga, dan waktu pengerjaan.",
       },
     ],
   },
@@ -32,15 +36,18 @@ const faqCategories = [
     items: [
       {
         question: "Metode pembayaran apa saja yang tersedia?",
-        answer: "Kami menerima pembayaran melalui transfer bank, kartu kredit/debit, e-wallet (GoPay, OVO, Dana), dan COD untuk area tertentu.",
+        answer:
+          "Kami menerima pembayaran melalui transfer bank, kartu kredit/debit, e-wallet (GoPay, OVO, Dana), dan COD untuk area tertentu.",
       },
       {
         question: "Apakah pembayaran aman?",
-        answer: "Ya, semua transaksi pembayaran di platform kami dienkripsi dan aman. Kami tidak menyimpan data kartu kredit Anda.",
+        answer:
+          "Ya, semua transaksi pembayaran di platform kami dienkripsi dan aman. Kami tidak menyimpan data kartu kredit Anda.",
       },
       {
         question: "Bagaimana cara menggunakan kode promo?",
-        answer: "Masukkan kode promo pada halaman checkout sebelum melakukan pembayaran. Diskon akan otomatis teraplikasi jika kode valid.",
+        answer:
+          "Masukkan kode promo pada halaman checkout sebelum melakukan pembayaran. Diskon akan otomatis teraplikasi jika kode valid.",
       },
     ],
   },
@@ -49,15 +56,18 @@ const faqCategories = [
     items: [
       {
         question: "Berapa lama waktu pengiriman?",
-        answer: "Waktu pengiriman tergantung lokasi: Pulau Jawa 2-4 hari kerja, luar Pulau Jawa 4-7 hari kerja. Untuk produk custom, waktu pengerjaan ditambah 7-14 hari kerja.",
+        answer:
+          "Waktu pengiriman tergantung lokasi: Pulau Jawa 2-4 hari kerja, luar Pulau Jawa 4-7 hari kerja. Untuk produk custom, waktu pengerjaan ditambah 7-14 hari kerja.",
       },
       {
         question: "Apakah bisa melacak pesanan?",
-        answer: "Ya, Anda dapat melacak status pesanan di halaman 'My Orders'. Nomor resi akan dikirimkan melalui notifikasi setelah pesanan dikirim.",
+        answer:
+          "Ya, Anda dapat melacak status pesanan di halaman 'My Orders'. Nomor resi akan dikirimkan melalui notifikasi setelah pesanan dikirim.",
       },
       {
         question: "Apakah ada gratis ongkir?",
-        answer: "Ya, kami sering mengadakan promo gratis ongkir. Cek halaman promo code untuk penawaran terbaru.",
+        answer:
+          "Ya, kami sering mengadakan promo gratis ongkir. Cek halaman promo code untuk penawaran terbaru.",
       },
     ],
   },
@@ -66,15 +76,18 @@ const faqCategories = [
     items: [
       {
         question: "Apakah semua produk adalah batik asli?",
-        answer: "Ya, semua produk kami adalah batik tulis dan cap asli dari Indramayu yang dibuat oleh pengrajin lokal dengan teknik tradisional.",
+        answer:
+          "Ya, semua produk kami adalah batik tulis dan cap asli dari Indramayu yang dibuat oleh pengrajin lokal dengan teknik tradisional.",
       },
       {
         question: "Bagaimana cara merawat batik?",
-        answer: "Cuci dengan tangan menggunakan deterjen lembut, jangan diperas, keringkan di tempat teduh, dan setrika dengan suhu sedang. Simpan dengan baik agar warna tetap awet.",
+        answer:
+          "Cuci dengan tangan menggunakan deterjen lembut, jangan diperas, keringkan di tempat teduh, dan setrika dengan suhu sedang. Simpan dengan baik agar warna tetap awet.",
       },
       {
         question: "Apakah warna batik bisa luntur?",
-        answer: "Batik tulis asli menggunakan pewarna berkualitas tinggi yang tahan lama. Namun, disarankan untuk mencuci terpisah pada pencucian pertama.",
+        answer:
+          "Batik tulis asli menggunakan pewarna berkualitas tinggi yang tahan lama. Namun, disarankan untuk mencuci terpisah pada pencucian pertama.",
       },
     ],
   },
@@ -104,7 +117,9 @@ const FAQPage = () => {
             Pertanyaan Umum
           </h2>
           <p className="text-sm text-muted-foreground">
-            Temukan jawaban untuk pertanyaan yang sering diajukan. Jika tidak menemukan jawaban yang Anda cari, silakan hubungi customer service kami.
+            Temukan jawaban untuk pertanyaan yang sering diajukan. Jika tidak
+            menemukan jawaban yang Anda cari, silakan hubungi customer service
+            kami.
           </p>
         </motion.div>
 

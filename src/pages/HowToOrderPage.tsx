@@ -1,38 +1,51 @@
-import { ChevronLeft, ShoppingCart, CreditCard, Package, Truck, CheckCircle } from "lucide-react";
+import {
+  CheckCircle,
+  ChevronLeft,
+  CreditCard,
+  Package,
+  ShoppingCart,
+  Truck,
+} from "lucide-react";
+
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import NavLink from "@/components/NavLink";
+import { motion } from "framer-motion";
 
 const steps = [
   {
     id: 1,
     icon: ShoppingCart,
     title: "Pilih Produk",
-    description: "Jelajahi katalog dan pilih produk batik yang Anda inginkan. Klik produk untuk melihat detail dan tambahkan ke keranjang.",
+    description:
+      "Jelajahi katalog dan pilih produk batik yang Anda inginkan. Klik produk untuk melihat detail dan tambahkan ke keranjang.",
   },
   {
     id: 2,
     icon: CreditCard,
     title: "Checkout",
-    description: "Setelah selesai memilih, buka keranjang dan klik 'Checkout'. Pilih alamat pengiriman dan metode pembayaran.",
+    description:
+      "Setelah selesai memilih, buka keranjang dan klik 'Checkout'. Pilih alamat pengiriman dan metode pembayaran.",
   },
   {
     id: 3,
     icon: Package,
     title: "Konfirmasi Pesanan",
-    description: "Periksa kembali pesanan Anda. Pastikan alamat dan produk sudah benar, lalu konfirmasi pesanan.",
+    description:
+      "Periksa kembali pesanan Anda. Pastikan alamat dan produk sudah benar, lalu konfirmasi pesanan.",
   },
   {
     id: 4,
     icon: Truck,
     title: "Pengiriman",
-    description: "Pesanan akan diproses dan dikirim ke alamat Anda. Anda dapat melacak status pengiriman di halaman pesanan.",
+    description:
+      "Pesanan akan diproses dan dikirim ke alamat Anda. Anda dapat melacak status pengiriman di halaman pesanan.",
   },
   {
     id: 5,
     icon: CheckCircle,
     title: "Terima Pesanan",
-    description: "Terima pesanan Anda dan berikan ulasan. Terima kasih sudah berbelanja di Tumbas!",
+    description:
+      "Terima pesanan Anda dan berikan ulasan. Terima kasih sudah berbelanja di Tumbas!",
   },
 ];
 
@@ -60,7 +73,8 @@ const HowToOrderPage = () => {
             Panduan Pemesanan
           </h2>
           <p className="text-sm text-muted-foreground">
-            Ikuti langkah-langkah berikut untuk memesan produk batik favorit Anda dengan mudah dan cepat.
+            Ikuti langkah-langkah berikut untuk memesan produk batik favorit
+            Anda dengan mudah dan cepat.
           </p>
         </motion.div>
 

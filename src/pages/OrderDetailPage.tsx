@@ -1,8 +1,17 @@
-import { CheckCircle, ChevronLeft, Clock, Copy, MapPin, Package, Truck } from "lucide-react";
+import {
+  CheckCircle,
+  ChevronLeft,
+  Clock,
+  Copy,
+  MapPin,
+  Package,
+  Truck,
+} from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
-import NavLink from "@/components/NavLink";
 import { useToast } from "@/hooks/use-toast";
 
 const orders = [
@@ -24,10 +33,22 @@ const orders = [
     trackingNumber: "JNE123456789",
     timeline: [
       { status: "Pesanan dibuat", date: "5 Jan 2024, 10:00", completed: true },
-      { status: "Pembayaran dikonfirmasi", date: "5 Jan 2024, 10:30", completed: true },
-      { status: "Pesanan diproses", date: "5 Jan 2024, 14:00", completed: true },
+      {
+        status: "Pembayaran dikonfirmasi",
+        date: "5 Jan 2024, 10:30",
+        completed: true,
+      },
+      {
+        status: "Pesanan diproses",
+        date: "5 Jan 2024, 14:00",
+        completed: true,
+      },
       { status: "Pesanan dikirim", date: "6 Jan 2024, 09:00", completed: true },
-      { status: "Pesanan diterima", date: "8 Jan 2024, 15:00", completed: true },
+      {
+        status: "Pesanan diterima",
+        date: "8 Jan 2024, 15:00",
+        completed: true,
+      },
     ],
   },
   {
@@ -45,8 +66,16 @@ const orders = [
     trackingNumber: "SCP987654321",
     timeline: [
       { status: "Pesanan dibuat", date: "3 Jan 2024, 08:00", completed: true },
-      { status: "Pembayaran dikonfirmasi", date: "3 Jan 2024, 08:45", completed: true },
-      { status: "Pesanan diproses", date: "3 Jan 2024, 11:00", completed: true },
+      {
+        status: "Pembayaran dikonfirmasi",
+        date: "3 Jan 2024, 08:45",
+        completed: true,
+      },
+      {
+        status: "Pesanan diproses",
+        date: "3 Jan 2024, 11:00",
+        completed: true,
+      },
       { status: "Pesanan dikirim", date: "4 Jan 2024, 10:00", completed: true },
       { status: "Pesanan diterima", date: "", completed: false },
     ],
@@ -69,7 +98,11 @@ const orders = [
     trackingNumber: "-",
     timeline: [
       { status: "Pesanan dibuat", date: "1 Jan 2024, 12:00", completed: true },
-      { status: "Pembayaran dikonfirmasi", date: "1 Jan 2024, 12:00", completed: true },
+      {
+        status: "Pembayaran dikonfirmasi",
+        date: "1 Jan 2024, 12:00",
+        completed: true,
+      },
       { status: "Pesanan diproses", date: "", completed: false },
       { status: "Pesanan dikirim", date: "", completed: false },
       { status: "Pesanan diterima", date: "", completed: false },
@@ -158,10 +191,14 @@ const OrderDetailPage = () => {
         >
           <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-sm font-semibold text-foreground">{order.id}</p>
+              <p className="text-sm font-semibold text-foreground">
+                {order.id}
+              </p>
               <p className="text-xs text-muted-foreground">{order.date}</p>
             </div>
-            <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full ${status.color}`}>
+            <div
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-full ${status.color}`}
+            >
               <StatusIcon size={14} />
               <span className="text-xs font-medium">{status.label}</span>
             </div>
@@ -216,7 +253,9 @@ const OrderDetailPage = () => {
                 <div className="flex-1 -mt-0.5">
                   <p
                     className={`text-sm font-medium ${
-                      step.completed ? "text-foreground" : "text-muted-foreground"
+                      step.completed
+                        ? "text-foreground"
+                        : "text-muted-foreground"
                     }`}
                   >
                     {step.status}
@@ -259,10 +298,14 @@ const OrderDetailPage = () => {
                     {item.product.name}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {item.quantity}x @ Rp {item.product.price.toLocaleString("id-ID")}
+                    {item.quantity}x @ Rp{" "}
+                    {item.product.price.toLocaleString("id-ID")}
                   </p>
                   <p className="text-sm font-semibold text-primary mt-1">
-                    Rp {(item.product.price * item.quantity).toLocaleString("id-ID")}
+                    Rp{" "}
+                    {(item.product.price * item.quantity).toLocaleString(
+                      "id-ID"
+                    )}
                   </p>
                 </div>
               </Link>

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import  { ReactNode, createContext, useContext, useState } from "react";
+
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 export interface UserProfile {

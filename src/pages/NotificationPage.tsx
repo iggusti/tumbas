@@ -1,4 +1,5 @@
-import { Bell, CheckCircle, Clock, Package, Percent, Truck } from "lucide-react";
+import { Bell, CheckCircle, Clock, Percent, Truck } from "lucide-react";
+
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
@@ -9,7 +10,8 @@ const notifications = [
     type: "promo",
     icon: Percent,
     title: "Promo Tahun Baru 2024!",
-    description: "Diskon hingga 20% untuk semua produk Batik Tulis. Gunakan kode TAHUNBARU2024.",
+    description:
+      "Diskon hingga 20% untuk semua produk Batik Tulis. Gunakan kode TAHUNBARU2024.",
     time: "2 jam lalu",
     isNew: true,
     link: "/promo-code",
@@ -19,7 +21,8 @@ const notifications = [
     type: "promo",
     icon: Percent,
     title: "Flash Sale Batik Premium",
-    description: "Hemat hingga 15% untuk koleksi batik premium pilihan. Berlaku hingga akhir bulan!",
+    description:
+      "Hemat hingga 15% untuk koleksi batik premium pilihan. Berlaku hingga akhir bulan!",
     time: "5 jam lalu",
     isNew: true,
     link: "/search",
@@ -29,7 +32,8 @@ const notifications = [
     type: "order",
     icon: Truck,
     title: "Pesanan Sedang Dikirim",
-    description: "Pesanan ORD-2024-002 sedang dalam perjalanan menuju alamatmu. Estimasi tiba 1-2 hari.",
+    description:
+      "Pesanan ORD-2024-002 sedang dalam perjalanan menuju alamatmu. Estimasi tiba 1-2 hari.",
     time: "1 hari lalu",
     isNew: false,
     link: "/order/ORD-2024-002",
@@ -39,7 +43,8 @@ const notifications = [
     type: "order",
     icon: CheckCircle,
     title: "Pesanan Diterima",
-    description: "Pesanan ORD-2024-001 telah sampai di tujuan. Terima kasih telah berbelanja di tumbas.!",
+    description:
+      "Pesanan ORD-2024-001 telah sampai di tujuan. Terima kasih telah berbelanja di tumbas.!",
     time: "2 hari lalu",
     isNew: false,
     link: "/order/ORD-2024-001",
@@ -49,7 +54,8 @@ const notifications = [
     type: "update",
     icon: Bell,
     title: "Koleksi Baru Tersedia!",
-    description: "Jelajahi koleksi batik terbaru dari pengrajin Indramayu. Motif eksklusif menanti!",
+    description:
+      "Jelajahi koleksi batik terbaru dari pengrajin Indramayu. Motif eksklusif menanti!",
     time: "3 hari lalu",
     isNew: false,
     link: "/search",
@@ -59,7 +65,8 @@ const notifications = [
     type: "order",
     icon: Clock,
     title: "Pesanan Sedang Diproses",
-    description: "Pesanan ORD-2024-003 sedang diproses oleh tim kami. Mohon tunggu update selanjutnya.",
+    description:
+      "Pesanan ORD-2024-003 sedang diproses oleh tim kami. Mohon tunggu update selanjutnya.",
     time: "4 hari lalu",
     isNew: false,
     link: "/order/ORD-2024-003",

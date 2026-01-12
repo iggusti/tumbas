@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
   Check,
@@ -8,17 +8,18 @@ import {
   Tag,
   Truck,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import NavLink from "@/components/NavLink";
-import { motion, AnimatePresence } from "framer-motion";
-import { products } from "@/data/products";
-import { useAddress, getAddressIcon } from "@/contexts/AddressContext";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Link, useLocation } from "react-router-dom";
+import { getAddressIcon, useAddress } from "@/contexts/AddressContext";
+
+import NavLink from "@/components/NavLink";
+import { products } from "@/data/products";
+import { useState } from "react";
 
 interface CheckoutItem {
   productId: string;

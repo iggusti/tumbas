@@ -1,9 +1,9 @@
 import { CheckCircle, ChevronLeft, Clock, Package, Truck } from "lucide-react";
-
 import { Link, useNavigate } from "react-router-dom";
+
+import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
-import NavLink from "@/components/NavLink";
 
 const orders = [
   {
@@ -128,7 +128,11 @@ const MyOrdersPage = () => {
                   </div>
                   <div className="flex items-center justify-between mt-4">
                     <p className="text-xs text-muted-foreground">
-                      {order.items.reduce((sum, item) => sum + item.quantity, 0)} item
+                      {order.items.reduce(
+                        (sum, item) => sum + item.quantity,
+                        0
+                      )}{" "}
+                      item
                     </p>
                     <p className="text-sm font-semibold text-foreground">
                       Rp {order.total.toLocaleString("id-ID")}

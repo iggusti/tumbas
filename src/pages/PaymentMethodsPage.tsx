@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { ArrowLeft, CreditCard, Plus, Trash2, Wallet, X } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
-import NavLink from "@/components/NavLink";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, CreditCard, Plus, Trash2, Wallet } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
+import NavLink from "@/components/NavLink";
+import { useState } from "react";
 
 interface PaymentCard {
   id: number;
