@@ -11,6 +11,7 @@ import {
 
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import NavLink from "@/components/NavLink";
 
 const helpTopics = [
   {
@@ -18,18 +19,21 @@ const helpTopics = [
     icon: FileText,
     title: "Cara Pemesanan",
     description: "Panduan lengkap untuk memesan produk",
+    route: "/how-to-order",
   },
   {
     id: 2,
     icon: HelpCircle,
     title: "FAQ",
     description: "Pertanyaan yang sering diajukan",
+    route: "/faq",
   },
   {
     id: 3,
     icon: ShieldCheck,
     title: "Kebijakan Pengembalian",
     description: "Syarat dan ketentuan retur produk",
+    route: "/return-policy",
   },
 ];
 
@@ -41,6 +45,7 @@ const contactMethods = [
     subtitle: "Chat dengan CS kami",
     action: "Mulai Chat",
     color: "bg-green-100 text-green-600",
+    href: "https://wa.me/6281234567890?text=Halo,%20saya%20butuh%20bantuan",
   },
   {
     id: 2,
@@ -49,6 +54,7 @@ const contactMethods = [
     subtitle: "+62 812-3456-7890",
     action: "Hubungi",
     color: "bg-blue-100 text-blue-600",
+    href: "tel:+6281234567890",
   },
   {
     id: 3,
@@ -57,6 +63,7 @@ const contactMethods = [
     subtitle: "cs@tumbas.id",
     action: "Kirim Email",
     color: "bg-purple-100 text-purple-600",
+    href: "mailto:cs@tumbas.id",
   },
 ];
 
@@ -97,8 +104,11 @@ const CustomerServicePage = () => {
             {contactMethods.map((method, index) => {
               const Icon = method.icon;
               return (
-                <motion.button
+                <motion.a
                   key={method.id}
+                  href={method.href}
+                  target={method.id === 1 ? "_blank" : undefined}
+                  rel={method.id === 1 ? "noopener noreferrer" : undefined}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -120,7 +130,7 @@ const CustomerServicePage = () => {
                   <span className="text-xs font-medium text-primary">
                     {method.action}
                   </span>
-                </motion.button>
+                </motion.a>
               );
             })}
           </div>
@@ -135,24 +145,25 @@ const CustomerServicePage = () => {
             {helpTopics.map((topic, index) => {
               const Icon = topic.icon;
               return (
-                <motion.button
-                  key={topic.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="w-full flex items-center gap-3 p-4 bg-card rounded-xl border border-border/50 hover:bg-accent/5 transition-colors"
-                >
-                  <Icon size={20} className="text-muted-foreground" />
-                  <div className="flex-1 text-left">
-                    <p className="text-sm font-medium text-foreground">
-                      {topic.title}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {topic.description}
-                    </p>
-                  </div>
-                  <ChevronRight size={18} className="text-muted-foreground" />
-                </motion.button>
+                <Link key={topic.id} to={topic.route}>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    className="w-full flex items-center gap-3 p-4 bg-card rounded-xl border border-border/50 hover:bg-accent/5 transition-colors"
+                  >
+                    <Icon size={20} className="text-muted-foreground" />
+                    <div className="flex-1 text-left">
+                      <p className="text-sm font-medium text-foreground">
+                        {topic.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {topic.description}
+                      </p>
+                    </div>
+                    <ChevronRight size={18} className="text-muted-foreground" />
+                  </motion.div>
+                </Link>
               );
             })}
           </div>
@@ -174,6 +185,8 @@ const CustomerServicePage = () => {
           </div>
         </motion.div>
       </div>
+
+      <NavLink />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { CheckCircle, ChevronLeft, Clock, Package, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
+import NavLink from "@/components/NavLink";
 
 const orders = [
   {
@@ -145,6 +146,8 @@ const MyOrdersPage = () => {
           </div>
         )}
       </div>
+
+      <NavLink />
     </div>
   );
 };
