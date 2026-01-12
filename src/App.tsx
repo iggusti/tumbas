@@ -15,6 +15,7 @@ import HowToOrderPage from "./pages/HowToOrderPage";
 import MyAccountPage from "./pages/MyAccountPage";
 import MyAddressPage from "./pages/MyAddressPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
+import OrderDetailPage from "./pages/OrderDetailPage";
 import NotFound from "./pages/NotFound";
 import NotificationPage from "./pages/NotificationPage";
 import PaymentMethodsPage from "./pages/PaymentMethodsPage";
@@ -73,6 +74,7 @@ const App = () => {
                       <Route path="/my-address" element={<MyAddressPage />} />
                       <Route path="/payment-methods" element={<PaymentMethodsPage />} />
                       <Route path="/my-orders" element={<MyOrdersPage />} />
+                      <Route path="/order/:orderId" element={<OrderDetailPage />} />
                       <Route path="/promo-code" element={<PromoCodePage />} />
                       <Route path="/customer-service" element={<CustomerServicePage />} />
                       <Route path="/how-to-order" element={<HowToOrderPage />} />
