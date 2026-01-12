@@ -1,6 +1,6 @@
 import { CheckCircle, ChevronLeft, Clock, Package, Truck } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import NavLink from "@/components/NavLink";
@@ -10,44 +10,52 @@ const orders = [
     id: "ORD-2024-001",
     date: "5 Jan 2024",
     status: "delivered",
-    items: [products[0], products[1]],
+    items: [
+      { product: products[0], quantity: 1 },
+      { product: products[1], quantity: 1 },
+    ],
     total: products[0].price + products[1].price,
   },
   {
     id: "ORD-2024-002",
     date: "3 Jan 2024",
     status: "shipping",
-    items: [products[2]],
-    total: products[2].price,
+    items: [{ product: products[2], quantity: 2 }],
+    total: products[2].price * 2,
   },
   {
     id: "ORD-2024-003",
     date: "1 Jan 2024",
     status: "processing",
-    items: [products[3], products[4]],
+    items: [
+      { product: products[3], quantity: 1 },
+      { product: products[4], quantity: 1 },
+    ],
     total: products[3].price + products[4].price,
   },
 ];
 
 const statusConfig = {
   processing: {
-    label: "Processing",
+    label: "Diproses",
     icon: Clock,
     color: "text-amber-600 bg-amber-100",
   },
   shipping: {
-    label: "Shipping",
+    label: "Dikirim",
     icon: Truck,
     color: "text-blue-600 bg-blue-100",
   },
   delivered: {
-    label: "Delivered",
+    label: "Diterima",
     icon: CheckCircle,
     color: "text-green-600 bg-green-100",
   },
 };
 
 const MyOrdersPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
@@ -57,7 +65,7 @@ const MyOrdersPage = () => {
             <ChevronLeft size={24} className="text-foreground" />
           </Link>
           <h1 className="text-xl font-display font-bold text-foreground">
-            My Orders
+            Pesanan Saya
           </h1>
         </div>
 
@@ -94,20 +102,21 @@ const MyOrdersPage = () => {
                   </div>
                 </div>
 
-                {/* Order Items */}
+                {/* Order Items - Clickable */}
                 <div className="p-4">
                   <div className="flex gap-3">
-                    {order.items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="w-16 h-16 rounded-lg overflow-hidden bg-muted"
+                    {order.items.slice(0, 2).map((item, itemIndex) => (
+                      <Link
+                        key={itemIndex}
+                        to={`/product/${item.product.id}`}
+                        className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0 hover:ring-2 hover:ring-primary/50 transition-all"
                       >
                         <img
-                          src={item.image}
-                          alt={item.name}
+                          src={item.product.image}
+                          alt={item.product.name}
                           className="w-full h-full object-cover"
                         />
-                      </div>
+                      </Link>
                     ))}
                     {order.items.length > 2 && (
                       <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center">
@@ -119,7 +128,7 @@ const MyOrdersPage = () => {
                   </div>
                   <div className="flex items-center justify-between mt-4">
                     <p className="text-xs text-muted-foreground">
-                      {order.items.length} item(s)
+                      {order.items.reduce((sum, item) => sum + item.quantity, 0)} item
                     </p>
                     <p className="text-sm font-semibold text-foreground">
                       Rp {order.total.toLocaleString("id-ID")}
@@ -129,8 +138,11 @@ const MyOrdersPage = () => {
 
                 {/* Order Action */}
                 <div className="px-4 pb-4">
-                  <button className="w-full py-2.5 bg-primary/10 text-primary rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors">
-                    View Details
+                  <button
+                    onClick={() => navigate(`/order/${order.id}`)}
+                    className="w-full py-2.5 bg-primary/10 text-primary rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors"
+                  >
+                    Lihat Detail
                   </button>
                 </div>
               </motion.div>
@@ -142,7 +154,7 @@ const MyOrdersPage = () => {
         {orders.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20">
             <Package size={64} className="text-muted-foreground/50 mb-4" />
-            <p className="text-muted-foreground">No orders yet</p>
+            <p className="text-muted-foreground">Belum ada pesanan</p>
           </div>
         )}
       </div>
