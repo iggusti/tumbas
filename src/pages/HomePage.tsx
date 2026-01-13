@@ -97,7 +97,7 @@ const HomePage = () => {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-4 py-3"
+        className="p-4"
       >
         <div className="flex items-center justify-between">
           <h1 className="font-display text-2xl font-bold text-[#9d3530]">

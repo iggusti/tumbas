@@ -58,7 +58,7 @@ const SearchPage = () => {
     <div className="mobile-container">
       <div className="page-content pb-24">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 pt-4 pb-2 gap-3">
+        <div className="flex items-center justify-between p-4 gap-3">
           <AnimatePresence mode="wait">
             {isSearching ? (
               <motion.div
@@ -90,25 +90,26 @@ const SearchPage = () => {
                 )}
               </motion.div>
             ) : (
-              <motion.h1
-                key="title"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-2xl font-display font-bold text-foreground"
+              <motion.header
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
               >
-                Search
-              </motion.h1>
+                <h1 className="font-display text-2xl font-bold text-foreground">
+                  Search
+                </h1>
+              </motion.header>
             )}
           </AnimatePresence>
-          <button
+          <motion.button
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             onClick={() =>
               isSearching ? handleClearSearch() : setIsSearching(true)
             }
             className="p-2 text-muted-foreground shrink-0"
           >
             {isSearching ? <X size={20} /> : <Search size={20} />}
-          </button>
+          </motion.button>
         </div>
 
         {/* Search Results */}

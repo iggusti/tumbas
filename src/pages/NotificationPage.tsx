@@ -78,11 +78,15 @@ const NotificationPage = () => {
     <div className="mobile-container">
       <div className="page-content pb-24">
         {/* Header */}
-        <div className="px-4 pt-4 pb-2">
-          <h1 className="text-2xl font-display font-bold text-foreground">
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4"
+        >
+          <h1 className="font-display text-2xl font-bold text-foreground">
             Notifikasi
           </h1>
-        </div>
+        </motion.header>
 
         {/* Status Section */}
         <div className="px-4 mt-4">
