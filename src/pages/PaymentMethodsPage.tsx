@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, CreditCard, Plus, Trash2, Wallet } from "lucide-react";
+import { CreditCardFormData, creditCardSchema } from "@/lib/validations";
 import {
   Dialog,
   DialogContent,
@@ -7,15 +8,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { creditCardSchema, CreditCardFormData } from "@/lib/validations";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface PaymentCard {
   id: number;
@@ -101,7 +101,9 @@ const PaymentMethodsPage = () => {
   };
 
   const handleCardHolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue("cardHolder", e.target.value.toUpperCase(), { shouldValidate: true });
+    setValue("cardHolder", e.target.value.toUpperCase(), {
+      shouldValidate: true,
+    });
   };
 
   const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,7 +151,7 @@ const PaymentMethodsPage = () => {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm px-4 py-3 flex items-center gap-3 border-b border-border"
+        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
         <Link
           to=""
@@ -161,9 +163,12 @@ const PaymentMethodsPage = () => {
         >
           <ArrowLeft size={20} className="text-foreground" />
         </Link>
-        <h1 className="font-display text-lg font-semibold text-foreground">
-          Payment Methods
-        </h1>
+        <div>
+          <span className="text-muted-foreground text-sm">tumbas.</span>
+          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
+            Payment Methods
+          </h1>
+        </div>
       </motion.header>
 
       <main className="px-4 py-6 pb-24">
@@ -293,7 +298,10 @@ const PaymentMethodsPage = () => {
       </main>
 
       {/* Add Card Dialog */}
-      <Dialog open={isAddCardOpen} onOpenChange={(open) => !open && handleCloseDialog()}>
+      <Dialog
+        open={isAddCardOpen}
+        onOpenChange={(open) => !open && handleCloseDialog()}
+      >
         <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <DialogHeader>
             <DialogTitle>Tambah Kartu Baru</DialogTitle>
@@ -309,7 +317,9 @@ const PaymentMethodsPage = () => {
                 maxLength={19}
               />
               {errors.cardNumber && (
-                <p className="text-xs text-destructive">{errors.cardNumber.message}</p>
+                <p className="text-xs text-destructive">
+                  {errors.cardNumber.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -321,7 +331,9 @@ const PaymentMethodsPage = () => {
                 onChange={handleCardHolderChange}
               />
               {errors.cardHolder && (
-                <p className="text-xs text-destructive">{errors.cardHolder.message}</p>
+                <p className="text-xs text-destructive">
+                  {errors.cardHolder.message}
+                </p>
               )}
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -335,7 +347,9 @@ const PaymentMethodsPage = () => {
                   maxLength={5}
                 />
                 {errors.expiry && (
-                  <p className="text-xs text-destructive">{errors.expiry.message}</p>
+                  <p className="text-xs text-destructive">
+                    {errors.expiry.message}
+                  </p>
                 )}
               </div>
               <div className="space-y-2">
@@ -349,14 +363,13 @@ const PaymentMethodsPage = () => {
                   maxLength={4}
                 />
                 {errors.cvv && (
-                  <p className="text-xs text-destructive">{errors.cvv.message}</p>
+                  <p className="text-xs text-destructive">
+                    {errors.cvv.message}
+                  </p>
                 )}
               </div>
             </div>
-            <Button
-              type="submit"
-              className="w-full"
-            >
+            <Button type="submit" className="w-full">
               Simpan Kartu
             </Button>
           </form>

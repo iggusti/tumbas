@@ -1,12 +1,13 @@
 import { ArrowLeft, Heart } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useFavorites } from "@/contexts/FavoritesContext";
 
 const FavoritesPage = () => {
+  const navigate = useNavigate();
   const { favorites, toggleFavorite } = useFavorites();
 
   const favoriteProducts = products.filter((p) => favorites.includes(p.id));
@@ -25,14 +26,22 @@ const FavoritesPage = () => {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-4 py-3"
+        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
-        <div className="flex items-center gap-3">
-          <Link to="/profile" className="p-1">
-            <ArrowLeft size={20} className="text-foreground" />
-          </Link>
-          <h1 className="font-display text-xl font-bold text-foreground">
-            Favorit
+        <Link
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          className="p-1"
+        >
+          <ArrowLeft size={20} className="text-foreground" />
+        </Link>
+        <div>
+          <span className="text-muted-foreground text-sm">tumbas.</span>
+          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
+            Favorites
           </h1>
         </div>
       </motion.header>

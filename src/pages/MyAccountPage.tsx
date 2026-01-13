@@ -16,10 +16,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  PasswordFormData,
+  ProfileFormData,
+  passwordSchema,
+  profileSchema,
+} from "@/lib/validations";
 import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { profileSchema, passwordSchema, ProfileFormData, PasswordFormData } from "@/lib/validations";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,7 +30,9 @@ import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
 import { useProfile } from "@/contexts/ProfileContext";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const MyAccountPage = () => {
   const navigate = useNavigate();
@@ -132,7 +137,7 @@ const MyAccountPage = () => {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm px-4 py-3 flex items-center gap-3 border-b border-border"
+        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
         <Link
           to=""
@@ -144,9 +149,12 @@ const MyAccountPage = () => {
         >
           <ArrowLeft size={20} className="text-foreground" />
         </Link>
-        <h1 className="font-display text-lg font-semibold text-foreground">
-          My Account
-        </h1>
+        <div>
+          <span className="text-muted-foreground text-sm">tumbas.</span>
+          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
+            My Account
+          </h1>
+        </div>
       </motion.header>
 
       <main className="px-4 py-6 pb-24">
@@ -272,15 +280,17 @@ const MyAccountPage = () => {
           <DialogHeader>
             <DialogTitle>Edit Biodata</DialogTitle>
           </DialogHeader>
-          <form onSubmit={profileForm.handleSubmit(handleSaveProfile)} className="space-y-4">
+          <form
+            onSubmit={profileForm.handleSubmit(handleSaveProfile)}
+            className="space-y-4"
+          >
             <div className="space-y-2">
               <Label htmlFor="fullName">Nama Lengkap</Label>
-              <Input
-                id="fullName"
-                {...profileForm.register("fullName")}
-              />
+              <Input id="fullName" {...profileForm.register("fullName")} />
               {profileForm.formState.errors.fullName && (
-                <p className="text-xs text-destructive">{profileForm.formState.errors.fullName.message}</p>
+                <p className="text-xs text-destructive">
+                  {profileForm.formState.errors.fullName.message}
+                </p>
               )}
             </div>
 
@@ -292,18 +302,19 @@ const MyAccountPage = () => {
                 {...profileForm.register("email")}
               />
               {profileForm.formState.errors.email && (
-                <p className="text-xs text-destructive">{profileForm.formState.errors.email.message}</p>
+                <p className="text-xs text-destructive">
+                  {profileForm.formState.errors.email.message}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="phone">No. Telepon</Label>
-              <Input
-                id="phone"
-                {...profileForm.register("phone")}
-              />
+              <Input id="phone" {...profileForm.register("phone")} />
               {profileForm.formState.errors.phone && (
-                <p className="text-xs text-destructive">{profileForm.formState.errors.phone.message}</p>
+                <p className="text-xs text-destructive">
+                  {profileForm.formState.errors.phone.message}
+                </p>
               )}
             </div>
 
@@ -333,7 +344,10 @@ const MyAccountPage = () => {
           <DialogHeader>
             <DialogTitle>Ubah Password</DialogTitle>
           </DialogHeader>
-          <form onSubmit={passwordForm.handleSubmit(handleChangePassword)} className="space-y-4">
+          <form
+            onSubmit={passwordForm.handleSubmit(handleChangePassword)}
+            className="space-y-4"
+          >
             <div className="space-y-2">
               <Label htmlFor="currentPassword">Password Saat Ini</Label>
               <div className="relative">
@@ -360,7 +374,9 @@ const MyAccountPage = () => {
                 </button>
               </div>
               {passwordForm.formState.errors.currentPassword && (
-                <p className="text-xs text-destructive">{passwordForm.formState.errors.currentPassword.message}</p>
+                <p className="text-xs text-destructive">
+                  {passwordForm.formState.errors.currentPassword.message}
+                </p>
               )}
             </div>
 
@@ -386,7 +402,9 @@ const MyAccountPage = () => {
                 </button>
               </div>
               {passwordForm.formState.errors.newPassword && (
-                <p className="text-xs text-destructive">{passwordForm.formState.errors.newPassword.message}</p>
+                <p className="text-xs text-destructive">
+                  {passwordForm.formState.errors.newPassword.message}
+                </p>
               )}
               <p className="text-xs text-muted-foreground">
                 Minimal 8 karakter
@@ -419,7 +437,9 @@ const MyAccountPage = () => {
                 </button>
               </div>
               {passwordForm.formState.errors.confirmPassword && (
-                <p className="text-xs text-destructive">{passwordForm.formState.errors.confirmPassword.message}</p>
+                <p className="text-xs text-destructive">
+                  {passwordForm.formState.errors.confirmPassword.message}
+                </p>
               )}
             </div>
 

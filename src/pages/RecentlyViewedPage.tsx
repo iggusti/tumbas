@@ -28,20 +28,21 @@ const RecentlyViewedPage = () => {
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-4 py-3"
+        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
       >
-        <div className="flex items-center gap-3">
-          <Link
-            to=""
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(-1);
-            }}
-            className="p-1"
-          >
-            <ArrowLeft size={20} className="text-foreground" />
-          </Link>
-          <h1 className="font-display text-xl font-bold text-foreground">
+        <Link
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          className="p-1"
+        >
+          <ArrowLeft size={20} className="text-foreground" />
+        </Link>
+        <div>
+          <span className="text-muted-foreground text-sm">tumbas.</span>
+          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
             Terakhir Dilihat
           </h1>
         </div>
