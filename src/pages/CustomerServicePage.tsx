@@ -1,5 +1,5 @@
 import {
-  ChevronLeft,
+  ArrowLeft,
   ChevronRight,
   FileText,
   HelpCircle,
@@ -74,21 +74,28 @@ const CustomerServicePage = () => {
     <div className="mobile-container">
       <div className="page-content pb-24">
         {/* Header */}
-        <div className="flex items-center gap-3 px-4 pt-4 pb-2">
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
+        >
           <Link
             to=""
             onClick={(e) => {
               e.preventDefault();
               navigate(-1);
             }}
-            className="p-2 -ml-2"
+            className="p-1"
           >
-            <ChevronLeft size={24} className="text-foreground" />
+            <ArrowLeft size={20} className="text-foreground" />
           </Link>
-          <h1 className="text-xl font-display font-bold text-foreground">
-            Customer Service
-          </h1>
-        </div>
+          <div>
+            <span className="text-muted-foreground text-sm">tumbas.</span>
+            <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
+              Customer Service
+            </h1>
+          </div>
+        </motion.header>
 
         {/* Welcome Banner */}
         <motion.div
