@@ -89,7 +89,7 @@ const NotificationPage = () => {
         </motion.header>
 
         {/* Status Section */}
-        <div className="px-4 mt-4">
+        <div className="px-4">
           <h2 className="text-sm font-semibold text-foreground mb-3">Status</h2>
           <div className="space-y-3">
             {notifications.map((notification, index) => {
