@@ -6,7 +6,6 @@ import {
   Home,
   MapPin,
   Plus,
-  X,
 } from "lucide-react";
 import {
   Dialog,
@@ -15,6 +14,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { addressSchema, AddressFormData } from "@/lib/validations";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,17 +37,30 @@ const MyAddressPage = () => {
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
-  const [formData, setFormData] = useState({
-    label: "",
-    name: "",
-    phone: "",
-    address: "",
-    icon: "home" as "home" | "office" | "other",
-    isDefault: false,
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<AddressFormData>({
+    resolver: zodResolver(addressSchema),
+    defaultValues: {
+      label: "",
+      name: "",
+      phone: "",
+      address: "",
+      icon: "home",
+      isDefault: false,
+    },
   });
 
+  const selectedIcon = watch("icon");
+
   const resetForm = () => {
-    setFormData({
+    reset({
       label: "",
       name: "",
       phone: "",
@@ -59,7 +74,7 @@ const MyAddressPage = () => {
   const handleOpenForm = (address?: Address) => {
     if (address) {
       setEditingAddress(address);
-      setFormData({
+      reset({
         label: address.label,
         name: address.name,
         phone: address.phone,
@@ -78,15 +93,23 @@ const MyAddressPage = () => {
     resetForm();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: AddressFormData) => {
+    const addressData = {
+      label: data.label,
+      name: data.name,
+      phone: data.phone,
+      address: data.address,
+      icon: data.icon,
+      isDefault: data.isDefault,
+    };
+    
     if (editingAddress) {
-      updateAddress(editingAddress.id, formData);
-      if (formData.isDefault) {
+      updateAddress(editingAddress.id, addressData);
+      if (data.isDefault) {
         setDefaultAddress(editingAddress.id);
       }
     } else {
-      addAddress(formData);
+      addAddress(addressData);
     }
     handleCloseForm();
   };
@@ -249,13 +272,13 @@ const MyAddressPage = () => {
 
       {/* Address Form Dialog */}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-w-[90%] rounded-xl">
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <DialogHeader>
             <DialogTitle>
               {editingAddress ? "Edit Alamat" : "Tambah Alamat Baru"}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label>Tipe Alamat</Label>
               <div className="flex gap-2">
@@ -263,9 +286,9 @@ const MyAddressPage = () => {
                   <button
                     key={value}
                     type="button"
-                    onClick={() => setFormData({ ...formData, icon: value })}
+                    onClick={() => setValue("icon", value)}
                     className={`flex-1 flex flex-col items-center gap-1 p-3 rounded-lg border transition-colors ${
-                      formData.icon === value
+                      selectedIcon === value
                         ? "border-primary bg-primary/10 text-primary"
                         : "border-border text-muted-foreground hover:border-primary/50"
                     }`}
@@ -282,12 +305,11 @@ const MyAddressPage = () => {
               <Input
                 id="label"
                 placeholder="cth: Rumah, Kantor"
-                value={formData.label}
-                onChange={(e) =>
-                  setFormData({ ...formData, label: e.target.value })
-                }
-                required
+                {...register("label")}
               />
+              {errors.label && (
+                <p className="text-xs text-destructive">{errors.label.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -295,12 +317,11 @@ const MyAddressPage = () => {
               <Input
                 id="name"
                 placeholder="Nama lengkap penerima"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                required
+                {...register("name")}
               />
+              {errors.name && (
+                <p className="text-xs text-destructive">{errors.name.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -308,12 +329,11 @@ const MyAddressPage = () => {
               <Input
                 id="phone"
                 placeholder="+62 xxx-xxxx-xxxx"
-                value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-                required
+                {...register("phone")}
               />
+              {errors.phone && (
+                <p className="text-xs text-destructive">{errors.phone.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -321,22 +341,18 @@ const MyAddressPage = () => {
               <textarea
                 id="address"
                 placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota/Kabupaten"
-                value={formData.address}
-                onChange={(e) =>
-                  setFormData({ ...formData, address: e.target.value })
-                }
-                required
+                {...register("address")}
                 className="w-full min-h-[80px] px-3 py-2 text-sm rounded-md border border-input bg-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
+              {errors.address && (
+                <p className="text-xs text-destructive">{errors.address.message}</p>
+              )}
             </div>
 
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                checked={formData.isDefault}
-                onChange={(e) =>
-                  setFormData({ ...formData, isDefault: e.target.checked })
-                }
+                {...register("isDefault")}
                 className="w-4 h-4 rounded border-border text-primary focus:ring-primary"
               />
               <span className="text-sm text-foreground">

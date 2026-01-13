@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { profileSchema, passwordSchema, ProfileFormData, PasswordFormData } from "@/lib/validations";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,23 +38,30 @@ const MyAccountPage = () => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
-  // Form states
-  const [editFormData, setEditFormData] = useState({
-    fullName: profile.fullName,
-    email: profile.email,
-    phone: profile.phone,
-  });
-
-  const [passwordForm, setPasswordForm] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
   const [showPasswords, setShowPasswords] = useState({
     current: false,
     new: false,
     confirm: false,
+  });
+
+  // Profile form
+  const profileForm = useForm<ProfileFormData>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      fullName: profile.fullName,
+      email: profile.email,
+      phone: profile.phone,
+    },
+  });
+
+  // Password form
+  const passwordForm = useForm<PasswordFormData>({
+    resolver: zodResolver(passwordSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
   });
 
   const accountDetails = [
@@ -87,7 +97,7 @@ const MyAccountPage = () => {
   };
 
   const handleOpenEditProfile = () => {
-    setEditFormData({
+    profileForm.reset({
       fullName: profile.fullName,
       email: profile.email,
       phone: profile.phone,
@@ -95,15 +105,14 @@ const MyAccountPage = () => {
     setIsEditProfileOpen(true);
   };
 
-  const handleSaveProfile = (e: React.FormEvent) => {
-    e.preventDefault();
-    updateProfile(editFormData);
+  const handleSaveProfile = (data: ProfileFormData) => {
+    updateProfile(data);
     setIsEditProfileOpen(false);
     toast.success("Profil berhasil diperbarui");
   };
 
   const handleOpenChangePassword = () => {
-    setPasswordForm({
+    passwordForm.reset({
       currentPassword: "",
       newPassword: "",
       confirmPassword: "",
@@ -111,19 +120,7 @@ const MyAccountPage = () => {
     setIsChangePasswordOpen(true);
   };
 
-  const handleChangePassword = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (passwordForm.newPassword.length < 8) {
-      toast.error("Password baru minimal 8 karakter");
-      return;
-    }
-
-    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      toast.error("Konfirmasi password tidak cocok");
-      return;
-    }
-
+  const handleChangePassword = (data: PasswordFormData) => {
     // Simulate password change
     setIsChangePasswordOpen(false);
     toast.success("Password berhasil diubah");
@@ -271,21 +268,20 @@ const MyAccountPage = () => {
 
       {/* Edit Profile Dialog */}
       <Dialog open={isEditProfileOpen} onOpenChange={setIsEditProfileOpen}>
-        <DialogContent className="max-w-[90%] rounded-xl">
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <DialogHeader>
             <DialogTitle>Edit Biodata</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSaveProfile} className="space-y-4">
+          <form onSubmit={profileForm.handleSubmit(handleSaveProfile)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="fullName">Nama Lengkap</Label>
               <Input
                 id="fullName"
-                value={editFormData.fullName}
-                onChange={(e) =>
-                  setEditFormData({ ...editFormData, fullName: e.target.value })
-                }
-                required
+                {...profileForm.register("fullName")}
               />
+              {profileForm.formState.errors.fullName && (
+                <p className="text-xs text-destructive">{profileForm.formState.errors.fullName.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -293,24 +289,22 @@ const MyAccountPage = () => {
               <Input
                 id="email"
                 type="email"
-                value={editFormData.email}
-                onChange={(e) =>
-                  setEditFormData({ ...editFormData, email: e.target.value })
-                }
-                required
+                {...profileForm.register("email")}
               />
+              {profileForm.formState.errors.email && (
+                <p className="text-xs text-destructive">{profileForm.formState.errors.email.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="phone">No. Telepon</Label>
               <Input
                 id="phone"
-                value={editFormData.phone}
-                onChange={(e) =>
-                  setEditFormData({ ...editFormData, phone: e.target.value })
-                }
-                required
+                {...profileForm.register("phone")}
               />
+              {profileForm.formState.errors.phone && (
+                <p className="text-xs text-destructive">{profileForm.formState.errors.phone.message}</p>
+              )}
             </div>
 
             <div className="flex gap-3 pt-2">
@@ -335,25 +329,18 @@ const MyAccountPage = () => {
         open={isChangePasswordOpen}
         onOpenChange={setIsChangePasswordOpen}
       >
-        <DialogContent className="max-w-[90%] rounded-xl">
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <DialogHeader>
             <DialogTitle>Ubah Password</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleChangePassword} className="space-y-4">
+          <form onSubmit={passwordForm.handleSubmit(handleChangePassword)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="currentPassword">Password Saat Ini</Label>
               <div className="relative">
                 <Input
                   id="currentPassword"
                   type={showPasswords.current ? "text" : "password"}
-                  value={passwordForm.currentPassword}
-                  onChange={(e) =>
-                    setPasswordForm({
-                      ...passwordForm,
-                      currentPassword: e.target.value,
-                    })
-                  }
-                  required
+                  {...passwordForm.register("currentPassword")}
                 />
                 <button
                   type="button"
@@ -372,6 +359,9 @@ const MyAccountPage = () => {
                   )}
                 </button>
               </div>
+              {passwordForm.formState.errors.currentPassword && (
+                <p className="text-xs text-destructive">{passwordForm.formState.errors.currentPassword.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -380,14 +370,7 @@ const MyAccountPage = () => {
                 <Input
                   id="newPassword"
                   type={showPasswords.new ? "text" : "password"}
-                  value={passwordForm.newPassword}
-                  onChange={(e) =>
-                    setPasswordForm({
-                      ...passwordForm,
-                      newPassword: e.target.value,
-                    })
-                  }
-                  required
+                  {...passwordForm.register("newPassword")}
                 />
                 <button
                   type="button"
@@ -402,6 +385,9 @@ const MyAccountPage = () => {
                   {showPasswords.new ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+              {passwordForm.formState.errors.newPassword && (
+                <p className="text-xs text-destructive">{passwordForm.formState.errors.newPassword.message}</p>
+              )}
               <p className="text-xs text-muted-foreground">
                 Minimal 8 karakter
               </p>
@@ -413,14 +399,7 @@ const MyAccountPage = () => {
                 <Input
                   id="confirmPassword"
                   type={showPasswords.confirm ? "text" : "password"}
-                  value={passwordForm.confirmPassword}
-                  onChange={(e) =>
-                    setPasswordForm({
-                      ...passwordForm,
-                      confirmPassword: e.target.value,
-                    })
-                  }
-                  required
+                  {...passwordForm.register("confirmPassword")}
                 />
                 <button
                   type="button"
@@ -439,6 +418,9 @@ const MyAccountPage = () => {
                   )}
                 </button>
               </div>
+              {passwordForm.formState.errors.confirmPassword && (
+                <p className="text-xs text-destructive">{passwordForm.formState.errors.confirmPassword.message}</p>
+              )}
             </div>
 
             <div className="flex gap-3 pt-2">
