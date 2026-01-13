@@ -7,6 +7,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { creditCardSchema, CreditCardFormData } from "@/lib/validations";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,12 +48,25 @@ const PaymentMethodsPage = () => {
     },
   ]);
 
-  const [newCard, setNewCard] = useState({
-    cardNumber: "",
-    cardHolder: "",
-    expiry: "",
-    cvv: "",
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<CreditCardFormData>({
+    resolver: zodResolver(creditCardSchema),
+    defaultValues: {
+      cardNumber: "",
+      cardHolder: "",
+      expiry: "",
+      cvv: "",
+    },
   });
+
+  const cardNumber = watch("cardNumber");
+  const expiry = watch("expiry");
 
   const detectCardType = (number: string): string => {
     const cleaned = number.replace(/\s/g, "");
@@ -74,29 +90,51 @@ const PaymentMethodsPage = () => {
     return cleaned;
   };
 
-  const handleAddCard = () => {
-    if (!newCard.cardNumber || !newCard.cardHolder || !newCard.expiry) return;
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatCardNumber(e.target.value);
+    setValue("cardNumber", formatted, { shouldValidate: true });
+  };
 
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatExpiry(e.target.value);
+    setValue("expiry", formatted, { shouldValidate: true });
+  };
+
+  const handleCardHolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue("cardHolder", e.target.value.toUpperCase(), { shouldValidate: true });
+  };
+
+  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 4);
+    setValue("cvv", value, { shouldValidate: true });
+  };
+
+  const onSubmit = (data: CreditCardFormData) => {
     const maskedNumber =
-      "**** **** **** " + newCard.cardNumber.replace(/\s/g, "").slice(-4);
-    const cardType = detectCardType(newCard.cardNumber);
+      "**** **** **** " + data.cardNumber.replace(/\s/g, "").slice(-4);
+    const cardType = detectCardType(data.cardNumber);
 
     const newCardData: PaymentCard = {
       id: Date.now(),
       type: "card",
       name: cardType,
       number: maskedNumber,
-      expiry: newCard.expiry,
+      expiry: data.expiry,
       isDefault: cards.length === 0,
     };
 
     setCards([...cards, newCardData]);
-    setNewCard({ cardNumber: "", cardHolder: "", expiry: "", cvv: "" });
+    reset();
     setIsAddCardOpen(false);
   };
 
   const handleDeleteCard = (id: number) => {
     setCards(cards.filter((card) => card.id !== id));
+  };
+
+  const handleCloseDialog = () => {
+    reset();
+    setIsAddCardOpen(false);
   };
 
   const eWallets = [
@@ -255,40 +293,36 @@ const PaymentMethodsPage = () => {
       </main>
 
       {/* Add Card Dialog */}
-      <Dialog open={isAddCardOpen} onOpenChange={setIsAddCardOpen}>
-        <DialogContent className="max-w-[90%] rounded-xl">
+      <Dialog open={isAddCardOpen} onOpenChange={(open) => !open && handleCloseDialog()}>
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <DialogHeader>
             <DialogTitle>Tambah Kartu Baru</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 mt-2">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
             <div className="space-y-2">
               <Label htmlFor="cardNumber">Nomor Kartu</Label>
               <Input
                 id="cardNumber"
                 placeholder="1234 5678 9012 3456"
-                value={newCard.cardNumber}
-                onChange={(e) =>
-                  setNewCard({
-                    ...newCard,
-                    cardNumber: formatCardNumber(e.target.value),
-                  })
-                }
+                value={cardNumber}
+                onChange={handleCardNumberChange}
                 maxLength={19}
               />
+              {errors.cardNumber && (
+                <p className="text-xs text-destructive">{errors.cardNumber.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="cardHolder">Nama Pemegang Kartu</Label>
               <Input
                 id="cardHolder"
                 placeholder="JOHN DOE"
-                value={newCard.cardHolder}
-                onChange={(e) =>
-                  setNewCard({
-                    ...newCard,
-                    cardHolder: e.target.value.toUpperCase(),
-                  })
-                }
+                {...register("cardHolder")}
+                onChange={handleCardHolderChange}
               />
+              {errors.cardHolder && (
+                <p className="text-xs text-destructive">{errors.cardHolder.message}</p>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
@@ -296,15 +330,13 @@ const PaymentMethodsPage = () => {
                 <Input
                   id="expiry"
                   placeholder="MM/YY"
-                  value={newCard.expiry}
-                  onChange={(e) =>
-                    setNewCard({
-                      ...newCard,
-                      expiry: formatExpiry(e.target.value),
-                    })
-                  }
+                  value={expiry}
+                  onChange={handleExpiryChange}
                   maxLength={5}
                 />
+                {errors.expiry && (
+                  <p className="text-xs text-destructive">{errors.expiry.message}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cvv">CVV</Label>
@@ -312,27 +344,22 @@ const PaymentMethodsPage = () => {
                   id="cvv"
                   type="password"
                   placeholder="***"
-                  value={newCard.cvv}
-                  onChange={(e) =>
-                    setNewCard({
-                      ...newCard,
-                      cvv: e.target.value.replace(/\D/g, "").slice(0, 4),
-                    })
-                  }
+                  {...register("cvv")}
+                  onChange={handleCvvChange}
                   maxLength={4}
                 />
+                {errors.cvv && (
+                  <p className="text-xs text-destructive">{errors.cvv.message}</p>
+                )}
               </div>
             </div>
             <Button
-              onClick={handleAddCard}
-              disabled={
-                !newCard.cardNumber || !newCard.cardHolder || !newCard.expiry
-              }
+              type="submit"
               className="w-full"
             >
               Simpan Kartu
             </Button>
-          </div>
+          </form>
         </DialogContent>
       </Dialog>
 

@@ -1,15 +1,24 @@
-import { ArrowLeft, ChevronRight, Coins, Minus, Plus, Tag } from "lucide-react";
+import { ArrowLeft, Check, ChevronRight, Coins, Minus, Plus, Tag, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import NavLink from "@/components/NavLink";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { useVoucher } from "@/contexts/VoucherContext";
+import { useState } from "react";
 
 const CartPage = () => {
   const navigate = useNavigate();
   const { cartItems, updateQuantity, removeItem, toggleCheck } = useCart();
+  const { vouchers, selectedVoucher, selectVoucher, calculateDiscount } = useVoucher();
+  const [isVoucherDialogOpen, setIsVoucherDialogOpen] = useState(false);
 
   const getProduct = (productId: string) => {
     return products.find((p) => p.id === productId);
@@ -30,8 +39,9 @@ const CartPage = () => {
     return sum + (product?.price || 0) * item.quantity;
   }, 0);
 
+  const discount = calculateDiscount(subtotal);
   const shippingCost = checkedItems.length > 0 ? 25000 : 0;
-  const total = subtotal + shippingCost;
+  const total = subtotal - discount + shippingCost;
 
   const handleCheckout = () => {
     const checkoutItems = checkedItems.map((item) => ({
@@ -39,6 +49,15 @@ const CartPage = () => {
       quantity: item.quantity,
     }));
     navigate("/checkout", { state: { items: checkoutItems } });
+  };
+
+  const handleSelectVoucher = (voucher: typeof selectedVoucher) => {
+    if (selectedVoucher?.id === voucher?.id) {
+      selectVoucher(null);
+    } else {
+      selectVoucher(voucher);
+    }
+    setIsVoucherDialogOpen(false);
   };
 
   return (
@@ -123,22 +142,19 @@ const CartPage = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <button className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                          Ubah
-                        </button>
-                        <span className="text-muted-foreground">|</span>
-                        <button
-                          onClick={() => removeItem(item.productId)}
-                          className="text-xs text-muted-foreground hover:text-destructive transition-colors"
-                        >
-                          Hapus
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => removeItem(item.productId)}
+                        className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+                      >
+                        Hapus
+                      </button>
                     </div>
 
-                    {/* Product Info */}
-                    <div className="flex gap-3 ml-7">
+                    {/* Product Info - Clickable */}
+                    <Link
+                      to={`/product/${item.productId}`}
+                      className="flex gap-3 ml-7 cursor-pointer"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -155,29 +171,34 @@ const CartPage = () => {
                           {formatPrice(product.price)}
                         </p>
                       </div>
-                      <div className="flex flex-col items-end justify-end">
-                        <div className="flex items-center gap-2 bg-secondary rounded-full px-2 py-1">
-                          <button
-                            onClick={() => updateQuantity(item.productId, -1)}
-                            className="p-1"
-                          >
-                            <Minus size={12} className="text-foreground" />
-                          </button>
-                          <span className="text-xs font-medium text-foreground w-4 text-center">
-                            {item.quantity}
-                          </span>
-                          <button
-                            onClick={() => updateQuantity(item.productId, 1)}
-                            className="p-1"
-                          >
-                            <Plus size={12} className="text-foreground" />
-                          </button>
-                        </div>
+                    </Link>
+                    
+                    {/* Quantity Controls */}
+                    <div className="flex justify-end mt-2 ml-7">
+                      <div className="flex items-center gap-2 bg-secondary rounded-full px-2 py-1">
+                        <button
+                          onClick={() => updateQuantity(item.productId, -1)}
+                          className="p-1"
+                        >
+                          <Minus size={12} className="text-foreground" />
+                        </button>
+                        <span className="text-xs font-medium text-foreground w-4 text-center">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(item.productId, 1)}
+                          className="p-1"
+                        >
+                          <Plus size={12} className="text-foreground" />
+                        </button>
                       </div>
                     </div>
 
                     {/* Voucher Produk */}
-                    <div className="flex items-center justify-between mt-3 ml-7 pt-3 border-t border-border">
+                    <button
+                      onClick={() => setIsVoucherDialogOpen(true)}
+                      className="flex items-center justify-between mt-3 ml-7 pt-3 border-t border-border w-[calc(100%-1.75rem)]"
+                    >
                       <div className="flex items-center gap-2">
                         <Tag size={14} className="text-muted-foreground" />
                         <span className="text-xs text-foreground">
@@ -186,14 +207,14 @@ const CartPage = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <span className="text-xs text-muted-foreground">
-                          Gunakan Maksimal kode
+                          {selectedVoucher ? selectedVoucher.code : "Gunakan Maksimal kode"}
                         </span>
                         <ChevronRight
                           size={14}
                           className="text-muted-foreground"
                         />
                       </div>
-                    </div>
+                    </button>
                   </motion.div>
                 );
               })}
@@ -218,6 +239,12 @@ const CartPage = () => {
                     {formatPrice(subtotal)}
                   </span>
                 </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Diskon ({selectedVoucher?.code})</span>
+                    <span className="font-medium">-{formatPrice(discount)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
                   <span className="text-foreground font-medium">
@@ -236,6 +263,76 @@ const CartPage = () => {
           </>
         )}
       </main>
+
+      {/* Voucher Selection Dialog */}
+      <Dialog open={isVoucherDialogOpen} onOpenChange={setIsVoucherDialogOpen}>
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Pilih Voucher</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 mt-2">
+            <AnimatePresence>
+              {vouchers.map((voucher) => {
+                const isSelected = selectedVoucher?.id === voucher.id;
+                const isEligible = subtotal >= voucher.minPurchase;
+
+                return (
+                  <motion.button
+                    key={voucher.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    onClick={() => isEligible && handleSelectVoucher(voucher)}
+                    disabled={!isEligible}
+                    className={`w-full text-left p-4 rounded-xl border transition-colors ${
+                      isSelected
+                        ? "border-primary bg-primary/5"
+                        : isEligible
+                        ? "border-border hover:border-primary/50"
+                        : "border-border opacity-50 cursor-not-allowed"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded font-mono font-medium">
+                            {voucher.code}
+                          </span>
+                          {isSelected && (
+                            <Check size={16} className="text-primary" />
+                          )}
+                        </div>
+                        <h4 className="font-medium text-foreground text-sm mt-2">
+                          {voucher.name}
+                        </h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {voucher.description}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Min. pembelian {formatPrice(voucher.minPurchase)}
+                        </p>
+                        {!isEligible && (
+                          <p className="text-xs text-destructive mt-1">
+                            Belanja lagi {formatPrice(voucher.minPurchase - subtotal)} untuk menggunakan voucher ini
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </AnimatePresence>
+
+            {selectedVoucher && (
+              <button
+                onClick={() => handleSelectVoucher(null)}
+                className="w-full py-3 text-center text-destructive text-sm font-medium hover:underline"
+              >
+                Hapus Voucher
+              </button>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Checkout Button */}
       {cartItems.length > 0 && (

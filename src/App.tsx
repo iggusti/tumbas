@@ -26,6 +26,7 @@ import RecentlyViewedPage from "./pages/RecentlyViewedPage";
 import ReturnPolicyPage from "./pages/ReturnPolicyPage";
 import SearchPage from "./pages/SearchPage";
 import SplashScreen from "./components/SplashScreen";
+import ScrollToTop from "./components/ScrollToTop";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -34,6 +35,8 @@ import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { RecentlyViewedProvider } from "@/contexts/RecentlyViewedContext";
 import { AddressProvider } from "@/contexts/AddressContext";
 import { ProfileProvider } from "@/contexts/ProfileContext";
+import { VoucherProvider } from "@/contexts/VoucherContext";
+import { OrderProvider } from "@/contexts/OrderContext";
 
 const queryClient = new QueryClient();
 
@@ -53,43 +56,48 @@ const App = () => {
       <ProfileProvider>
         <AddressProvider>
           <CartProvider>
-            <FavoritesProvider>
-              <RecentlyViewedProvider>
-                <TooltipProvider>
-                  <Toaster />
-                  <Sonner />
-                  <SplashScreen isVisible={showSplash} />
-                  <BrowserRouter>
-                    <Routes>
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/about-shop" element={<AboutShopPage />} />
-                      <Route path="/about-batik-indramayu" element={<AboutBatikIndramayuPage />} />
-                      <Route path="/search" element={<SearchPage />} />
-                      <Route path="/notification" element={<NotificationPage />} />
-                      <Route path="/product/:id" element={<ProductDetailPage />} />
-                      <Route path="/cart" element={<CartPage />} />
-                      <Route path="/checkout" element={<CheckoutPage />} />
-                      <Route path="/profile" element={<ProfilePage />} />
-                      <Route path="/my-account" element={<MyAccountPage />} />
-                      <Route path="/my-address" element={<MyAddressPage />} />
-                      <Route path="/payment-methods" element={<PaymentMethodsPage />} />
-                      <Route path="/my-orders" element={<MyOrdersPage />} />
-                      <Route path="/order/:orderId" element={<OrderDetailPage />} />
-                      <Route path="/promo-code" element={<PromoCodePage />} />
-                      <Route path="/customer-service" element={<CustomerServicePage />} />
-                      <Route path="/how-to-order" element={<HowToOrderPage />} />
-                      <Route path="/faq" element={<FAQPage />} />
-                      <Route path="/return-policy" element={<ReturnPolicyPage />} />
-                      <Route path="/contact" element={<ContactPage />} />
-                      <Route path="/favorites" element={<FavoritesPage />} />
-                      <Route path="/recently-viewed" element={<RecentlyViewedPage />} />
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </BrowserRouter>
-                </TooltipProvider>
-              </RecentlyViewedProvider>
-            </FavoritesProvider>
+            <VoucherProvider>
+              <OrderProvider>
+                <FavoritesProvider>
+                  <RecentlyViewedProvider>
+                    <TooltipProvider>
+                      <Toaster />
+                      <Sonner />
+                      <SplashScreen isVisible={showSplash} />
+                      <BrowserRouter>
+                        <ScrollToTop />
+                        <Routes>
+                          <Route path="/" element={<HomePage />} />
+                          <Route path="/about-shop" element={<AboutShopPage />} />
+                          <Route path="/about-batik-indramayu" element={<AboutBatikIndramayuPage />} />
+                          <Route path="/search" element={<SearchPage />} />
+                          <Route path="/notification" element={<NotificationPage />} />
+                          <Route path="/product/:id" element={<ProductDetailPage />} />
+                          <Route path="/cart" element={<CartPage />} />
+                          <Route path="/checkout" element={<CheckoutPage />} />
+                          <Route path="/profile" element={<ProfilePage />} />
+                          <Route path="/my-account" element={<MyAccountPage />} />
+                          <Route path="/my-address" element={<MyAddressPage />} />
+                          <Route path="/payment-methods" element={<PaymentMethodsPage />} />
+                          <Route path="/my-orders" element={<MyOrdersPage />} />
+                          <Route path="/order/:orderId" element={<OrderDetailPage />} />
+                          <Route path="/promo-code" element={<PromoCodePage />} />
+                          <Route path="/customer-service" element={<CustomerServicePage />} />
+                          <Route path="/how-to-order" element={<HowToOrderPage />} />
+                          <Route path="/faq" element={<FAQPage />} />
+                          <Route path="/return-policy" element={<ReturnPolicyPage />} />
+                          <Route path="/contact" element={<ContactPage />} />
+                          <Route path="/favorites" element={<FavoritesPage />} />
+                          <Route path="/recently-viewed" element={<RecentlyViewedPage />} />
+                          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                          <Route path="*" element={<NotFound />} />
+                        </Routes>
+                      </BrowserRouter>
+                    </TooltipProvider>
+                  </RecentlyViewedProvider>
+                </FavoritesProvider>
+              </OrderProvider>
+            </VoucherProvider>
           </CartProvider>
         </AddressProvider>
       </ProfileProvider>

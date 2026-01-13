@@ -5,6 +5,7 @@ import {
   ChevronRight,
   HandCoins,
   MapPin,
+  MessageSquare,
   Tag,
   Truck,
 } from "lucide-react";
@@ -16,6 +17,13 @@ import {
 } from "@/components/ui/dialog";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAddressIcon, useAddress } from "@/contexts/AddressContext";
+import { useVoucher } from "@/contexts/VoucherContext";
+import { useCart } from "@/contexts/CartContext";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { sellerMessageSchema } from "@/lib/validations";
+import { toast } from "sonner";
 
 import NavLink from "@/components/NavLink";
 import { products } from "@/data/products";
@@ -26,13 +34,28 @@ interface CheckoutItem {
   quantity: number;
 }
 
+const SHIPPING_OPTIONS = [
+  { id: "regular", name: "Regular", price: 18000, eta: "3-5 hari" },
+  { id: "express", name: "Express", price: 35000, eta: "1-2 hari" },
+  { id: "same-day", name: "Same Day", price: 50000, eta: "Hari ini" },
+];
+
 const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const checkoutItems: CheckoutItem[] = location.state?.items || [];
   const { addresses, selectedAddressId, selectAddress, getSelectedAddress } =
     useAddress();
+  const { vouchers, selectedVoucher, selectVoucher, calculateDiscount } = useVoucher();
+  const { clearCart } = useCart();
+  
   const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
+  const [isVoucherDialogOpen, setIsVoucherDialogOpen] = useState(false);
+  const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
+  const [isShippingDialogOpen, setIsShippingDialogOpen] = useState(false);
+  const [sellerMessage, setSellerMessage] = useState("");
+  const [messageError, setMessageError] = useState("");
+  const [selectedShipping, setSelectedShipping] = useState(SHIPPING_OPTIONS[0]);
 
   const selectedAddress = getSelectedAddress();
 
@@ -53,12 +76,56 @@ const CheckoutPage = () => {
     return sum + (product?.price || 0) * item.quantity;
   }, 0);
 
-  const shippingCost = 18000;
-  const total = subtotal + shippingCost;
+  const discount = calculateDiscount(subtotal);
+  const shippingCost = selectedShipping.price;
+  const total = subtotal - discount + shippingCost;
 
   const handleSelectAddress = (id: string) => {
     selectAddress(id);
     setIsAddressDialogOpen(false);
+  };
+
+  const handleSelectVoucher = (voucher: typeof selectedVoucher) => {
+    if (selectedVoucher?.id === voucher?.id) {
+      selectVoucher(null);
+    } else {
+      selectVoucher(voucher);
+    }
+    setIsVoucherDialogOpen(false);
+  };
+
+  const handleSaveMessage = () => {
+    const result = sellerMessageSchema.safeParse({ message: sellerMessage });
+    if (!result.success) {
+      setMessageError(result.error.errors[0].message);
+      return;
+    }
+    setMessageError("");
+    setIsMessageDialogOpen(false);
+  };
+
+  const handleSelectShipping = (option: typeof selectedShipping) => {
+    setSelectedShipping(option);
+    setIsShippingDialogOpen(false);
+  };
+
+  const handleBuyNow = () => {
+    if (!selectedAddress) {
+      toast.error("Pilih alamat pengiriman terlebih dahulu");
+      return;
+    }
+
+    if (checkoutItems.length === 0) {
+      toast.error("Tidak ada produk yang dibeli");
+      return;
+    }
+
+    // Clear checked items from cart
+    clearCart();
+    
+    // Navigate to success/orders page
+    toast.success("Pesanan berhasil dibuat!");
+    navigate("/my-orders");
   };
 
   return (
@@ -163,7 +230,7 @@ const CheckoutPage = () => {
                   tumbas.
                 </span>
               </div>
-              <div className="flex gap-3">
+              <Link to={`/product/${item.productId}`} className="flex gap-3">
                 <div className="w-20 h-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
                   <img
                     src={product.image}
@@ -187,17 +254,18 @@ const CheckoutPage = () => {
                     </p>
                   )}
                 </div>
-              </div>
+              </Link>
             </motion.div>
           );
         })}
 
         {/* Shipping */}
-        <motion.div
+        <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-card rounded-xl p-4 mb-4 border border-border/50"
+          onClick={() => setIsShippingDialogOpen(true)}
+          className="w-full bg-card rounded-xl p-4 mb-4 border border-border/50 text-left"
         >
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
@@ -205,21 +273,20 @@ const CheckoutPage = () => {
             </div>
             <div className="flex-1">
               <h3 className="font-medium text-foreground text-sm">
-                Promosi Pengiriman
+                {selectedShipping.name}
               </h3>
               <p className="text-xs text-muted-foreground mt-1">
-                Nikmati promo gratis pengiriman hingga Rp10.000 untuk
-                <br />
-                pesanan Toko lain - Pelayan
+                Estimasi tiba: {selectedShipping.eta}
               </p>
             </div>
-            <div className="text-right">
+            <div className="text-right flex items-center gap-2">
               <span className="text-sm font-semibold text-foreground">
-                {formatPrice(shippingCost)}
+                {formatPrice(selectedShipping.price)}
               </span>
+              <ChevronRight size={16} className="text-muted-foreground" />
             </div>
           </div>
-        </motion.div>
+        </motion.button>
 
         {/* Voucher & Options */}
         <motion.div
@@ -228,40 +295,84 @@ const CheckoutPage = () => {
           transition={{ delay: 0.4 }}
           className="bg-card rounded-xl p-4 mb-4 border border-border/50 space-y-3"
         >
-          <button className="w-full flex items-center justify-between py-2">
+          <button
+            onClick={() => setIsVoucherDialogOpen(true)}
+            className="w-full flex items-center justify-between py-2"
+          >
             <div className="flex items-center gap-2">
               <Tag size={16} className="text-muted-foreground" />
               <span className="text-sm text-foreground">Voucher Produk</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground">
-                Gunakan Voucher kode
+                {selectedVoucher ? (
+                  <span className="text-primary font-medium">{selectedVoucher.code}</span>
+                ) : (
+                  "Gunakan Voucher kode"
+                )}
               </span>
               <ChevronRight size={16} className="text-muted-foreground" />
             </div>
           </button>
           <div className="border-t border-border" />
-          <button className="w-full flex items-center justify-between py-2">
-            <span className="text-sm text-foreground">Pesan untuk Penjual</span>
+          <button
+            onClick={() => setIsMessageDialogOpen(true)}
+            className="w-full flex items-center justify-between py-2"
+          >
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">-</span>
+              <MessageSquare size={16} className="text-muted-foreground" />
+              <span className="text-sm text-foreground">Pesan untuk Penjual</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground line-clamp-1 max-w-[120px]">
+                {sellerMessage || "-"}
+              </span>
               <ChevronRight size={16} className="text-muted-foreground" />
             </div>
           </button>
           <div className="border-t border-border" />
-          <button className="w-full flex items-center justify-between py-2">
+          <button
+            onClick={() => setIsShippingDialogOpen(true)}
+            className="w-full flex items-center justify-between py-2"
+          >
             <span className="text-sm text-foreground">Opsi Pengiriman</span>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Lihat semua</span>
+              <span className="text-xs text-muted-foreground">{selectedShipping.name}</span>
               <ChevronRight size={16} className="text-muted-foreground" />
             </div>
           </button>
+        </motion.div>
+
+        {/* Order Summary */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-card rounded-xl p-4 mb-4 border border-border/50"
+        >
+          <h3 className="font-medium text-foreground text-sm mb-3">Ringkasan Pesanan</h3>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Subtotal ({checkoutItems.length} item)</span>
+              <span className="text-foreground">{formatPrice(subtotal)}</span>
+            </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-green-600">
+                <span>Diskon ({selectedVoucher?.code})</span>
+                <span>-{formatPrice(discount)}</span>
+              </div>
+            )}
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Pengiriman</span>
+              <span className="text-foreground">{formatPrice(shippingCost)}</span>
+            </div>
+          </div>
         </motion.div>
       </main>
 
       {/* Address Selection Dialog */}
       <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
-        <DialogContent className="max-w-[90%] rounded-xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Pilih Alamat Pengiriman</DialogTitle>
           </DialogHeader>
@@ -334,6 +445,184 @@ const CheckoutPage = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Voucher Selection Dialog */}
+      <Dialog open={isVoucherDialogOpen} onOpenChange={setIsVoucherDialogOpen}>
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Pilih Voucher</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 mt-2">
+            <AnimatePresence>
+              {vouchers.map((voucher) => {
+                const isSelected = selectedVoucher?.id === voucher.id;
+                const isEligible = subtotal >= voucher.minPurchase;
+
+                return (
+                  <motion.button
+                    key={voucher.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    onClick={() => isEligible && handleSelectVoucher(voucher)}
+                    disabled={!isEligible}
+                    className={`w-full text-left p-4 rounded-xl border transition-colors ${
+                      isSelected
+                        ? "border-primary bg-primary/5"
+                        : isEligible
+                        ? "border-border hover:border-primary/50"
+                        : "border-border opacity-50 cursor-not-allowed"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded font-mono font-medium">
+                            {voucher.code}
+                          </span>
+                          {isSelected && (
+                            <Check size={16} className="text-primary" />
+                          )}
+                        </div>
+                        <h4 className="font-medium text-foreground text-sm mt-2">
+                          {voucher.name}
+                        </h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {voucher.description}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Min. pembelian {formatPrice(voucher.minPurchase)}
+                        </p>
+                        {!isEligible && (
+                          <p className="text-xs text-destructive mt-1">
+                            Belanja lagi {formatPrice(voucher.minPurchase - subtotal)} untuk menggunakan voucher ini
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </AnimatePresence>
+
+            {selectedVoucher && (
+              <button
+                onClick={() => handleSelectVoucher(null)}
+                className="w-full py-3 text-center text-destructive text-sm font-medium hover:underline"
+              >
+                Hapus Voucher
+              </button>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Seller Message Dialog */}
+      <Dialog open={isMessageDialogOpen} onOpenChange={setIsMessageDialogOpen}>
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
+          <DialogHeader>
+            <DialogTitle>Pesan untuk Penjual</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 mt-2">
+            <div className="space-y-2">
+              <Label htmlFor="sellerMessage">Pesan (opsional)</Label>
+              <Textarea
+                id="sellerMessage"
+                placeholder="Tulis pesan untuk penjual, misal: 'Tolong packing dengan bubble wrap'"
+                value={sellerMessage}
+                onChange={(e) => {
+                  setSellerMessage(e.target.value);
+                  setMessageError("");
+                }}
+                className="min-h-[100px]"
+                maxLength={500}
+              />
+              {messageError && (
+                <p className="text-xs text-destructive">{messageError}</p>
+              )}
+              <p className="text-xs text-muted-foreground text-right">
+                {sellerMessage.length}/500
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setIsMessageDialogOpen(false);
+                  setMessageError("");
+                }}
+                className="flex-1"
+              >
+                Batal
+              </Button>
+              <Button onClick={handleSaveMessage} className="flex-1">
+                Simpan
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Shipping Options Dialog */}
+      <Dialog open={isShippingDialogOpen} onOpenChange={setIsShippingDialogOpen}>
+        <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
+          <DialogHeader>
+            <DialogTitle>Pilih Opsi Pengiriman</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 mt-2">
+            {SHIPPING_OPTIONS.map((option) => {
+              const isSelected = selectedShipping.id === option.id;
+
+              return (
+                <button
+                  key={option.id}
+                  onClick={() => handleSelectShipping(option)}
+                  className={`w-full text-left p-4 rounded-xl border transition-colors ${
+                    isSelected
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-primary/50"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                          isSelected ? "bg-primary/10" : "bg-muted"
+                        }`}
+                      >
+                        <Truck
+                          size={18}
+                          className={
+                            isSelected ? "text-primary" : "text-muted-foreground"
+                          }
+                        />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-foreground text-sm">
+                          {option.name}
+                        </h4>
+                        <p className="text-xs text-muted-foreground">
+                          Estimasi: {option.eta}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold text-foreground">
+                        {formatPrice(option.price)}
+                      </span>
+                      {isSelected && (
+                        <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                          <Check size={12} className="text-primary-foreground" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Bottom Total & Button */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -350,6 +639,7 @@ const CheckoutPage = () => {
           </div>
           <motion.button
             whileTap={{ scale: 0.95 }}
+            onClick={handleBuyNow}
             className="w-50 rounded-sm btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <HandCoins
