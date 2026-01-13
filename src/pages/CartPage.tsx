@@ -1,23 +1,34 @@
-import { ArrowLeft, Check, ChevronRight, Coins, Minus, Plus, Tag, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowLeft,
+  Check,
+  ChevronRight,
+  Coins,
+  Minus,
+  Plus,
+  Tag,
+  X,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Link, useNavigate } from "react-router-dom";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import NavLink from "@/components/NavLink";
-import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
-import { useVoucher } from "@/contexts/VoucherContext";
 import { useState } from "react";
+import { useVoucher } from "@/contexts/VoucherContext";
 
 const CartPage = () => {
   const navigate = useNavigate();
   const { cartItems, updateQuantity, removeItem, toggleCheck } = useCart();
-  const { vouchers, selectedVoucher, selectVoucher, calculateDiscount } = useVoucher();
+  const { vouchers, selectedVoucher, selectVoucher, calculateDiscount } =
+    useVoucher();
   const [isVoucherDialogOpen, setIsVoucherDialogOpen] = useState(false);
 
   const getProduct = (productId: string) => {
@@ -164,15 +175,17 @@ const CartPage = () => {
                         <h3 className="font-medium text-foreground text-sm line-clamp-2 mb-1">
                           {product.name}
                         </h3>
-                        <p className="text-xs text-muted-foreground line-through">
-                          {formatPrice(product.price * 1.2)}
-                        </p>
+                        {product.originalPrice && (
+                          <p className="text-xs text-muted-foreground line-through">
+                            {formatPrice(product.originalPrice)}
+                          </p>
+                        )}
                         <p className="font-display font-semibold text-primary text-sm">
                           {formatPrice(product.price)}
                         </p>
                       </div>
                     </Link>
-                    
+
                     {/* Quantity Controls */}
                     <div className="flex justify-end mt-2 ml-7">
                       <div className="flex items-center gap-2 bg-secondary rounded-full px-2 py-1">
@@ -207,7 +220,9 @@ const CartPage = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <span className="text-xs text-muted-foreground">
-                          {selectedVoucher ? selectedVoucher.code : "Gunakan Maksimal kode"}
+                          {selectedVoucher
+                            ? selectedVoucher.code
+                            : "Gunakan Maksimal kode"}
                         </span>
                         <ChevronRight
                           size={14}
@@ -242,7 +257,9 @@ const CartPage = () => {
                 {discount > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>Diskon ({selectedVoucher?.code})</span>
-                    <span className="font-medium">-{formatPrice(discount)}</span>
+                    <span className="font-medium">
+                      -{formatPrice(discount)}
+                    </span>
                   </div>
                 )}
                 <div className="flex justify-between">
@@ -312,7 +329,9 @@ const CartPage = () => {
                         </p>
                         {!isEligible && (
                           <p className="text-xs text-destructive mt-1">
-                            Belanja lagi {formatPrice(voucher.minPurchase - subtotal)} untuk menggunakan voucher ini
+                            Belanja lagi{" "}
+                            {formatPrice(voucher.minPurchase - subtotal)} untuk
+                            menggunakan voucher ini
                           </p>
                         )}
                       </div>
