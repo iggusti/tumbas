@@ -1,6 +1,6 @@
 import {
   ArrowLeft,
-  ChevronLeft,
+  CheckCircle,
   Clock,
   Copy,
   MapPin,
