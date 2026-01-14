@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ArrowLeft,
   Check,
   ChevronRight,
   HandCoins,
@@ -26,6 +25,9 @@ import { sellerMessageSchema } from "@/lib/validations";
 import { toast } from "sonner";
 
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
+import PaymentMethodSelector from "@/components/PaymentMethodSelector";
+import { formatPrice } from "@/lib/formatters";
 import { products } from "@/data/products";
 import { useState } from "react";
 
@@ -53,6 +55,8 @@ const CheckoutPage = () => {
   const [isVoucherDialogOpen, setIsVoucherDialogOpen] = useState(false);
   const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
   const [isShippingDialogOpen, setIsShippingDialogOpen] = useState(false);
+  const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [sellerMessage, setSellerMessage] = useState("");
   const [messageError, setMessageError] = useState("");
   const [selectedShipping, setSelectedShipping] = useState(SHIPPING_OPTIONS[0]);
@@ -61,14 +65,6 @@ const CheckoutPage = () => {
 
   const getProduct = (productId: string) => {
     return products.find((p) => p.id === productId);
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
   };
 
   const subtotal = checkoutItems.reduce((sum, item) => {
@@ -120,6 +116,19 @@ const CheckoutPage = () => {
       return;
     }
 
+    // Open payment method dialog
+    setIsPaymentDialogOpen(true);
+  };
+
+  const handleConfirmPayment = () => {
+    if (!selectedPaymentMethod) {
+      toast.error("Pilih metode pembayaran terlebih dahulu");
+      return;
+    }
+
+    // Close dialog and process order
+    setIsPaymentDialogOpen(false);
+    
     // Clear checked items from cart
     clearCart();
     
