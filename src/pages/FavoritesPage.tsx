@@ -1,63 +1,30 @@
-import { ArrowLeft, Heart } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
+import EmptyState from "@/components/EmptyState";
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
+import { formatPrice } from "@/lib/formatters";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useFavorites } from "@/contexts/FavoritesContext";
 
 const FavoritesPage = () => {
-  const navigate = useNavigate();
   const { favorites, toggleFavorite } = useFavorites();
 
   const favoriteProducts = products.filter((p) => favorites.includes(p.id));
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-      >
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-        <div>
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-            Favorites
-          </h1>
-        </div>
-      </motion.header>
+      <PageHeader title="Favorites" />
 
       <main className="px-4 pb-24">
         {favoriteProducts.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center justify-center py-16"
-          >
-            <Heart size={48} className="text-muted-foreground/50 mb-4" />
-            <p className="text-muted-foreground text-center">
-              Belum ada produk favorit
-            </p>
-          </motion.div>
+          <EmptyState
+            icon={Heart}
+            title="Belum ada produk favorit"
+            description="Tambahkan produk ke favorit untuk melihatnya di sini"
+          />
         ) : (
           <div className="grid grid-cols-2 gap-3">
             {favoriteProducts.map((product, index) => (

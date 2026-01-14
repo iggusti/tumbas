@@ -1,65 +1,32 @@
-import { ArrowLeft, Clock4 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Clock4 } from "lucide-react";
+import { Link } from "react-router-dom";
 
+import EmptyState from "@/components/EmptyState";
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
+import { formatPrice } from "@/lib/formatters";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 
 const RecentlyViewedPage = () => {
-  const navigate = useNavigate();
   const { recentlyViewed } = useRecentlyViewed();
 
   const recentProducts = recentlyViewed
     .map((id) => products.find((p) => p.id === id))
     .filter(Boolean);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-      >
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-        <div>
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-            Terakhir Dilihat
-          </h1>
-        </div>
-      </motion.header>
+      <PageHeader title="Terakhir Dilihat" />
 
       <main className="px-4 pb-24">
         {recentProducts.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center justify-center py-16"
-          >
-            <Clock4 size={48} className="text-muted-foreground/50 mb-4" />
-            <p className="text-muted-foreground text-center">
-              Belum ada produk yang dilihat
-            </p>
-          </motion.div>
+          <EmptyState
+            icon={Clock4}
+            title="Belum ada produk yang dilihat"
+            description="Produk yang Anda lihat akan muncul di sini"
+          />
         ) : (
           <div className="grid grid-cols-2 gap-3">
             {recentProducts.map((product, index) => (

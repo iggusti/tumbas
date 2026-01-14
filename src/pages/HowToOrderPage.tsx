@@ -1,14 +1,13 @@
 import {
-  ArrowLeft,
   CheckCircle,
   CreditCard,
   Package,
   ShoppingCart,
   Truck,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import { motion } from "framer-motion";
 
 const steps = [
@@ -50,34 +49,10 @@ const steps = [
 ];
 
 const HowToOrderPage = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
-        {/* Header */}
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-        >
-          <Link
-            to=""
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(-1);
-            }}
-            className="p-1"
-          >
-            <ArrowLeft size={20} className="text-foreground" />
-          </Link>
-          <div>
-            <span className="text-muted-foreground text-sm">tumbas.</span>
-            <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-              Cara Pemesanan
-            </h1>
-          </div>
-        </motion.header>
+        <PageHeader title="Cara Pemesanan" />
 
         {/* Introduction */}
         <motion.div

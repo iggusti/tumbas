@@ -1,7 +1,7 @@
-import { ArrowLeft, Check, Copy, Gift, Percent } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Check, Copy, Gift, Percent } from "lucide-react";
 
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -45,7 +45,6 @@ const promoCodes = [
 ];
 
 const PromoCodePage = () => {
-  const navigate = useNavigate();
   const [copiedId, setCopiedId] = useState<number | null>(null);
 
   const handleCopyCode = (id: number, code: string) => {
@@ -57,29 +56,7 @@ const PromoCodePage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
-        {/* Header */}
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-        >
-          <Link
-            to=""
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(-1);
-            }}
-            className="p-1"
-          >
-            <ArrowLeft size={20} className="text-foreground" />
-          </Link>
-          <div>
-            <span className="text-muted-foreground text-sm">tumbas.</span>
-            <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-              Promo Code
-            </h1>
-          </div>
-        </motion.header>
+        <PageHeader title="Promo Code" />
 
         {/* Promo Banner */}
         <motion.div
