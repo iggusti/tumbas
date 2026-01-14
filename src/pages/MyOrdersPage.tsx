@@ -5,6 +5,7 @@ import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
+import EmptyState from "@/components/EmptyState";
 
 const orders = [
   {
@@ -60,6 +61,7 @@ const MyOrdersPage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
+        {/* Header */}
         <PageHeader title="Pesanan Saya" />
 
         {/* Orders List */}
@@ -149,10 +151,11 @@ const MyOrdersPage = () => {
 
         {/* Empty State */}
         {orders.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <Package size={64} className="text-muted-foreground/50 mb-4" />
-            <p className="text-muted-foreground">Belum ada pesanan</p>
-          </div>
+          <EmptyState
+            icon={Package}
+            title="Belum ada pesanan"
+            description="Anda belum memiliki pesanan"
+          />
         )}
       </div>
 

@@ -16,20 +16,20 @@ import {
 } from "@/components/ui/dialog";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAddressIcon, useAddress } from "@/contexts/AddressContext";
-import { useVoucher } from "@/contexts/VoucherContext";
-import { useCart } from "@/contexts/CartContext";
-import { Textarea } from "@/components/ui/textarea";
+
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { sellerMessageSchema } from "@/lib/validations";
-import { toast } from "sonner";
-
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import PaymentMethodSelector from "@/components/PaymentMethodSelector";
+import { Textarea } from "@/components/ui/textarea";
 import { formatPrice } from "@/lib/formatters";
 import { products } from "@/data/products";
+import { sellerMessageSchema } from "@/lib/validations";
+import { toast } from "sonner";
+import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
+import { useVoucher } from "@/contexts/VoucherContext";
 
 interface CheckoutItem {
   productId: string;
@@ -48,15 +48,18 @@ const CheckoutPage = () => {
   const checkoutItems: CheckoutItem[] = location.state?.items || [];
   const { addresses, selectedAddressId, selectAddress, getSelectedAddress } =
     useAddress();
-  const { vouchers, selectedVoucher, selectVoucher, calculateDiscount } = useVoucher();
+  const { vouchers, selectedVoucher, selectVoucher, calculateDiscount } =
+    useVoucher();
   const { clearCart } = useCart();
-  
+
   const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
   const [isVoucherDialogOpen, setIsVoucherDialogOpen] = useState(false);
   const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
   const [isShippingDialogOpen, setIsShippingDialogOpen] = useState(false);
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    string | null
+  >(null);
   const [sellerMessage, setSellerMessage] = useState("");
   const [messageError, setMessageError] = useState("");
   const [selectedShipping, setSelectedShipping] = useState(SHIPPING_OPTIONS[0]);
@@ -128,10 +131,10 @@ const CheckoutPage = () => {
 
     // Close dialog and process order
     setIsPaymentDialogOpen(false);
-    
+
     // Clear checked items from cart
     clearCart();
-    
+
     // Navigate to success/orders page
     toast.success("Pesanan berhasil dibuat!");
     navigate("/my-orders");
@@ -140,28 +143,7 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-      >
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-        <div>
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-            Checkout
-          </h1>
-        </div>
-      </motion.header>
+      <PageHeader title="Checkout" />
 
       <main className="px-4 pb-[11rem]">
         {/* Delivery Address */}
@@ -315,7 +297,9 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground">
                 {selectedVoucher ? (
-                  <span className="text-primary font-medium">{selectedVoucher.code}</span>
+                  <span className="text-primary font-medium">
+                    {selectedVoucher.code}
+                  </span>
                 ) : (
                   "Gunakan Voucher kode"
                 )}
@@ -330,7 +314,9 @@ const CheckoutPage = () => {
           >
             <div className="flex items-center gap-2">
               <MessageSquare size={16} className="text-muted-foreground" />
-              <span className="text-sm text-foreground">Pesan untuk Penjual</span>
+              <span className="text-sm text-foreground">
+                Pesan untuk Penjual
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground line-clamp-1 max-w-[120px]">
@@ -346,7 +332,9 @@ const CheckoutPage = () => {
           >
             <span className="text-sm text-foreground">Opsi Pengiriman</span>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">{selectedShipping.name}</span>
+              <span className="text-xs text-muted-foreground">
+                {selectedShipping.name}
+              </span>
               <ChevronRight size={16} className="text-muted-foreground" />
             </div>
           </button>
@@ -359,10 +347,14 @@ const CheckoutPage = () => {
           transition={{ delay: 0.5 }}
           className="bg-card rounded-xl p-4 mb-4 border border-border/50"
         >
-          <h3 className="font-medium text-foreground text-sm mb-3">Ringkasan Pesanan</h3>
+          <h3 className="font-medium text-foreground text-sm mb-3">
+            Ringkasan Pesanan
+          </h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Subtotal ({checkoutItems.length} item)</span>
+              <span className="text-muted-foreground">
+                Subtotal ({checkoutItems.length} item)
+              </span>
               <span className="text-foreground">{formatPrice(subtotal)}</span>
             </div>
             {discount > 0 && (
@@ -373,7 +365,9 @@ const CheckoutPage = () => {
             )}
             <div className="flex justify-between">
               <span className="text-muted-foreground">Pengiriman</span>
-              <span className="text-foreground">{formatPrice(shippingCost)}</span>
+              <span className="text-foreground">
+                {formatPrice(shippingCost)}
+              </span>
             </div>
           </div>
         </motion.div>
@@ -502,7 +496,9 @@ const CheckoutPage = () => {
                         </p>
                         {!isEligible && (
                           <p className="text-xs text-destructive mt-1">
-                            Belanja lagi {formatPrice(voucher.minPurchase - subtotal)} untuk menggunakan voucher ini
+                            Belanja lagi{" "}
+                            {formatPrice(voucher.minPurchase - subtotal)} untuk
+                            menggunakan voucher ini
                           </p>
                         )}
                       </div>
@@ -572,7 +568,10 @@ const CheckoutPage = () => {
       </Dialog>
 
       {/* Shipping Options Dialog */}
-      <Dialog open={isShippingDialogOpen} onOpenChange={setIsShippingDialogOpen}>
+      <Dialog
+        open={isShippingDialogOpen}
+        onOpenChange={setIsShippingDialogOpen}
+      >
         <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <DialogHeader>
             <DialogTitle>Pilih Opsi Pengiriman</DialogTitle>
@@ -601,7 +600,9 @@ const CheckoutPage = () => {
                         <Truck
                           size={18}
                           className={
-                            isSelected ? "text-primary" : "text-muted-foreground"
+                            isSelected
+                              ? "text-primary"
+                              : "text-muted-foreground"
                           }
                         />
                       </div>
@@ -620,7 +621,10 @@ const CheckoutPage = () => {
                       </span>
                       {isSelected && (
                         <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                          <Check size={12} className="text-primary-foreground" />
+                          <Check
+                            size={12}
+                            className="text-primary-foreground"
+                          />
                         </div>
                       )}
                     </div>

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, CreditCard, Plus, Trash2, Wallet } from "lucide-react";
+import { CreditCard, Plus, Trash2, Wallet } from "lucide-react";
 import { CreditCardFormData, creditCardSchema } from "@/lib/validations";
 import {
   Dialog,
@@ -7,12 +7,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,6 @@ interface PaymentCard {
 }
 
 const PaymentMethodsPage = () => {
-  const navigate = useNavigate();
   const [isAddCardOpen, setIsAddCardOpen] = useState(false);
   const [cards, setCards] = useState<PaymentCard[]>([
     {
@@ -148,28 +147,7 @@ const PaymentMethodsPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-      >
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-        <div>
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-            Payment Methods
-          </h1>
-        </div>
-      </motion.header>
+      <PageHeader title="Payment Methods" />
 
       <main className="px-4 py-6 pb-24">
         {/* Cards Section */}

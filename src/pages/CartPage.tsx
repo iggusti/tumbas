@@ -1,13 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ArrowLeft,
   Check,
   ChevronRight,
   Coins,
   Minus,
   Plus,
+  ShoppingCart,
   Tag,
-  X,
 } from "lucide-react";
 import {
   Dialog,
@@ -18,7 +17,9 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import EmptyState from "@/components/EmptyState";
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
@@ -74,46 +75,16 @@ const CartPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-      >
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-        <div>
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-            Keranjang Saya
-          </h1>
-        </div>
-      </motion.header>
+      <PageHeader title="Keranjang Saya" />
 
       <main className="page-container pb-[11rem]">
         {cartItems.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col items-center justify-center py-20"
-          >
-            <div className="w-24 h-24 rounded-full bg-secondary flex items-center justify-center mb-4">
-              <span className="text-4xl">🛒</span>
-            </div>
-            <h2 className="font-display text-xl font-semibold text-foreground mb-2">
-              Your cart is empty
-            </h2>
-            <p className="text-muted-foreground text-center">
-              Add some beautiful batik to your cart!
-            </p>
-          </motion.div>
+          /* Empty State */
+          <EmptyState
+            icon={ShoppingCart}
+            title="Belum ada produk di keranjang"
+            description="Tambahkan produk ke keranjang untuk melihatnya di sini"
+          />
         ) : (
           <>
             {/* Cart Items */}

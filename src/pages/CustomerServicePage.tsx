@@ -7,8 +7,8 @@ import {
   Phone,
   ShieldCheck,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import { motion } from "framer-motion";
@@ -71,6 +71,7 @@ const CustomerServicePage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
+        {/* Header */}
         <PageHeader title="Customer Service" />
 
         {/* Welcome Banner */}

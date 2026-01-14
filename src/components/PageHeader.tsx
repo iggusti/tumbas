@@ -1,32 +1,34 @@
-import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+
+import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface PageHeaderProps {
   title: string;
-  showBrand?: boolean;
-  showBackButton?: boolean;
-  variant?: "default" | "simple";
+  isAboutPage?: boolean;
 }
 
-const PageHeader = ({
-  title,
-  showBrand = true,
-  showBackButton = true,
-  variant = "default",
-}: PageHeaderProps) => {
+const PageHeader = ({ title, isAboutPage = false }: PageHeaderProps) => {
   const navigate = useNavigate();
 
-  if (variant === "simple") {
+  if (isAboutPage) {
     return (
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="p-4"
+        className="flex items-center gap-3 px-4 py-4"
       >
-        <h1 className="font-display text-2xl font-bold text-foreground">
-          {title}
-        </h1>
+        <Link
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+          className="p-1"
+        >
+          <ArrowLeft size={20} className="text-white" />
+        </Link>
+        <span className="text-white/80 text-sm">tumbas.</span>
       </motion.header>
     );
   }
@@ -37,22 +39,18 @@ const PageHeader = ({
       animate={{ opacity: 1, y: 0 }}
       className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
     >
-      {showBackButton && (
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-      )}
+      <Link
+        to=""
+        onClick={(e) => {
+          e.preventDefault();
+          navigate(-1);
+        }}
+        className="p-1"
+      >
+        <ArrowLeft size={20} className="text-foreground" />
+      </Link>
       <div>
-        {showBrand && (
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-        )}
+        <span className="text-muted-foreground text-sm">tumbas.</span>
         <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
           {title}
         </h1>

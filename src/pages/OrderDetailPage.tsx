@@ -1,11 +1,4 @@
-import {
-  CheckCircle,
-  Clock,
-  Copy,
-  MapPin,
-  Package,
-  Truck,
-} from "lucide-react";
+import { CheckCircle, Clock, Copy, MapPin, Package, Truck } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
@@ -173,6 +166,7 @@ const OrderDetailPage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
+        {/* Header */}
         <PageHeader title="Detail Pesanan" />
 
         {/* Order Status */}

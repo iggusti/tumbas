@@ -1,7 +1,6 @@
+import EmptyState from "@/components/EmptyState";
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
-
-import EmptyState from "@/components/EmptyState";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import { formatPrice } from "@/lib/formatters";
@@ -16,10 +15,12 @@ const FavoritesPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Header */}
       <PageHeader title="Favorites" />
 
       <main className="px-4 pb-24">
         {favoriteProducts.length === 0 ? (
+          /* Empty State */
           <EmptyState
             icon={Heart}
             title="Belum ada produk favorit"

@@ -56,6 +56,7 @@ const PromoCodePage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
+        {/* Header */}
         <PageHeader title="Promo Code" />
 
         {/* Promo Banner */}

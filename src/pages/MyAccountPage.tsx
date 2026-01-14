@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   Camera,
   ChevronRight,
   Eye,
@@ -15,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Link, useNavigate } from "react-router-dom";
 import {
   PasswordFormData,
   ProfileFormData,
@@ -28,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -35,7 +34,6 @@ import { useProfile } from "@/contexts/ProfileContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const MyAccountPage = () => {
-  const navigate = useNavigate();
   const { profile, updateProfile, updatePhoto } = useProfile();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -134,28 +132,7 @@ const MyAccountPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-      >
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-        <div>
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-            My Account
-          </h1>
-        </div>
-      </motion.header>
+      <PageHeader title="My Account" />
 
       <main className="px-4 py-6 pb-24">
         {/* Profile Photo Section */}
@@ -278,7 +255,7 @@ const MyAccountPage = () => {
       <Dialog open={isEditProfileOpen} onOpenChange={setIsEditProfileOpen}>
         <DialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <DialogHeader>
-            <DialogTitle>Edit Biodata</DialogTitle>
+            <DialogTitle>Edit Akun</DialogTitle>
           </DialogHeader>
           <form
             onSubmit={profileForm.handleSubmit(handleSaveProfile)}

@@ -1,7 +1,6 @@
 import { Clock4 } from "lucide-react";
-import { Link } from "react-router-dom";
-
 import EmptyState from "@/components/EmptyState";
+import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import { formatPrice } from "@/lib/formatters";
@@ -18,10 +17,12 @@ const RecentlyViewedPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Header */}
       <PageHeader title="Terakhir Dilihat" />
 
       <main className="px-4 pb-24">
         {recentProducts.length === 0 ? (
+          /* Empty State */
           <EmptyState
             icon={Clock4}
             title="Belum ada produk yang dilihat"

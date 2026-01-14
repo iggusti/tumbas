@@ -52,6 +52,7 @@ const HowToOrderPage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
+        {/* Header */}
         <PageHeader title="Cara Pemesanan" />
 
         {/* Introduction */}

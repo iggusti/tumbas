@@ -1,32 +1,25 @@
 import { Address, getAddressIcon, useAddress } from "@/contexts/AddressContext";
-import {
-  ArrowLeft,
-  Briefcase,
-  Check,
-  Home,
-  MapPin,
-  Plus,
-} from "lucide-react";
+import { AddressFormData, addressSchema } from "@/lib/validations";
+import { Briefcase, Check, Home, MapPin, Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { addressSchema, AddressFormData } from "@/lib/validations";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import EmptyState from "@/components/EmptyState";
 
 const MyAddressPage = () => {
-  const navigate = useNavigate();
   const {
     addresses,
     addAddress,
@@ -102,7 +95,7 @@ const MyAddressPage = () => {
       icon: data.icon,
       isDefault: data.isDefault,
     };
-    
+
     if (editingAddress) {
       updateAddress(editingAddress.id, addressData);
       if (data.isDefault) {
@@ -123,28 +116,7 @@ const MyAddressPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-background px-4 py-3 flex items-center gap-3"
-      >
-        <Link
-          to=""
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="p-1"
-        >
-          <ArrowLeft size={20} className="text-foreground" />
-        </Link>
-        <div>
-          <span className="text-muted-foreground text-sm">tumbas.</span>
-          <h1 className="font-display text-lg font-semibold text-foreground -mt-1">
-            My Address
-          </h1>
-        </div>
-      </motion.header>
+      <PageHeader title="My Address" />
 
       <main className="px-4 pb-24">
         {/* Add New Address Button */}
@@ -252,21 +224,11 @@ const MyAddressPage = () => {
 
         {/* Empty State */}
         {addresses.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col items-center justify-center py-16 text-center"
-          >
-            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-              <MapPin size={32} className="text-muted-foreground" />
-            </div>
-            <h3 className="font-semibold text-foreground mb-1">
-              Belum Ada Alamat
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Tambahkan alamat pengiriman untuk memudahkan checkout
-            </p>
-          </motion.div>
+          <EmptyState
+            icon={MapPin}
+            title="Belum ada alamat"
+            description="Anda belum memiliki alamat"
+          />
         )}
       </main>
 
@@ -308,7 +270,9 @@ const MyAddressPage = () => {
                 {...register("label")}
               />
               {errors.label && (
-                <p className="text-xs text-destructive">{errors.label.message}</p>
+                <p className="text-xs text-destructive">
+                  {errors.label.message}
+                </p>
               )}
             </div>
 
@@ -320,7 +284,9 @@ const MyAddressPage = () => {
                 {...register("name")}
               />
               {errors.name && (
-                <p className="text-xs text-destructive">{errors.name.message}</p>
+                <p className="text-xs text-destructive">
+                  {errors.name.message}
+                </p>
               )}
             </div>
 
@@ -332,7 +298,9 @@ const MyAddressPage = () => {
                 {...register("phone")}
               />
               {errors.phone && (
-                <p className="text-xs text-destructive">{errors.phone.message}</p>
+                <p className="text-xs text-destructive">
+                  {errors.phone.message}
+                </p>
               )}
             </div>
 
@@ -345,7 +313,9 @@ const MyAddressPage = () => {
                 className="w-full min-h-[80px] px-3 py-2 text-sm rounded-md border border-input bg-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
               {errors.address && (
-                <p className="text-xs text-destructive">{errors.address.message}</p>
+                <p className="text-xs text-destructive">
+                  {errors.address.message}
+                </p>
               )}
             </div>
 

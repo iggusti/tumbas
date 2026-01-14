@@ -55,6 +55,7 @@ const ReturnPolicyPage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
+        {/* Header */}
         <PageHeader title="Kebijakan Pengembalian" />
 
         {/* Important Notice */}

@@ -4,8 +4,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import { motion } from "framer-motion";
@@ -97,6 +97,7 @@ const FAQPage = () => {
   return (
     <div className="mobile-container">
       <div className="page-content pb-24">
+        {/* Header */}
         <PageHeader title="FAQ" />
 
         {/* Introduction */}
