@@ -28,6 +28,8 @@ import { products } from "@/data/products";
 import { sellerMessageSchema } from "@/lib/validations";
 import { toast } from "sonner";
 import { useCart } from "@/contexts/CartContext";
+import { useNotification } from "@/contexts/NotificationContext";
+import { useOrder } from "@/contexts/OrderContext";
 import { useState } from "react";
 import { useVoucher } from "@/contexts/VoucherContext";
 
@@ -50,7 +52,9 @@ const CheckoutPage = () => {
     useAddress();
   const { vouchers, selectedVoucher, selectVoucher, calculateDiscount } =
     useVoucher();
-  const { clearCart } = useCart();
+  const { clearCheckedItems } = useCart();
+  const { addOrder } = useOrder();
+  const { addNotification } = useNotification();
 
   const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
   const [isVoucherDialogOpen, setIsVoucherDialogOpen] = useState(false);
@@ -129,11 +133,48 @@ const CheckoutPage = () => {
       return;
     }
 
-    // Close dialog and process order
+    if (!selectedAddress) {
+      toast.error("Pilih alamat pengiriman terlebih dahulu");
+      return;
+    }
+
+    // Close dialog
     setIsPaymentDialogOpen(false);
 
-    // Clear checked items from cart
-    clearCart();
+    // Create order items
+    const orderItems = checkoutItems.map((item) => {
+      const product = getProduct(item.productId);
+      return {
+        productId: item.productId,
+        quantity: item.quantity,
+        price: product?.price || 0,
+      };
+    });
+
+    // Add order to context
+    const orderId = addOrder({
+      items: orderItems,
+      addressId: selectedAddress.id,
+      shippingOption: selectedShipping.name,
+      shippingCost: selectedShipping.price,
+      subtotal,
+      discount,
+      total,
+      sellerMessage: sellerMessage || undefined,
+      voucherCode: selectedVoucher?.code,
+      status: "pending",
+    });
+
+    // Add notification for new order
+    addNotification({
+      type: "order",
+      title: "Pesanan Berhasil Dibuat",
+      description: `Pesanan ${orderId} telah berhasil dibuat. Total: ${formatPrice(total)}`,
+      link: `/order/${orderId}`,
+    });
+
+    // Clear only checked items from cart
+    clearCheckedItems();
 
     // Navigate to success/orders page
     toast.success("Pesanan berhasil dibuat!");
