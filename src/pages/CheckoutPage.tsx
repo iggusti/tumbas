@@ -636,6 +636,15 @@ const CheckoutPage = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Payment Method Selector */}
+      <PaymentMethodSelector
+        open={isPaymentDialogOpen}
+        onOpenChange={setIsPaymentDialogOpen}
+        selectedMethod={selectedPaymentMethod}
+        onSelectMethod={setSelectedPaymentMethod}
+        onConfirm={handleConfirmPayment}
+      />
+
       {/* Bottom Total & Button */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
