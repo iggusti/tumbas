@@ -13,6 +13,7 @@ interface CartContextType {
   removeItem: (productId: string) => void;
   toggleCheck: (productId: string) => void;
   clearCart: () => void;
+  clearCheckedItems: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -70,6 +71,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCartItems([]);
   };
 
+  const clearCheckedItems = () => {
+    setCartItems((items) => items.filter((item) => !item.checked));
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -79,6 +84,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         removeItem,
         toggleCheck,
         clearCart,
+        clearCheckedItems,
       }}
     >
       {children}
