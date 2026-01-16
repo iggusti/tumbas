@@ -2,11 +2,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Check,
   ChevronRight,
+  CreditCard,
   HandCoins,
   MapPin,
   MessageSquare,
+  Package,
   Tag,
   Truck,
+  Zap,
 } from "lucide-react";
 import {
   Dialog,
@@ -21,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
-import PaymentMethodSelector from "@/components/PaymentMethodSelector";
+import PaymentMethodSelector, { paymentMethods } from "@/components/PaymentMethodSelector";
 import { Textarea } from "@/components/ui/textarea";
 import { formatPrice } from "@/lib/formatters";
 import { products } from "@/data/products";
@@ -39,9 +42,9 @@ interface CheckoutItem {
 }
 
 const SHIPPING_OPTIONS = [
-  { id: "regular", name: "Regular", price: 18000, eta: "3-5 hari" },
-  { id: "express", name: "Express", price: 35000, eta: "1-2 hari" },
-  { id: "same-day", name: "Same Day", price: 50000, eta: "Hari ini" },
+  { id: "regular", name: "Regular", price: 18000, eta: "3-5 hari", icon: Package },
+  { id: "express", name: "Express", price: 35000, eta: "1-2 hari", icon: Truck },
+  { id: "same-day", name: "Same Day", price: 50000, eta: "Hari ini", icon: Zap },
 ];
 
 const CheckoutPage = () => {
@@ -112,6 +115,10 @@ const CheckoutPage = () => {
     setIsShippingDialogOpen(false);
   };
 
+  const getSelectedPaymentMethod = () => {
+    return paymentMethods.find((m) => m.id === selectedPaymentMethod);
+  };
+
   const handleBuyNow = () => {
     if (!selectedAddress) {
       toast.error("Pilih alamat pengiriman terlebih dahulu");
@@ -123,23 +130,10 @@ const CheckoutPage = () => {
       return;
     }
 
-    // Open payment method dialog
-    setIsPaymentDialogOpen(true);
-  };
-
-  const handleConfirmPayment = () => {
     if (!selectedPaymentMethod) {
       toast.error("Pilih metode pembayaran terlebih dahulu");
       return;
     }
-
-    if (!selectedAddress) {
-      toast.error("Pilih alamat pengiriman terlebih dahulu");
-      return;
-    }
-
-    // Close dialog
-    setIsPaymentDialogOpen(false);
 
     // Create order items
     const orderItems = checkoutItems.map((item) => {
@@ -291,7 +285,7 @@ const CheckoutPage = () => {
           );
         })}
 
-        {/* Shipping */}
+        {/* Shipping Option Button */}
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -300,15 +294,20 @@ const CheckoutPage = () => {
           className="w-full bg-card rounded-xl p-4 mb-4 border border-border/50 text-left"
         >
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-              <Truck size={16} className="text-muted-foreground" />
-            </div>
+            {(() => {
+              const ShippingIcon = selectedShipping.icon;
+              return (
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <ShippingIcon size={16} className="text-primary" />
+                </div>
+              );
+            })()}
             <div className="flex-1">
               <h3 className="font-medium text-foreground text-sm">
-                {selectedShipping.name}
+                Opsi Pengiriman
               </h3>
               <p className="text-xs text-muted-foreground mt-1">
-                Estimasi tiba: {selectedShipping.eta}
+                {selectedShipping.name} • Estimasi: {selectedShipping.eta}
               </p>
             </div>
             <div className="text-right flex items-center gap-2">
@@ -317,6 +316,43 @@ const CheckoutPage = () => {
               </span>
               <ChevronRight size={16} className="text-muted-foreground" />
             </div>
+          </div>
+        </motion.button>
+
+        {/* Payment Option Button */}
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          onClick={() => setIsPaymentDialogOpen(true)}
+          className="w-full bg-card rounded-xl p-4 mb-4 border border-border/50 text-left"
+        >
+          <div className="flex items-start gap-3">
+            {(() => {
+              const selectedMethod = getSelectedPaymentMethod();
+              if (selectedMethod) {
+                const PaymentIcon = selectedMethod.icon;
+                return (
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <PaymentIcon size={16} className="text-primary" />
+                  </div>
+                );
+              }
+              return (
+                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+                  <CreditCard size={16} className="text-muted-foreground" />
+                </div>
+              );
+            })()}
+            <div className="flex-1">
+              <h3 className="font-medium text-foreground text-sm">
+                Opsi Pembayaran
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                {getSelectedPaymentMethod()?.name || "Pilih metode pembayaran"}
+              </p>
+            </div>
+            <ChevronRight size={18} className="text-muted-foreground" />
           </div>
         </motion.button>
 
@@ -362,19 +398,6 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground line-clamp-1 max-w-[120px]">
                 {sellerMessage || "-"}
-              </span>
-              <ChevronRight size={16} className="text-muted-foreground" />
-            </div>
-          </button>
-          <div className="border-t border-border" />
-          <button
-            onClick={() => setIsShippingDialogOpen(true)}
-            className="w-full flex items-center justify-between py-2"
-          >
-            <span className="text-sm text-foreground">Opsi Pengiriman</span>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">
-                {selectedShipping.name}
               </span>
               <ChevronRight size={16} className="text-muted-foreground" />
             </div>
@@ -620,6 +643,7 @@ const CheckoutPage = () => {
           <div className="space-y-3 mt-2">
             {SHIPPING_OPTIONS.map((option) => {
               const isSelected = selectedShipping.id === option.id;
+              const ShippingIcon = option.icon;
 
               return (
                 <button
@@ -638,7 +662,7 @@ const CheckoutPage = () => {
                           isSelected ? "bg-primary/10" : "bg-muted"
                         }`}
                       >
-                        <Truck
+                        <ShippingIcon
                           size={18}
                           className={
                             isSelected
@@ -683,7 +707,6 @@ const CheckoutPage = () => {
         onOpenChange={setIsPaymentDialogOpen}
         selectedMethod={selectedPaymentMethod}
         onSelectMethod={setSelectedPaymentMethod}
-        onConfirm={handleConfirmPayment}
       />
 
       {/* Bottom Total & Button */}

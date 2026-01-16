@@ -15,7 +15,7 @@ interface PaymentMethod {
   icon: typeof CreditCard;
 }
 
-const paymentMethods: PaymentMethod[] = [
+export const paymentMethods: PaymentMethod[] = [
   {
     id: "mastercard",
     type: "card",
@@ -65,7 +65,6 @@ interface PaymentMethodSelectorProps {
   onOpenChange: (open: boolean) => void;
   selectedMethod: string | null;
   onSelectMethod: (methodId: string) => void;
-  onConfirm: () => void;
 }
 
 const PaymentMethodSelector = ({
@@ -73,12 +72,16 @@ const PaymentMethodSelector = ({
   onOpenChange,
   selectedMethod,
   onSelectMethod,
-  onConfirm,
 }: PaymentMethodSelectorProps) => {
   const groupedMethods = {
     card: paymentMethods.filter((m) => m.type === "card"),
     ewallet: paymentMethods.filter((m) => m.type === "ewallet"),
     bank: paymentMethods.filter((m) => m.type === "bank"),
+  };
+
+  const handleSelect = (methodId: string) => {
+    onSelectMethod(methodId);
+    onOpenChange(false);
   };
 
   return (
@@ -105,7 +108,7 @@ const PaymentMethodSelector = ({
                       key={method.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      onClick={() => onSelectMethod(method.id)}
+                      onClick={() => handleSelect(method.id)}
                       className={`w-full text-left p-3 rounded-xl border transition-colors ${
                         isSelected
                           ? "border-primary bg-primary/5"
@@ -166,7 +169,7 @@ const PaymentMethodSelector = ({
                       key={method.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      onClick={() => onSelectMethod(method.id)}
+                      onClick={() => handleSelect(method.id)}
                       className={`w-full text-left p-3 rounded-xl border transition-colors ${
                         isSelected
                           ? "border-primary bg-primary/5"
@@ -227,7 +230,7 @@ const PaymentMethodSelector = ({
                       key={method.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      onClick={() => onSelectMethod(method.id)}
+                      onClick={() => handleSelect(method.id)}
                       className={`w-full text-left p-3 rounded-xl border transition-colors ${
                         isSelected
                           ? "border-primary bg-primary/5"
@@ -271,15 +274,6 @@ const PaymentMethodSelector = ({
               </AnimatePresence>
             </div>
           </div>
-
-          {/* Confirm Button */}
-          <button
-            onClick={onConfirm}
-            disabled={!selectedMethod}
-            className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Konfirmasi Pembayaran
-          </button>
         </div>
       </DialogContent>
     </Dialog>
