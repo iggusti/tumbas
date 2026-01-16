@@ -12,21 +12,26 @@ export interface Notification {
 
 interface NotificationContextType {
   notifications: Notification[];
-  addNotification: (notification: Omit<Notification, "id" | "time" | "isNew">) => void;
+  addNotification: (
+    notification: Omit<Notification, "id" | "time" | "isNew">
+  ) => void;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   clearNotifications: () => void;
   hasUnreadNotifications: () => boolean;
 }
 
-const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
+const NotificationContext = createContext<NotificationContextType | undefined>(
+  undefined
+);
 
 const DEFAULT_NOTIFICATIONS: Notification[] = [
   {
     id: "notif-order-1",
     type: "order",
     title: "Pesanan Diterima",
-    description: "Pesanan ORD-1736847600000 telah berhasil diterima. Total: Rp1.245.000",
+    description:
+      "Pesanan ORD-1736847600000 telah berhasil diterima. Total: Rp1.245.000",
     time: "6 hari lalu",
     isNew: false,
     link: "/order/ORD-1736847600000",
@@ -68,14 +73,18 @@ const DEFAULT_NOTIFICATIONS: Notification[] = [
       "Jelajahi koleksi batik terbaru dari pengrajin Indramayu. Motif eksklusif menanti!",
     time: "3 hari lalu",
     isNew: false,
-    link: "/search",
+    link: "/",
   },
 ];
 
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
-  const [notifications, setNotifications] = useState<Notification[]>(DEFAULT_NOTIFICATIONS);
+  const [notifications, setNotifications] = useState<Notification[]>(
+    DEFAULT_NOTIFICATIONS
+  );
 
-  const addNotification = (notification: Omit<Notification, "id" | "time" | "isNew">) => {
+  const addNotification = (
+    notification: Omit<Notification, "id" | "time" | "isNew">
+  ) => {
     const newNotification: Notification = {
       ...notification,
       id: `notif-${Date.now()}`,
@@ -126,7 +135,9 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 export const useNotification = () => {
   const context = useContext(NotificationContext);
   if (context === undefined) {
-    throw new Error("useNotification must be used within a NotificationProvider");
+    throw new Error(
+      "useNotification must be used within a NotificationProvider"
+    );
   }
   return context;
 };
