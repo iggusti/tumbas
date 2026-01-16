@@ -73,30 +73,28 @@ const NotificationPage = () => {
                       to={notification.link}
                       onClick={() => handleNotificationClick(notification.id)}
                       className={`p-4 rounded-xl flex gap-3 block border transition-colors ${
-                        notification.isNew 
-                          ? "bg-primary/10 border-primary/30" 
-                          : "bg-card border-border/50 opacity-70"
+                        notification.isNew
+                          ? "bg-primary/10 border-primary/30"
+                          : "bg-card border-border/50"
                       } hover:border-primary/30`}
                     >
                       <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconStyle(notification.type)}`}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconStyle(
+                          notification.type
+                        )}`}
                       >
                         <Icon size={18} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
-                          <h3 className={`font-semibold text-sm ${
-                            notification.isNew ? "text-foreground" : "text-muted-foreground"
-                          }`}>
+                          <h3 className="font-semibold text-sm text-foreground">
                             {notification.title}
                           </h3>
                           {notification.isNew && (
                             <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-1.5" />
                           )}
                         </div>
-                        <p className={`text-xs mt-0.5 line-clamp-2 ${
-                          notification.isNew ? "text-muted-foreground" : "text-muted-foreground/70"
-                        }`}>
+                        <p className="text-xs mt-0.5 line-clamp-2 text-muted-foreground">
                           {notification.description}
                         </p>
                         <p className="text-xs text-muted-foreground/70 mt-1">
