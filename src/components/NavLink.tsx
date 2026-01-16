@@ -2,6 +2,7 @@ import { Bell, Home, Search, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 import { motion } from "framer-motion";
+import { useNotification } from "@/contexts/NotificationContext";
 
 const navItems = [
   { path: "/", icon: Home, label: "Home" },
@@ -12,6 +13,7 @@ const navItems = [
 
 const NavLink = () => {
   const location = useLocation();
+  const { hasUnreadNotifications } = useNotification();
 
   return (
     <nav className="bottom-nav">
@@ -34,7 +36,7 @@ const NavLink = () => {
                   />
                 )}
                 <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
-                {Icon === Bell && (
+                {Icon === Bell && hasUnreadNotifications() && (
                   <span className="absolute top-1 right-4 w-2 h-2 bg-accent rounded-full" />
                 )}
                 <span className="text-xs font-medium">{item.label}</span>

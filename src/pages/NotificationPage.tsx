@@ -1,4 +1,4 @@
-import { Bell, CheckCircle, Clock, Package, Percent, Truck } from "lucide-react";
+import { Bell, Package, Percent } from "lucide-react";
 
 import { Link } from "react-router-dom";
 import NavLink from "@/components/NavLink";
@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useNotification } from "@/contexts/NotificationContext";
 
 const NotificationPage = () => {
-  const { notifications } = useNotification();
+  const { notifications, markAsRead } = useNotification();
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -30,6 +30,10 @@ const NotificationPage = () => {
       default:
         return "bg-muted text-muted-foreground";
     }
+  };
+
+  const handleNotificationClick = (id: string) => {
+    markAsRead(id);
   };
 
   return (
@@ -67,9 +71,12 @@ const NotificationPage = () => {
                   >
                     <Link
                       to={notification.link}
-                      className={`p-4 rounded-xl flex gap-3 block ${
-                        notification.isNew ? "bg-primary/10" : "bg-card"
-                      } border border-border/50 hover:border-primary/30 transition-colors`}
+                      onClick={() => handleNotificationClick(notification.id)}
+                      className={`p-4 rounded-xl flex gap-3 block border transition-colors ${
+                        notification.isNew 
+                          ? "bg-primary/10 border-primary/30" 
+                          : "bg-card border-border/50 opacity-70"
+                      } hover:border-primary/30`}
                     >
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconStyle(notification.type)}`}
@@ -78,14 +85,18 @@ const NotificationPage = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
-                          <h3 className="font-semibold text-foreground text-sm">
+                          <h3 className={`font-semibold text-sm ${
+                            notification.isNew ? "text-foreground" : "text-muted-foreground"
+                          }`}>
                             {notification.title}
                           </h3>
                           {notification.isNew && (
                             <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-1.5" />
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                        <p className={`text-xs mt-0.5 line-clamp-2 ${
+                          notification.isNew ? "text-muted-foreground" : "text-muted-foreground/70"
+                        }`}>
                           {notification.description}
                         </p>
                         <p className="text-xs text-muted-foreground/70 mt-1">

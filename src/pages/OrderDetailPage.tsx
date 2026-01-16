@@ -1,4 +1,4 @@
-import { CheckCircle, Clock, Copy, MapPin, Package, Truck, XCircle } from "lucide-react";
+import { CheckCircle, Clock, Copy, Package, Truck, XCircle } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useToast } from "@/hooks/use-toast";
 import { useOrder } from "@/contexts/OrderContext";
-import { useAddress } from "@/contexts/AddressContext";
+import { getAddressIcon, useAddress } from "@/contexts/AddressContext";
 import { formatPrice } from "@/lib/formatters";
 
 const statusConfig = {
@@ -246,8 +246,16 @@ const OrderDetailPage = () => {
               Alamat Pengiriman
             </h2>
             <div className="flex gap-3">
-              <MapPin size={18} className="text-primary flex-shrink-0 mt-0.5" />
+              {(() => {
+                const AddressIcon = getAddressIcon(shippingAddress.icon);
+                return <AddressIcon size={18} className="text-primary flex-shrink-0 mt-0.5" />;
+              })()}
               <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">
+                    {shippingAddress.label}
+                  </span>
+                </div>
                 <p className="text-sm font-medium text-foreground">
                   {shippingAddress.name}
                 </p>
