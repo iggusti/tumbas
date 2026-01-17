@@ -164,7 +164,7 @@ const ProductDetailPage = () => {
             </h1>
             {product.originalPrice && (
               <p className="mt-1 text-xs text-muted-foreground">
-                Limited offer
+                limited offer
               </p>
             )}
           </div>

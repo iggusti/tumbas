@@ -83,7 +83,7 @@ const ProductCard = ({
         </p>
         {originalPrice && (
           <p className="text-[10px] text-muted-foreground -mt-[5px]">
-            Limited offer
+            limited offer
           </p>
         )}
       </div>

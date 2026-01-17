@@ -61,9 +61,19 @@ const FavoritesPage = () => {
                   <h3 className="font-medium text-sm text-foreground line-clamp-2 mb-1">
                     {product.name}
                   </h3>
+                  {product.originalPrice && (
+                    <p className="text-[10px] text-muted-foreground line-through">
+                      {formatPrice(product.originalPrice)}
+                    </p>
+                  )}
                   <p className="font-display font-semibold text-primary">
                     {formatPrice(product.price)}
                   </p>
+                  {product.originalPrice && (
+                    <p className="text-[10px] text-muted-foreground -mt-[5px]">
+                      limited offer
+                    </p>
+                  )}
                 </div>
               </motion.div>
             ))}
