@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState, useEffect, useCallback } from "react";
 
 export interface OrderItem {
   productId: string;
@@ -17,14 +17,18 @@ export interface Order {
   total: number;
   sellerMessage?: string;
   voucherCode?: string;
+  paymentMethod?: string;
   status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   createdAt: string;
+  cancelledReason?: string;
 }
 
 interface OrderContextType {
   orders: Order[];
   addOrder: (order: Omit<Order, "id" | "createdAt">) => string;
   getOrder: (id: string) => Order | undefined;
+  updateOrder: (id: string, updates: Partial<Order>) => void;
+  cancelOrder: (id: string, reason: string) => void;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -63,7 +67,12 @@ const DEFAULT_ORDERS: Order[] = [
   },
 ];
 
-export const OrderProvider = ({ children }: { children: ReactNode }) => {
+interface OrderProviderProps {
+  children: ReactNode;
+  onOrderCancelled?: (orderId: string) => void;
+}
+
+export const OrderProvider = ({ children, onOrderCancelled }: OrderProviderProps) => {
   const [orders, setOrders] = useState<Order[]>(DEFAULT_ORDERS);
 
   const addOrder = (orderData: Omit<Order, "id" | "createdAt">): string => {
@@ -80,12 +89,55 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     return orders.find((order) => order.id === id);
   };
 
+  const updateOrder = (id: string, updates: Partial<Order>) => {
+    setOrders((prev) =>
+      prev.map((order) =>
+        order.id === id ? { ...order, ...updates } : order
+      )
+    );
+  };
+
+  const cancelOrder = useCallback((id: string, reason: string) => {
+    setOrders((prev) =>
+      prev.map((order) =>
+        order.id === id
+          ? { ...order, status: "cancelled" as const, cancelledReason: reason }
+          : order
+      )
+    );
+    onOrderCancelled?.(id);
+  }, [onOrderCancelled]);
+
+  // Check for expired pending orders every minute
+  useEffect(() => {
+    const checkExpiredOrders = () => {
+      const now = new Date().getTime();
+      const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+
+      orders.forEach((order) => {
+        if (order.status === "pending") {
+          const orderTime = new Date(order.createdAt).getTime();
+          if (now - orderTime >= oneHour) {
+            cancelOrder(order.id, "Pembayaran tidak dilakukan dalam 1 jam");
+          }
+        }
+      });
+    };
+
+    const interval = setInterval(checkExpiredOrders, 60000); // Check every minute
+    checkExpiredOrders(); // Check immediately on mount
+
+    return () => clearInterval(interval);
+  }, [orders, cancelOrder]);
+
   return (
     <OrderContext.Provider
       value={{
         orders,
         addOrder,
         getOrder,
+        updateOrder,
+        cancelOrder,
       }}
     >
       {children}

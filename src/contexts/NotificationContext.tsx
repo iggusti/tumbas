@@ -77,7 +77,11 @@ const DEFAULT_NOTIFICATIONS: Notification[] = [
   },
 ];
 
-export const NotificationProvider = ({ children }: { children: ReactNode }) => {
+interface NotificationProviderProps {
+  children: ReactNode | ((context: { addNotification: NotificationContextType["addNotification"] }) => ReactNode);
+}
+
+export const NotificationProvider = ({ children }: NotificationProviderProps) => {
   const [notifications, setNotifications] = useState<Notification[]>(
     DEFAULT_NOTIFICATIONS
   );
@@ -116,18 +120,20 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     return notifications.some((notif) => notif.isNew);
   };
 
+  const contextValue = {
+    notifications,
+    addNotification,
+    markAsRead,
+    markAllAsRead,
+    clearNotifications,
+    hasUnreadNotifications,
+  };
+
   return (
-    <NotificationContext.Provider
-      value={{
-        notifications,
-        addNotification,
-        markAsRead,
-        markAllAsRead,
-        clearNotifications,
-        hasUnreadNotifications,
-      }}
-    >
-      {children}
+    <NotificationContext.Provider value={contextValue}>
+      {typeof children === "function"
+        ? children({ addNotification })
+        : children}
     </NotificationContext.Provider>
   );
 };
