@@ -1,7 +1,8 @@
 import { Building2, Clock, Copy, CreditCard, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+
 import { formatPrice } from "@/lib/formatters";
+import { useToast } from "@/hooks/use-toast";
 
 interface PaymentInstructionsProps {
   paymentMethod: string;
@@ -58,7 +59,8 @@ const PaymentInstructions = ({
   const { toast } = useToast();
   const [timeLeft, setTimeLeft] = useState<number>(0);
 
-  const paymentInfo = PAYMENT_DETAILS[paymentMethod as keyof typeof PAYMENT_DETAILS];
+  const paymentInfo =
+    PAYMENT_DETAILS[paymentMethod as keyof typeof PAYMENT_DETAILS];
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -128,13 +130,15 @@ const PaymentInstructions = ({
             <Icon size={20} className="text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium text-foreground">{paymentInfo.name}</p>
+            <p className="text-sm font-medium text-foreground">
+              {paymentInfo.name}
+            </p>
             <p className="text-xs text-muted-foreground">
               {paymentInfo.type === "bank"
                 ? "Virtual Account"
                 : paymentInfo.type === "ewallet"
-                ? "E-Wallet"
-                : "Kartu Kredit/Debit"}
+                  ? "E-Wallet"
+                  : "Kartu Kredit/Debit"}
             </p>
           </div>
         </div>
@@ -144,7 +148,9 @@ const PaymentInstructions = ({
           <div className="flex items-center justify-between">
             <p className="text-sm text-muted-foreground">Total Pembayaran</p>
             <div className="flex items-center gap-2">
-              <p className="text-lg font-bold text-primary">{formatPrice(total)}</p>
+              <p className="text-lg font-bold text-primary">
+                {formatPrice(total)}
+              </p>
               <button
                 onClick={() => copyToClipboard(total.toString(), "Nominal")}
                 className="p-1.5 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded transition-colors"
@@ -159,7 +165,9 @@ const PaymentInstructions = ({
         {paymentInfo.type === "bank" && (
           <div className="space-y-3">
             <div className="p-3 bg-muted/50 rounded-lg">
-              <p className="text-xs text-muted-foreground mb-1">Nomor Virtual Account</p>
+              <p className="text-xs text-muted-foreground mb-1">
+                Nomor Virtual Account
+              </p>
               <div className="flex items-center justify-between">
                 <p className="text-sm font-mono font-semibold text-foreground">
                   {(paymentInfo as { accountNumber: string }).accountNumber}
@@ -178,7 +186,9 @@ const PaymentInstructions = ({
               </div>
             </div>
             <div className="p-3 bg-muted/50 rounded-lg">
-              <p className="text-xs text-muted-foreground mb-1">Nama Penerima</p>
+              <p className="text-xs text-muted-foreground mb-1">
+                Nama Penerima
+              </p>
               <p className="text-sm font-semibold text-foreground">
                 {(paymentInfo as { accountName: string }).accountName}
               </p>
@@ -186,7 +196,9 @@ const PaymentInstructions = ({
             <div className="text-xs text-muted-foreground space-y-1">
               <p className="font-medium text-foreground">Cara Pembayaran:</p>
               <ol className="list-decimal list-inside space-y-1">
-                <li>Buka aplikasi {paymentInfo.name.replace("Transfer Bank ", "")}</li>
+                <li>
+                  Buka aplikasi {paymentInfo.name.replace("Transfer Bank ", "")}
+                </li>
                 <li>Pilih menu Transfer → Virtual Account</li>
                 <li>Masukkan nomor Virtual Account di atas</li>
                 <li>Konfirmasi detail pembayaran dan nominal</li>
@@ -201,7 +213,9 @@ const PaymentInstructions = ({
         {paymentInfo.type === "ewallet" && (
           <div className="space-y-3">
             <div className="p-3 bg-muted/50 rounded-lg">
-              <p className="text-xs text-muted-foreground mb-1">Nomor {paymentInfo.name}</p>
+              <p className="text-xs text-muted-foreground mb-1">
+                Nomor {paymentInfo.name}
+              </p>
               <div className="flex items-center justify-between">
                 <p className="text-sm font-mono font-semibold text-foreground">
                   {(paymentInfo as { phoneNumber: string }).phoneNumber}
@@ -238,8 +252,9 @@ const PaymentInstructions = ({
           <div className="text-xs text-muted-foreground space-y-1">
             <p className="font-medium text-foreground">Informasi:</p>
             <p>
-              Pembayaran dengan {paymentInfo.name} akan diproses secara otomatis. 
-              Silakan periksa notifikasi dari bank Anda untuk konfirmasi transaksi.
+              Pembayaran dengan {paymentInfo.name} akan diproses secara
+              otomatis. Silakan periksa notifikasi dari bank Anda untuk
+              konfirmasi transaksi.
             </p>
           </div>
         )}

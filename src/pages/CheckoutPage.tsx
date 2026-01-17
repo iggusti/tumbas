@@ -18,13 +18,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import PaymentMethodSelector, {
+  paymentMethods,
+} from "@/components/PaymentMethodSelector";
 import { getAddressIcon, useAddress } from "@/contexts/AddressContext";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
-import PaymentMethodSelector, { paymentMethods } from "@/components/PaymentMethodSelector";
 import { Textarea } from "@/components/ui/textarea";
 import { formatPrice } from "@/lib/formatters";
 import { products } from "@/data/products";
@@ -42,9 +44,27 @@ interface CheckoutItem {
 }
 
 const SHIPPING_OPTIONS = [
-  { id: "regular", name: "Regular", price: 18000, eta: "3-5 hari", icon: Package },
-  { id: "express", name: "Express", price: 35000, eta: "1-2 hari", icon: Truck },
-  { id: "same-day", name: "Same Day", price: 50000, eta: "Hari ini", icon: Zap },
+  {
+    id: "regular",
+    name: "Regular",
+    price: 18000,
+    eta: "3-5 hari",
+    icon: Package,
+  },
+  {
+    id: "express",
+    name: "Express",
+    price: 35000,
+    eta: "1-2 hari",
+    icon: Truck,
+  },
+  {
+    id: "same-day",
+    name: "Same Day",
+    price: 50000,
+    eta: "Hari ini",
+    icon: Zap,
+  },
 ];
 
 const CheckoutPage = () => {
@@ -536,8 +556,8 @@ const CheckoutPage = () => {
                       isSelected
                         ? "border-primary bg-primary/5"
                         : isEligible
-                        ? "border-border hover:border-primary/50"
-                        : "border-border opacity-50 cursor-not-allowed"
+                          ? "border-border hover:border-primary/50"
+                          : "border-border opacity-50 cursor-not-allowed"
                     }`}
                   >
                     <div className="flex items-start justify-between">

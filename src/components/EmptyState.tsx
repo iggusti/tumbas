@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface EmptyStateProps {
   icon: LucideIcon;
@@ -17,7 +17,9 @@ const EmptyState = ({ icon: Icon, title, description }: EmptyStateProps) => {
       <Icon size={48} className="text-muted-foreground/50 mb-4" />
       <h3 className="font-semibold text-foreground mb-1">{title}</h3>
       {description && (
-        <p className="text-sm text-muted-foreground text-center">{description}</p>
+        <p className="text-sm text-muted-foreground text-center">
+          {description}
+        </p>
       )}
     </motion.div>
   );

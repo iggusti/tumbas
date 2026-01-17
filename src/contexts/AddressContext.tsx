@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from "react";
-import { Home, MapPin, Briefcase } from "lucide-react";
+import { Briefcase, Home, MapPin } from "lucide-react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 export interface Address {
   id: string;

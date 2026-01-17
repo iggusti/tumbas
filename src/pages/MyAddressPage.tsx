@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
+import EmptyState from "@/components/EmptyState";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import NavLink from "@/components/NavLink";
@@ -17,7 +18,6 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import EmptyState from "@/components/EmptyState";
 
 const MyAddressPage = () => {
   const {

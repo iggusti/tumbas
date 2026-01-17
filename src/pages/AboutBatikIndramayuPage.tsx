@@ -1,7 +1,7 @@
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import aboutBatikIndramayu from "@/assets/about-batik-indramayu.png";
 import { motion } from "framer-motion";
-import PageHeader from "@/components/PageHeader";
 
 const AboutBatikIndramayuPage = () => {
   return (

@@ -1,4 +1,11 @@
-import { ReactNode, createContext, useContext, useState, useEffect, useCallback } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 export interface OrderItem {
   productId: string;
@@ -52,9 +59,7 @@ const DEFAULT_ORDERS: Order[] = [
   },
   {
     id: "ORD-1736934000000",
-    items: [
-      { productId: "2", quantity: 1, price: 520000 },
-    ],
+    items: [{ productId: "2", quantity: 1, price: 520000 }],
     addressId: "2",
     shippingOption: "Regular",
     shippingCost: 18000,
@@ -72,7 +77,10 @@ interface OrderProviderProps {
   onOrderCancelled?: (orderId: string) => void;
 }
 
-export const OrderProvider = ({ children, onOrderCancelled }: OrderProviderProps) => {
+export const OrderProvider = ({
+  children,
+  onOrderCancelled,
+}: OrderProviderProps) => {
   const [orders, setOrders] = useState<Order[]>(DEFAULT_ORDERS);
 
   const addOrder = (orderData: Omit<Order, "id" | "createdAt">): string => {
@@ -91,22 +99,27 @@ export const OrderProvider = ({ children, onOrderCancelled }: OrderProviderProps
 
   const updateOrder = (id: string, updates: Partial<Order>) => {
     setOrders((prev) =>
-      prev.map((order) =>
-        order.id === id ? { ...order, ...updates } : order
-      )
+      prev.map((order) => (order.id === id ? { ...order, ...updates } : order))
     );
   };
 
-  const cancelOrder = useCallback((id: string, reason: string) => {
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === id
-          ? { ...order, status: "cancelled" as const, cancelledReason: reason }
-          : order
-      )
-    );
-    onOrderCancelled?.(id);
-  }, [onOrderCancelled]);
+  const cancelOrder = useCallback(
+    (id: string, reason: string) => {
+      setOrders((prev) =>
+        prev.map((order) =>
+          order.id === id
+            ? {
+                ...order,
+                status: "cancelled" as const,
+                cancelledReason: reason,
+              }
+            : order
+        )
+      );
+      onOrderCancelled?.(id);
+    },
+    [onOrderCancelled]
+  );
 
   // Check for expired pending orders every minute
   useEffect(() => {

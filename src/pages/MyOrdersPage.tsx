@@ -1,13 +1,13 @@
 import { CheckCircle, Clock, Package, Truck, XCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { Order, useOrder } from "@/contexts/OrderContext";
 
+import EmptyState from "@/components/EmptyState";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
+import { formatPrice } from "@/lib/formatters";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
-import EmptyState from "@/components/EmptyState";
-import { useOrder, Order } from "@/contexts/OrderContext";
-import { formatPrice } from "@/lib/formatters";
 
 const statusConfig = {
   pending: {
@@ -55,10 +55,12 @@ const MyOrdersPage = () => {
   };
 
   const getOrderItems = (order: Order) => {
-    return order.items.map((item) => ({
-      product: getProduct(item.productId),
-      quantity: item.quantity,
-    })).filter((item) => item.product);
+    return order.items
+      .map((item) => ({
+        product: getProduct(item.productId),
+        quantity: item.quantity,
+      }))
+      .filter((item) => item.product);
   };
 
   return (
@@ -103,7 +105,9 @@ const MyOrdersPage = () => {
                       className={`flex items-center gap-1.5 px-3 py-1 rounded-full ${status.color}`}
                     >
                       <StatusIcon size={14} />
-                      <span className="text-xs font-medium">{status.label}</span>
+                      <span className="text-xs font-medium">
+                        {status.label}
+                      </span>
                     </div>
                   </div>
 

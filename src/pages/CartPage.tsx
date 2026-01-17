@@ -275,8 +275,8 @@ const CartPage = () => {
                       isSelected
                         ? "border-primary bg-primary/5"
                         : isEligible
-                        ? "border-border hover:border-primary/50"
-                        : "border-border opacity-50 cursor-not-allowed"
+                          ? "border-border hover:border-primary/50"
+                          : "border-border opacity-50 cursor-not-allowed"
                     }`}
                   >
                     <div className="flex items-start justify-between">

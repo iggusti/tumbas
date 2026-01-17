@@ -1,7 +1,7 @@
 import NavLink from "@/components/NavLink";
+import PageHeader from "@/components/PageHeader";
 import aboutShop from "@/assets/about-shop.png";
 import { motion } from "framer-motion";
-import PageHeader from "@/components/PageHeader";
 
 const AboutShopPage = () => {
   return (
