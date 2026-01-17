@@ -1,5 +1,6 @@
 import {
   CheckCircle,
+  Clock,
   CreditCard,
   Package,
   ShoppingCart,
@@ -20,31 +21,38 @@ const steps = [
   },
   {
     id: 2,
-    icon: CreditCard,
+    icon: Package,
     title: "Checkout",
     description:
-      "Setelah selesai memilih, buka keranjang dan klik 'Checkout'. Pilih alamat pengiriman dan metode pembayaran.",
+      "Buka keranjang, centang produk yang ingin dibeli, lalu klik 'Checkout'. Pilih alamat pengiriman, opsi pengiriman, dan metode pembayaran.",
   },
   {
     id: 3,
-    icon: Package,
-    title: "Konfirmasi Pesanan",
+    icon: CreditCard,
+    title: "Buat Pesanan",
     description:
-      "Periksa kembali pesanan Anda. Pastikan alamat dan produk sudah benar, lalu konfirmasi pesanan.",
+      "Periksa kembali pesanan Anda. Pastikan alamat dan produk sudah benar, lalu klik 'Beli Sekarang' untuk membuat pesanan.",
   },
   {
     id: 4,
-    icon: Truck,
-    title: "Pengiriman",
+    icon: Clock,
+    title: "Lakukan Pembayaran",
     description:
-      "Pesanan akan diproses dan dikirim ke alamat Anda. Anda dapat melacak status pengiriman di halaman pesanan.",
+      "Ikuti instruksi pembayaran di halaman detail pesanan. Selesaikan pembayaran dalam waktu 1 jam agar pesanan tidak dibatalkan otomatis.",
   },
   {
     id: 5,
+    icon: Truck,
+    title: "Pengiriman",
+    description:
+      "Setelah pembayaran dikonfirmasi, pesanan akan diproses dan dikirim ke alamat Anda. Lacak status pengiriman di halaman pesanan.",
+  },
+  {
+    id: 6,
     icon: CheckCircle,
     title: "Terima Pesanan",
     description:
-      "Terima pesanan Anda dan berikan ulasan. Terima kasih sudah berbelanja di Tumbas!",
+      "Terima pesanan Anda dan pastikan produk sesuai. Terima kasih sudah berbelanja di Tumbas!",
   },
 ];
 
