@@ -156,6 +156,7 @@ const CheckoutPage = () => {
       total,
       sellerMessage: sellerMessage || undefined,
       voucherCode: selectedVoucher?.code,
+      paymentMethod: selectedPaymentMethod,
       status: "pending",
     });
 
