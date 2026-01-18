@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -11,20 +12,19 @@ import {
   Tag,
   X,
 } from "lucide-react";
-
 import { Link, useNavigate } from "react-router-dom";
-import NavLink from "@/components/NavLink";
-import ProductCard from "@/components/ProductCard";
-import heroBanner from "@/assets/hero-banner.png";
-import { motion, AnimatePresence } from "framer-motion";
-import { products } from "@/data/products";
-import { useState } from "react";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+
+import NavLink from "@/components/NavLink";
+import ProductCard from "@/components/ProductCard";
+import heroBanner from "@/assets/hero-banner.png";
+import { products } from "@/data/products";
+import { useState } from "react";
 
 const ITEMS_PER_PAGE = 4;
 
@@ -40,7 +40,7 @@ const ProductSection = ({ title, products }: SectionProps) => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const currentProducts = products.slice(
     startIndex,
-    startIndex + ITEMS_PER_PAGE
+    startIndex + ITEMS_PER_PAGE,
   );
 
   return (
@@ -143,7 +143,7 @@ const HomePage = () => {
                 className="text-foreground transform scale-x-[-1]"
               />
             </Link>
-            <button 
+            <button
               onClick={() => setIsMenuOpen(true)}
               className="relative p-2"
             >
@@ -175,7 +175,7 @@ const HomePage = () => {
               <h2 className="font-display text-center text-2xl font-bold text-white mb-3">
                 collection.
               </h2>
-              <button 
+              <button
                 onClick={handleShopNow}
                 className="self-center px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-sm text-white text-sm font-medium hover:bg-white/30 transition-colors"
               >
@@ -281,7 +281,10 @@ const HomePage = () => {
 
       {/* Menu Sheet */}
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-        <SheetContent side="right" className="w-full max-w-[320px] sm:max-w-[400px] p-0">
+        <SheetContent
+          side="right"
+          className="w-full max-w-[320px] sm:max-w-[400px] p-0"
+        >
           <SheetHeader className="p-4 sm:p-6 border-b border-border/50">
             <SheetTitle className="text-left font-display text-xl sm:text-2xl text-primary">
               Menu
@@ -301,12 +304,18 @@ const HomePage = () => {
                   className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg hover:bg-muted transition-colors group"
                 >
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <item.icon size={20} className="text-primary sm:w-6 sm:h-6" />
+                    <item.icon
+                      size={20}
+                      className="text-primary sm:w-6 sm:h-6"
+                    />
                   </div>
                   <span className="text-sm sm:text-base font-medium text-foreground">
                     {item.label}
                   </span>
-                  <ChevronRight size={16} className="ml-auto text-muted-foreground group-hover:text-primary transition-colors" />
+                  <ChevronRight
+                    size={16}
+                    className="ml-auto text-muted-foreground group-hover:text-primary transition-colors"
+                  />
                 </Link>
               </motion.div>
             ))}

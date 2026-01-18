@@ -80,7 +80,7 @@ const NotificationPage = () => {
                     >
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getIconStyle(
-                          notification.type
+                          notification.type,
                         )}`}
                       >
                         <Icon size={18} />

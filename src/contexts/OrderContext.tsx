@@ -99,7 +99,7 @@ export const OrderProvider = ({
 
   const updateOrder = (id: string, updates: Partial<Order>) => {
     setOrders((prev) =>
-      prev.map((order) => (order.id === id ? { ...order, ...updates } : order))
+      prev.map((order) => (order.id === id ? { ...order, ...updates } : order)),
     );
   };
 
@@ -113,15 +113,15 @@ export const OrderProvider = ({
                 status: "cancelled" as const,
                 cancelledReason: reason,
               }
-            : order
-        )
+            : order,
+        ),
       );
       // Only trigger callback for automatic cancellations
       if (!isManual) {
         onOrderCancelled?.(id, reason);
       }
     },
-    [onOrderCancelled]
+    [onOrderCancelled],
   );
 
   // Check for expired pending orders every minute

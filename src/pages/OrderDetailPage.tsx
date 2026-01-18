@@ -1,4 +1,14 @@
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   AlertTriangle,
   CheckCircle,
   Clock,
@@ -10,17 +20,6 @@ import {
   XCircle,
   Zap,
 } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { useNotification } from "@/contexts/NotificationContext";
 import {
   Dialog,
   DialogContent,
@@ -43,6 +42,7 @@ import { formatPrice } from "@/lib/formatters";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { sellerMessageSchema } from "@/lib/validations";
+import { useNotification } from "@/contexts/NotificationContext";
 import { useOrder } from "@/contexts/OrderContext";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -113,7 +113,7 @@ const OrderDetailPage = () => {
   const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [sellerMessage, setSellerMessage] = useState(
-    order?.sellerMessage || ""
+    order?.sellerMessage || "",
   );
   const [messageError, setMessageError] = useState("");
 
@@ -210,7 +210,7 @@ const OrderDetailPage = () => {
   const shippingAddress = getAddress(order.addressId);
   const isPending = order.status === "pending";
   const selectedPaymentMethod = paymentMethods.find(
-    (m) => m.id === order.paymentMethod
+    (m) => m.id === order.paymentMethod,
   );
   const currentShipping =
     SHIPPING_OPTIONS.find((s) => s.name === order.shippingOption) ||
@@ -630,7 +630,10 @@ const OrderDetailPage = () => {
       </div>
 
       {/* Cancel Order Confirmation Dialog */}
-      <AlertDialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
+      <AlertDialog
+        open={isCancelDialogOpen}
+        onOpenChange={setIsCancelDialogOpen}
+      >
         <AlertDialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
@@ -638,7 +641,8 @@ const OrderDetailPage = () => {
               Batalkan Pesanan?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini tidak dapat dibatalkan.
+              Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini
+              tidak dapat dibatalkan.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
