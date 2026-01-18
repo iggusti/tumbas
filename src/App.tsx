@@ -80,7 +80,7 @@ const AppContent = ({ showSplash }: { showSplash: boolean }) => {
       onOrderCancelled={(orderId) => {
         addNotification({
           type: "order",
-          title: "Pesanan Dibatalkan",
+          title: "Pesanan Dibatalkan Otomatis",
           description: `Pesanan ${orderId} dibatalkan karena pembayaran tidak dilakukan dalam 1 jam.`,
           link: `/order/${orderId}`,
         });
