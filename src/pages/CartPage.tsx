@@ -20,6 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import EmptyState from "@/components/EmptyState";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
+import { formatPrice } from "@/lib/formatters";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
@@ -34,14 +35,6 @@ const CartPage = () => {
 
   const getProduct = (productId: string) => {
     return products.find((p) => p.id === productId);
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
   };
 
   const checkedItems = cartItems.filter((item) => item.checked);

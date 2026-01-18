@@ -35,7 +35,7 @@ interface OrderContextType {
   addOrder: (order: Omit<Order, "id" | "createdAt">) => string;
   getOrder: (id: string) => Order | undefined;
   updateOrder: (id: string, updates: Partial<Order>) => void;
-  cancelOrder: (id: string, reason: string) => void;
+  cancelOrder: (id: string, reason: string, isManual?: boolean) => void;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -74,7 +74,7 @@ const DEFAULT_ORDERS: Order[] = [
 
 interface OrderProviderProps {
   children: ReactNode;
-  onOrderCancelled?: (orderId: string) => void;
+  onOrderCancelled?: (orderId: string, reason: string) => void;
 }
 
 export const OrderProvider = ({
@@ -104,7 +104,7 @@ export const OrderProvider = ({
   };
 
   const cancelOrder = useCallback(
-    (id: string, reason: string) => {
+    (id: string, reason: string, isManual?: boolean) => {
       setOrders((prev) =>
         prev.map((order) =>
           order.id === id
@@ -116,7 +116,10 @@ export const OrderProvider = ({
             : order
         )
       );
-      onOrderCancelled?.(id);
+      // Only trigger callback for automatic cancellations
+      if (!isManual) {
+        onOrderCancelled?.(id, reason);
+      }
     },
     [onOrderCancelled]
   );
