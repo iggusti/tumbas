@@ -179,7 +179,7 @@ const OrderDetailPage = () => {
 
   const handleManualCancel = () => {
     if (order && order.status === "pending") {
-      cancelOrder(order.id, "Dibatalkan oleh pembeli");
+      cancelOrder(order.id, "Dibatalkan oleh pembeli", true);
       addNotification({
         type: "order",
         title: "Pesanan Dibatalkan",
