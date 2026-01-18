@@ -281,13 +281,13 @@ const HomePage = () => {
 
       {/* Menu Sheet */}
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-        <SheetContent side="right" className="w-[280px] p-0">
-          <SheetHeader className="p-4 border-b border-border/50">
-            <SheetTitle className="text-left font-display text-xl text-primary">
+        <SheetContent side="right" className="w-full max-w-[320px] sm:max-w-[400px] p-0">
+          <SheetHeader className="p-4 sm:p-6 border-b border-border/50">
+            <SheetTitle className="text-left font-display text-xl sm:text-2xl text-primary">
               Menu
             </SheetTitle>
           </SheetHeader>
-          <nav className="p-2">
+          <nav className="p-2 sm:p-4">
             {menuItems.map((item, index) => (
               <motion.div
                 key={item.path}
@@ -298,18 +298,24 @@ const HomePage = () => {
                 <Link
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
+                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg hover:bg-muted transition-colors group"
                 >
-                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-                    <item.icon size={18} className="text-primary" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <item.icon size={20} className="text-primary sm:w-6 sm:h-6" />
                   </div>
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-sm sm:text-base font-medium text-foreground">
                     {item.label}
                   </span>
+                  <ChevronRight size={16} className="ml-auto text-muted-foreground group-hover:text-primary transition-colors" />
                 </Link>
               </motion.div>
             ))}
           </nav>
+          <div className="absolute bottom-6 left-0 right-0 px-4 sm:px-6">
+            <p className="text-xs sm:text-sm text-center text-muted-foreground">
+              tumbas. © 2025
+            </p>
+          </div>
         </SheetContent>
       </Sheet>
     </div>
