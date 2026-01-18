@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -23,6 +22,7 @@ import {
 import NavLink from "@/components/NavLink";
 import ProductCard from "@/components/ProductCard";
 import heroBanner from "@/assets/hero-banner.png";
+import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useState } from "react";
 

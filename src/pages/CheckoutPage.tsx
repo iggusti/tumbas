@@ -289,13 +289,15 @@ const CheckoutPage = () => {
                   <h3 className="font-medium text-foreground text-sm line-clamp-2">
                     {product.name}
                   </h3>
-                  <p className="text-xs text-muted-foreground line-through mt-1">
-                    {formatPrice(product.price * 1.2)}
-                  </p>
+                  {product.originalPrice && (
+                    <p className="text-xs text-muted-foreground line-through mt-1">
+                      {formatPrice(product.originalPrice)}
+                    </p>
+                  )}
                   <p className="text-sm font-semibold text-primary">
                     {formatPrice(product.price)}
                   </p>
-                  {item.quantity > 1 && (
+                  {item.quantity >= 1 && (
                     <p className="text-xs text-muted-foreground mt-1">
                       Qty: {item.quantity}
                     </p>
