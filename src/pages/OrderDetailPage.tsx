@@ -1,4 +1,5 @@
 import {
+  AlertTriangle,
   CheckCircle,
   Clock,
   Copy,
@@ -9,6 +10,17 @@ import {
   XCircle,
   Zap,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useNotification } from "@/contexts/NotificationContext";
 import {
   Dialog,
   DialogContent,
@@ -95,9 +107,11 @@ const OrderDetailPage = () => {
 
   const order = getOrder(orderId || "");
 
+  const { addNotification } = useNotification();
   const [isShippingDialogOpen, setIsShippingDialogOpen] = useState(false);
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
   const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
+  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [sellerMessage, setSellerMessage] = useState(
     order?.sellerMessage || ""
   );
@@ -160,6 +174,19 @@ const OrderDetailPage = () => {
   const handlePaymentExpired = () => {
     if (order && order.status === "pending") {
       cancelOrder(order.id, "Pembayaran tidak dilakukan dalam 1 jam");
+    }
+  };
+
+  const handleManualCancel = () => {
+    if (order && order.status === "pending") {
+      cancelOrder(order.id, "Dibatalkan oleh pembeli");
+      addNotification({
+        type: "order",
+        title: "Pesanan Dibatalkan",
+        description: `Pesanan ${order.id} telah dibatalkan oleh Anda.`,
+        link: `/order/${order.id}`,
+      });
+      setIsCancelDialogOpen(false);
     }
   };
 
@@ -567,6 +594,25 @@ const OrderDetailPage = () => {
           </div>
         </motion.div>
 
+        {/* Cancel Order Button for Pending */}
+        {isPending && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+            className="mx-4 mt-4"
+          >
+            <Button
+              variant="outline"
+              onClick={() => setIsCancelDialogOpen(true)}
+              className="w-full border-destructive text-destructive hover:bg-destructive/10"
+            >
+              <XCircle size={16} className="mr-2" />
+              Batalkan Pesanan
+            </Button>
+          </motion.div>
+        )}
+
         {/* Help Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -582,6 +628,30 @@ const OrderDetailPage = () => {
           </Link>
         </motion.div>
       </div>
+
+      {/* Cancel Order Confirmation Dialog */}
+      <AlertDialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
+        <AlertDialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="text-destructive" size={20} />
+              Batalkan Pesanan?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini tidak dapat dibatalkan.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Tidak, Kembali</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleManualCancel}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Ya, Batalkan
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Shipping Options Dialog */}
       <Dialog

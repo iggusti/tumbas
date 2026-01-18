@@ -1,12 +1,30 @@
-import { ChevronLeft, ChevronRight, Menu, ShoppingCart } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  HelpCircle,
+  Info,
+  Menu,
+  Package,
+  ReceiptText,
+  Search,
+  ShoppingCart,
+  Tag,
+  X,
+} from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavLink from "@/components/NavLink";
 import ProductCard from "@/components/ProductCard";
 import heroBanner from "@/assets/hero-banner.png";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
 import { useState } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 
 const ITEMS_PER_PAGE = 4;
 
@@ -86,10 +104,25 @@ const ProductSection = ({ title, products }: SectionProps) => {
   );
 };
 
+const menuItems = [
+  { icon: Search, label: "Cari Produk", path: "/search" },
+  { icon: Package, label: "Pesanan Saya", path: "/my-orders" },
+  { icon: Tag, label: "Promo & Voucher", path: "/promo-code" },
+  { icon: ReceiptText, label: "Cara Order", path: "/how-to-order" },
+  { icon: Info, label: "About Shop", path: "/about-shop" },
+  { icon: HelpCircle, label: "Customer Service", path: "/customer-service" },
+];
+
 const HomePage = () => {
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const sellingFast = products.filter((p) => p.originalPrice);
   const premiumProducts = products.filter((p) => p.isPremium);
   const classicProducts = products.filter((p) => !p.isPremium);
+
+  const handleShopNow = () => {
+    navigate("/search");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -110,7 +143,10 @@ const HomePage = () => {
                 className="text-foreground transform scale-x-[-1]"
               />
             </Link>
-            <button className="relative p-2">
+            <button 
+              onClick={() => setIsMenuOpen(true)}
+              className="relative p-2"
+            >
               <Menu size={20} className="text-foreground" />
             </button>
           </div>
@@ -139,7 +175,10 @@ const HomePage = () => {
               <h2 className="font-display text-center text-2xl font-bold text-white mb-3">
                 collection.
               </h2>
-              <button className="self-center px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-sm text-white text-sm font-medium hover:bg-white/30 transition-colors">
+              <button 
+                onClick={handleShopNow}
+                className="self-center px-6 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-sm text-white text-sm font-medium hover:bg-white/30 transition-colors"
+              >
                 Shop Now
               </button>
             </div>
@@ -239,6 +278,40 @@ const HomePage = () => {
       </main>
 
       <NavLink />
+
+      {/* Menu Sheet */}
+      <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+        <SheetContent side="right" className="w-[280px] p-0">
+          <SheetHeader className="p-4 border-b border-border/50">
+            <SheetTitle className="text-left font-display text-xl text-primary">
+              Menu
+            </SheetTitle>
+          </SheetHeader>
+          <nav className="p-2">
+            {menuItems.map((item, index) => (
+              <motion.div
+                key={item.path}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * index }}
+              >
+                <Link
+                  to={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
+                >
+                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
+                    <item.icon size={18} className="text-primary" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground">
+                    {item.label}
+                  </span>
+                </Link>
+              </motion.div>
+            ))}
+          </nav>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
