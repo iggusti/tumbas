@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, CreditCard, Wallet, Building2 } from "lucide-react";
+import { Check, CreditCard, Wallet, Building2, QrCode } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -9,13 +9,20 @@ import {
 
 interface PaymentMethod {
   id: string;
-  type: "card" | "ewallet" | "bank";
+  type: "card" | "ewallet" | "bank" | "qris";
   name: string;
   subtitle?: string;
   icon: typeof CreditCard;
 }
 
 export const paymentMethods: PaymentMethod[] = [
+  {
+    id: "qris",
+    type: "qris",
+    name: "QRIS",
+    subtitle: "Scan QR dengan aplikasi apapun",
+    icon: QrCode,
+  },
   {
     id: "mastercard",
     type: "card",
@@ -74,6 +81,7 @@ const PaymentMethodSelector = ({
   onSelectMethod,
 }: PaymentMethodSelectorProps) => {
   const groupedMethods = {
+    qris: paymentMethods.filter((m) => m.type === "qris"),
     card: paymentMethods.filter((m) => m.type === "card"),
     ewallet: paymentMethods.filter((m) => m.type === "ewallet"),
     bank: paymentMethods.filter((m) => m.type === "bank"),
@@ -92,6 +100,67 @@ const PaymentMethodSelector = ({
         </DialogHeader>
 
         <div className="space-y-4 mt-2">
+          {/* QRIS */}
+          <div>
+            <h4 className="text-sm font-medium text-muted-foreground mb-2">
+              QRIS (Recommended)
+            </h4>
+            <div className="space-y-2">
+              <AnimatePresence>
+                {groupedMethods.qris.map((method) => {
+                  const isSelected = selectedMethod === method.id;
+                  const Icon = method.icon;
+
+                  return (
+                    <motion.button
+                      key={method.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      onClick={() => handleSelect(method.id)}
+                      className={`w-full text-left p-3 rounded-xl border transition-colors ${
+                        isSelected
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                            isSelected ? "bg-primary/10" : "bg-muted"
+                          }`}
+                        >
+                          <Icon
+                            size={18}
+                            className={
+                              isSelected
+                                ? "text-primary"
+                                : "text-muted-foreground"
+                            }
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-foreground">
+                            {method.name}
+                          </p>
+                          {method.subtitle && (
+                            <p className="text-xs text-muted-foreground">
+                              {method.subtitle}
+                            </p>
+                          )}
+                        </div>
+                        {isSelected && (
+                          <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                            <Check size={12} className="text-primary-foreground" />
+                          </div>
+                        )}
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          </div>
+
           {/* Kartu Debit/Kredit */}
           <div>
             <h4 className="text-sm font-medium text-muted-foreground mb-2">

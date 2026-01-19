@@ -1,17 +1,24 @@
-import { Building2, Clock, Copy, CreditCard, Wallet } from "lucide-react";
+import { Building2, Clock, Copy, CreditCard, QrCode, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { formatPrice } from "@/lib/formatters";
 import { useToast } from "@/hooks/use-toast";
+import QRISPayment from "./QRISPayment";
 
 interface PaymentInstructionsProps {
   paymentMethod: string;
   total: number;
   createdAt: string;
+  orderId: string;
   onExpired?: () => void;
 }
 
 const PAYMENT_DETAILS = {
+  qris: {
+    type: "qris",
+    name: "QRIS",
+    icon: QrCode,
+  },
   bca: {
     type: "bank",
     name: "Transfer Bank BCA",
@@ -54,6 +61,7 @@ const PaymentInstructions = ({
   paymentMethod,
   total,
   createdAt,
+  orderId,
   onExpired,
 }: PaymentInstructionsProps) => {
   const { toast } = useToast();
@@ -101,6 +109,39 @@ const PaymentInstructions = ({
   };
 
   if (!paymentInfo) return null;
+
+  // QRIS Payment - show QR code component
+  if (paymentInfo.type === "qris") {
+    return (
+      <div className="space-y-4">
+        {/* Countdown Timer */}
+        <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800 flex items-center justify-center">
+              <Clock size={20} className="text-amber-600 dark:text-amber-400" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                Selesaikan pembayaran sebelum
+              </p>
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+                {formatTime(timeLeft)}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* QRIS Payment Component */}
+        <div className="p-4 bg-card rounded-xl border border-border/50">
+          <QRISPayment
+            orderId={orderId}
+            total={total}
+            createdAt={createdAt}
+          />
+        </div>
+      </div>
+    );
+  }
 
   const Icon = paymentInfo.icon;
 

@@ -15,6 +15,7 @@ import {
   Copy,
   CreditCard,
   MessageSquare,
+  MapPin,
   Package,
   Truck,
   XCircle,
@@ -339,6 +340,7 @@ const OrderDetailPage = () => {
               paymentMethod={order.paymentMethod}
               total={order.total}
               createdAt={order.createdAt}
+              orderId={order.id}
               onExpired={handlePaymentExpired}
             />
           </motion.div>
@@ -403,9 +405,20 @@ const OrderDetailPage = () => {
           transition={{ delay: 0.2 }}
           className="mx-4 mt-4 p-4 bg-card rounded-xl border border-border/50"
         >
-          <h2 className="text-sm font-semibold text-foreground mb-4">
-            Status Pesanan
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-semibold text-foreground">
+              Status Pesanan
+            </h2>
+            {(order.status === "shipped" || order.status === "processing" || order.status === "delivered") && (
+              <Link
+                to={`/tracking/${order.id}`}
+                className="flex items-center gap-1 text-xs text-primary font-medium hover:underline"
+              >
+                <MapPin size={14} />
+                Lacak Pengiriman
+              </Link>
+            )}
+          </div>
           <div className="space-y-4">
             {timeline.map((step, index) => (
               <div key={index} className="flex gap-3">
