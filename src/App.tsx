@@ -25,6 +25,7 @@ import MyOrdersPage from "./pages/MyOrdersPage";
 import NotFound from "./pages/NotFound";
 import NotificationPage from "./pages/NotificationPage";
 import OrderDetailPage from "./pages/OrderDetailPage";
+import TrackingPage from "./pages/TrackingPage";
 import { OrderProvider } from "@/contexts/OrderContext";
 import PaymentMethodsPage from "./pages/PaymentMethodsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
@@ -115,6 +116,7 @@ const AppContent = ({ showSplash }: { showSplash: boolean }) => {
                 />
                 <Route path="/my-orders" element={<MyOrdersPage />} />
                 <Route path="/order/:orderId" element={<OrderDetailPage />} />
+                <Route path="/tracking/:orderId" element={<TrackingPage />} />
                 <Route path="/promo-code" element={<PromoCodePage />} />
                 <Route
                   path="/customer-service"
