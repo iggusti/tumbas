@@ -86,7 +86,7 @@ const CheckoutPage = () => {
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     string | null
-  >(null);
+  >("bca");
   const [sellerMessage, setSellerMessage] = useState("");
   const [messageError, setMessageError] = useState("");
   const [selectedShipping, setSelectedShipping] = useState(SHIPPING_OPTIONS[0]);

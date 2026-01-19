@@ -520,21 +520,19 @@ const OrderDetailPage = () => {
         )}
 
         {/* Seller Message */}
-        {order.sellerMessage && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45 }}
-            className="mx-4 mt-4 p-4 bg-card rounded-xl border border-border/50"
-          >
-            <h2 className="text-sm font-semibold text-foreground mb-3">
-              Catatan untuk Penjual
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {order.sellerMessage}
-            </p>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45 }}
+          className="mx-4 mt-4 p-4 bg-card rounded-xl border border-border/50"
+        >
+          <h2 className="text-sm font-semibold text-foreground mb-3">
+            Catatan untuk Penjual
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {order.sellerMessage || "-"}
+          </p>
+        </motion.div>
 
         {/* Payment Summary */}
         <motion.div
