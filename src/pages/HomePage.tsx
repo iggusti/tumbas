@@ -283,7 +283,7 @@ const HomePage = () => {
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
         <SheetContent
           side="right"
-          className="w-full max-w-[320px] sm:max-w-[400px] p-0"
+          className="w-full max-w-[280px] p-0"
         >
           <SheetHeader className="p-4 sm:p-6 border-b border-border/50">
             <SheetTitle className="text-left font-display text-xl sm:text-2xl text-primary">
