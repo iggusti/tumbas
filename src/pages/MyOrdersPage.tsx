@@ -1,63 +1,23 @@
-import { CheckCircle, Clock, Package, Truck, XCircle } from "lucide-react";
+import { Package } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Order, useOrder } from "@/contexts/OrderContext";
 
 import EmptyState from "@/components/EmptyState";
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
-import { formatPrice } from "@/lib/formatters";
+import { formatPrice, formatDateShort } from "@/lib/formatters";
+import { ORDER_STATUS_CONFIG } from "@/data/constants";
+import { getProductById } from "@/lib/product-utils";
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
-
-const statusConfig = {
-  pending: {
-    label: "Menunggu",
-    icon: Clock,
-    color: "text-amber-600 bg-amber-100",
-  },
-  processing: {
-    label: "Diproses",
-    icon: Clock,
-    color: "text-amber-600 bg-amber-100",
-  },
-  shipped: {
-    label: "Dikirim",
-    icon: Truck,
-    color: "text-blue-600 bg-blue-100",
-  },
-  delivered: {
-    label: "Diterima",
-    icon: CheckCircle,
-    color: "text-green-600 bg-green-100",
-  },
-  cancelled: {
-    label: "Dibatalkan",
-    icon: XCircle,
-    color: "text-red-600 bg-red-100",
-  },
-};
 
 const MyOrdersPage = () => {
   const navigate = useNavigate();
   const { orders } = useOrder();
 
-  const getProduct = (productId: string) => {
-    return products.find((p) => p.id === productId);
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  };
-
   const getOrderItems = (order: Order) => {
     return order.items
       .map((item) => ({
-        product: getProduct(item.productId),
+        product: getProductById(item.productId),
         quantity: item.quantity,
       }))
       .filter((item) => item.product);
@@ -79,7 +39,7 @@ const MyOrdersPage = () => {
             />
           ) : (
             orders.map((order, index) => {
-              const status = statusConfig[order.status];
+              const status = ORDER_STATUS_CONFIG[order.status];
               const StatusIcon = status.icon;
               const orderItems = getOrderItems(order);
 
@@ -98,7 +58,7 @@ const MyOrdersPage = () => {
                         {order.id}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {formatDate(order.createdAt)}
+                        {formatDateShort(order.createdAt)}
                       </p>
                     </div>
                     <div
@@ -106,7 +66,7 @@ const MyOrdersPage = () => {
                     >
                       <StatusIcon size={14} />
                       <span className="text-xs font-medium">
-                        {status.label}
+                        {status.shortLabel}
                       </span>
                     </div>
                   </div>

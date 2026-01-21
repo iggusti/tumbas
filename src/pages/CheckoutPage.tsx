@@ -6,10 +6,7 @@ import {
   HandCoins,
   MapPin,
   MessageSquare,
-  Package,
   Tag,
-  Truck,
-  Zap,
   AlertTriangle,
 } from "lucide-react";
 import {
@@ -40,7 +37,8 @@ import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import { Textarea } from "@/components/ui/textarea";
 import { formatPrice } from "@/lib/formatters";
-import { products } from "@/data/products";
+import { SHIPPING_OPTIONS } from "@/data/constants";
+import { getProductById } from "@/lib/product-utils";
 import { sellerMessageSchema } from "@/lib/validations";
 import { toast } from "sonner";
 import { useCart } from "@/contexts/CartContext";
@@ -53,30 +51,6 @@ interface CheckoutItem {
   productId: string;
   quantity: number;
 }
-
-const SHIPPING_OPTIONS = [
-  {
-    id: "regular",
-    name: "Regular",
-    price: 18000,
-    eta: "3-5 hari",
-    icon: Package,
-  },
-  {
-    id: "express",
-    name: "Express",
-    price: 35000,
-    eta: "1-2 hari",
-    icon: Truck,
-  },
-  {
-    id: "same-day",
-    name: "Same Day",
-    price: 50000,
-    eta: "Hari ini",
-    icon: Zap,
-  },
-];
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -101,16 +75,12 @@ const CheckoutPage = () => {
   >("bca");
   const [sellerMessage, setSellerMessage] = useState("");
   const [messageError, setMessageError] = useState("");
-  const [selectedShipping, setSelectedShipping] = useState(SHIPPING_OPTIONS[0]);
+  const [selectedShipping, setSelectedShipping] = useState<(typeof SHIPPING_OPTIONS)[number]>(SHIPPING_OPTIONS[0]);
 
   const selectedAddress = getSelectedAddress();
 
-  const getProduct = (productId: string) => {
-    return products.find((p) => p.id === productId);
-  };
-
   const subtotal = checkoutItems.reduce((sum, item) => {
-    const product = getProduct(item.productId);
+    const product = getProductById(item.productId);
     return sum + (product?.price || 0) * item.quantity;
   }, 0);
 
@@ -142,7 +112,7 @@ const CheckoutPage = () => {
     setIsMessageDialogOpen(false);
   };
 
-  const handleSelectShipping = (option: typeof selectedShipping) => {
+  const handleSelectShipping = (option: (typeof SHIPPING_OPTIONS)[number]) => {
     setSelectedShipping(option);
     setIsShippingDialogOpen(false);
   };
@@ -173,7 +143,7 @@ const CheckoutPage = () => {
   const handleBuyNow = () => {
     // Create order items
     const orderItems = checkoutItems.map((item) => {
-      const product = getProduct(item.productId);
+      const product = getProductById(item.productId);
       return {
         productId: item.productId,
         quantity: item.quantity,
@@ -273,7 +243,7 @@ const CheckoutPage = () => {
 
         {/* Products */}
         {checkoutItems.map((item, index) => {
-          const product = getProduct(item.productId);
+          const product = getProductById(item.productId);
           if (!product) return null;
 
           return (

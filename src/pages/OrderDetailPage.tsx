@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import {
   AlertTriangle,
-  CheckCircle,
-  Clock,
   Copy,
   CreditCard,
   MessageSquare,
@@ -19,7 +17,6 @@ import {
   Package,
   Truck,
   XCircle,
-  Zap,
 } from "lucide-react";
 import {
   Dialog,
@@ -39,66 +36,15 @@ import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import PaymentInstructions from "@/components/PaymentInstructions";
 import { Textarea } from "@/components/ui/textarea";
-import { formatPrice } from "@/lib/formatters";
+import { formatPrice, formatDate } from "@/lib/formatters";
+import { ORDER_STATUS_CONFIG, SHIPPING_OPTIONS } from "@/data/constants";
+import { getProductById } from "@/lib/product-utils";
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
 import { sellerMessageSchema } from "@/lib/validations";
 import { useNotification } from "@/contexts/NotificationContext";
 import { useOrder } from "@/contexts/OrderContext";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-
-const statusConfig = {
-  pending: {
-    label: "Menunggu Pembayaran",
-    icon: Clock,
-    color: "text-amber-600 bg-amber-100",
-  },
-  processing: {
-    label: "Sedang Diproses",
-    icon: Clock,
-    color: "text-amber-600 bg-amber-100",
-  },
-  shipped: {
-    label: "Dalam Pengiriman",
-    icon: Truck,
-    color: "text-blue-600 bg-blue-100",
-  },
-  delivered: {
-    label: "Diterima",
-    icon: CheckCircle,
-    color: "text-green-600 bg-green-100",
-  },
-  cancelled: {
-    label: "Dibatalkan",
-    icon: XCircle,
-    color: "text-red-600 bg-red-100",
-  },
-};
-
-const SHIPPING_OPTIONS = [
-  {
-    id: "regular",
-    name: "Regular",
-    price: 18000,
-    eta: "3-5 hari",
-    icon: Package,
-  },
-  {
-    id: "express",
-    name: "Express",
-    price: 35000,
-    eta: "1-2 hari",
-    icon: Truck,
-  },
-  {
-    id: "same-day",
-    name: "Same Day",
-    price: 50000,
-    eta: "Hari ini",
-    icon: Zap,
-  },
-];
 
 const OrderDetailPage = () => {
   const { orderId } = useParams();
@@ -118,26 +64,11 @@ const OrderDetailPage = () => {
   );
   const [messageError, setMessageError] = useState("");
 
-  const getProduct = (productId: string) => {
-    return products.find((p) => p.id === productId);
-  };
-
   const getAddress = (addressId: string) => {
     return addresses.find((a) => a.id === addressId);
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  const handleSelectShipping = (option: (typeof SHIPPING_OPTIONS)[0]) => {
+  const handleSelectShipping = (option: (typeof SHIPPING_OPTIONS)[number]) => {
     if (order) {
       const newTotal = order.subtotal - order.discount + option.price;
       updateOrder(order.id, {
@@ -206,7 +137,7 @@ const OrderDetailPage = () => {
     );
   }
 
-  const status = statusConfig[order.status];
+  const status = ORDER_STATUS_CONFIG[order.status];
   const StatusIcon = status.icon;
   const shippingAddress = getAddress(order.addressId);
   const isPending = order.status === "pending";
@@ -216,48 +147,6 @@ const OrderDetailPage = () => {
   const currentShipping =
     SHIPPING_OPTIONS.find((s) => s.name === order.shippingOption) ||
     SHIPPING_OPTIONS[0];
-
-  const timeline = [
-    {
-      status: "Pesanan dibuat",
-      date: formatDate(order.createdAt),
-      completed: true,
-    },
-    {
-      status: "Pembayaran dikonfirmasi",
-      date:
-        order.status !== "pending" && order.status !== "cancelled"
-          ? formatDate(order.createdAt)
-          : "",
-      completed: order.status !== "pending" && order.status !== "cancelled",
-    },
-    {
-      status: "Pesanan diproses",
-      date:
-        order.status === "processing" ||
-        order.status === "shipped" ||
-        order.status === "delivered"
-          ? formatDate(order.createdAt)
-          : "",
-      completed:
-        order.status === "processing" ||
-        order.status === "shipped" ||
-        order.status === "delivered",
-    },
-    {
-      status: "Pesanan dikirim",
-      date:
-        order.status === "shipped" || order.status === "delivered"
-          ? formatDate(order.createdAt)
-          : "",
-      completed: order.status === "shipped" || order.status === "delivered",
-    },
-    {
-      status: "Pesanan diterima",
-      date: order.status === "delivered" ? formatDate(order.createdAt) : "",
-      completed: order.status === "delivered",
-    },
-  ];
 
   const copyOrderId = () => {
     navigator.clipboard.writeText(order.id);
@@ -411,7 +300,7 @@ const OrderDetailPage = () => {
           </h2>
           <div className="space-y-3">
             {order.items.map((item, index) => {
-              const product = getProduct(item.productId);
+              const product = getProductById(item.productId);
               if (!product) return null;
               return (
                 <Link
