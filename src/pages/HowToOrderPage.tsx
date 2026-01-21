@@ -45,7 +45,7 @@ const steps = [
     icon: Truck,
     title: "Pengiriman",
     description:
-      "Setelah pembayaran dikonfirmasi, pesanan akan diproses dan dikirim ke alamat Anda. Lacak status pengiriman di halaman pesanan.",
+      "Setelah pembayaran dikonfirmasi, pesanan akan diproses dan dikirim ke alamat Anda. Lacak status pengiriman di halaman lacak pengiriman.",
   },
   {
     id: 6,
