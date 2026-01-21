@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import NavLink from "@/components/NavLink";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
+import { formatPrice } from "@/lib/formatters";
 import { toast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
@@ -36,14 +37,6 @@ const ProductDetailPage = () => {
       </div>
     );
   }
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
 
   const handleAddToCart = () => {
     addToCart(product.id, 1);

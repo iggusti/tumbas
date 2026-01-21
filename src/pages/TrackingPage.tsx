@@ -10,6 +10,7 @@ import { Link, useParams } from "react-router-dom";
 
 import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
+import { formatDate } from "@/lib/formatters";
 import { motion } from "framer-motion";
 import { useOrder } from "@/contexts/OrderContext";
 
@@ -33,17 +34,6 @@ const TrackingPage = () => {
       </div>
     );
   }
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const getTrackingSteps = () => {
     const createdDate = new Date(order.createdAt);

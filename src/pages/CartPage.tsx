@@ -22,6 +22,7 @@ import NavLink from "@/components/NavLink";
 import PageHeader from "@/components/PageHeader";
 import { formatPrice } from "@/lib/formatters";
 import { products } from "@/data/products";
+import { getProductById } from "@/lib/product-utils";
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
 import { useVoucher } from "@/contexts/VoucherContext";
