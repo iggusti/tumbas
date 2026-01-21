@@ -7,6 +7,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    pool: "threads",
   },
   resolve: {
     alias: {
@@ -14,6 +15,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["html-encoding-sniffer", "@exodus/bytes"],
+    exclude: ["html-encoding-sniffer", "@exodus/bytes"],
   },
 });
