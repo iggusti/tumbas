@@ -10,6 +10,7 @@ import {
   Tag,
   Truck,
   Zap,
+  AlertTriangle,
 } from "lucide-react";
 import {
   Dialog,
@@ -17,6 +18,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PaymentMethodSelector, {
   paymentMethods,
@@ -84,6 +95,7 @@ const CheckoutPage = () => {
   const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
   const [isShippingDialogOpen, setIsShippingDialogOpen] = useState(false);
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     string | null
   >("bca");
@@ -139,7 +151,7 @@ const CheckoutPage = () => {
     return paymentMethods.find((m) => m.id === selectedPaymentMethod);
   };
 
-  const handleBuyNow = () => {
+  const handleConfirmBuy = () => {
     if (!selectedAddress) {
       toast.error("Pilih alamat pengiriman terlebih dahulu");
       return;
@@ -155,6 +167,10 @@ const CheckoutPage = () => {
       return;
     }
 
+    setIsConfirmDialogOpen(true);
+  };
+
+  const handleBuyNow = () => {
     // Create order items
     const orderItems = checkoutItems.map((item) => {
       const product = getProduct(item.productId);
@@ -168,7 +184,7 @@ const CheckoutPage = () => {
     // Add order to context
     const orderId = addOrder({
       items: orderItems,
-      addressId: selectedAddress.id,
+      addressId: selectedAddress!.id,
       shippingOption: selectedShipping.name,
       shippingCost: selectedShipping.price,
       subtotal,
@@ -176,7 +192,7 @@ const CheckoutPage = () => {
       total,
       sellerMessage: sellerMessage || undefined,
       voucherCode: selectedVoucher?.code,
-      paymentMethod: selectedPaymentMethod,
+      paymentMethod: selectedPaymentMethod!,
       status: "pending",
     });
 
@@ -192,6 +208,7 @@ const CheckoutPage = () => {
     clearCheckedItems();
 
     // Navigate to success/orders page
+    setIsConfirmDialogOpen(false);
     toast.success("Pesanan berhasil dibuat!");
     navigate("/my-orders");
   };
@@ -748,7 +765,7 @@ const CheckoutPage = () => {
           </div>
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={handleBuyNow}
+            onClick={handleConfirmBuy}
             className="w-50 rounded-sm btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <HandCoins
@@ -759,6 +776,49 @@ const CheckoutPage = () => {
           </motion.button>
         </div>
       </motion.div>
+
+      {/* Confirmation Dialog */}
+      <AlertDialog open={isConfirmDialogOpen} onOpenChange={setIsConfirmDialogOpen}>
+        <AlertDialogContent className="w-[calc(100%-2rem)] max-w-[400px] rounded-xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="text-amber-500" size={20} />
+              Konfirmasi Pesanan
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-left">
+              <div className="space-y-3 mt-2">
+                <div className="p-3 bg-muted/50 rounded-lg space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Pengiriman ke:</span>
+                    <span className="font-medium text-foreground">{selectedAddress?.name}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Metode Pengiriman:</span>
+                    <span className="font-medium text-foreground">{selectedShipping.name}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Pembayaran:</span>
+                    <span className="font-medium text-foreground">{getSelectedPaymentMethod()?.name}</span>
+                  </div>
+                  <div className="flex justify-between text-sm pt-2 border-t border-border">
+                    <span className="text-muted-foreground">Total Pembayaran:</span>
+                    <span className="font-semibold text-primary">{formatPrice(total)}</span>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Apakah Anda yakin ingin melanjutkan pesanan ini?
+                </p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogCancel className="flex-1">Cek Ulang</AlertDialogCancel>
+            <AlertDialogAction onClick={handleBuyNow} className="flex-1 bg-primary hover:bg-primary/90">
+              Ya, Beli Sekarang
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <NavLink />
     </div>

@@ -398,54 +398,6 @@ const OrderDetailPage = () => {
           </motion.div>
         )}
 
-        {/* Order Timeline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mx-4 mt-4 p-4 bg-card rounded-xl border border-border/50"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-semibold text-foreground">
-              Status Pesanan
-            </h2>
-            {(order.status === "shipped" || order.status === "processing" || order.status === "delivered") && (
-              <Link
-                to={`/tracking/${order.id}`}
-                className="flex items-center gap-1 text-xs text-primary font-medium hover:underline"
-              >
-                <MapPin size={14} />
-                Lacak Pengiriman
-              </Link>
-            )}
-          </div>
-          <div className="space-y-4">
-            {timeline.map((step, index) => (
-              <div key={index} className="flex gap-3">
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`w-3 h-3 rounded-full ${step.completed ? "bg-primary" : "bg-muted-foreground/30"}`}
-                  />
-                  {index < timeline.length - 1 && (
-                    <div
-                      className={`w-0.5 h-8 ${step.completed ? "bg-primary" : "bg-muted-foreground/30"}`}
-                    />
-                  )}
-                </div>
-                <div className="flex-1 -mt-0.5">
-                  <p
-                    className={`text-sm font-medium ${step.completed ? "text-foreground" : "text-muted-foreground"}`}
-                  >
-                    {step.status}
-                  </p>
-                  {step.date && (
-                    <p className="text-xs text-muted-foreground">{step.date}</p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
 
         {/* Order Items */}
         <motion.div
@@ -529,6 +481,24 @@ const OrderDetailPage = () => {
                 </p>
               </div>
             </div>
+          </motion.div>
+        )}
+
+        {/* Track Shipment Button */}
+        {(order.status === "processing" || order.status === "shipped" || order.status === "delivered") && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.42 }}
+            className="mx-4 mt-4"
+          >
+            <Link
+              to={`/tracking/${order.id}`}
+              className="flex items-center justify-center gap-2 w-full py-3 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              <MapPin size={16} />
+              Lacak Pengiriman
+            </Link>
           </motion.div>
         )}
 
