@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { FavoritesProvider, useFavorites } from "./FavoritesContext";
 
 // Test component that uses the context
@@ -20,6 +20,9 @@ const TestComponent = () => {
       </div>
       <div data-testid="is-favorite-2">
         {isFavorite("2") ? "true" : "false"}
+      </div>
+      <div data-testid="is-favorite-3">
+        {isFavorite("3") ? "true" : "false"}
       </div>
       <button onClick={() => addToFavorites("2")} data-testid="add-favorite">
         Add Favorite
@@ -60,8 +63,9 @@ describe("FavoritesContext", () => {
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("3");
     expect(screen.getByTestId("is-favorite-2")).toHaveTextContent("false");
 
-    const addButton = screen.getByTestId("add-favorite");
-    addButton.click();
+    act(() => {
+      screen.getByTestId("add-favorite").click();
+    });
 
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("4");
     expect(screen.getByTestId("is-favorite-2")).toHaveTextContent("true");
@@ -76,11 +80,14 @@ describe("FavoritesContext", () => {
 
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("3");
 
-    const addButton = screen.getByTestId("add-favorite");
-    addButton.click(); // Add '2'
+    act(() => {
+      screen.getByTestId("add-favorite").click(); // Add '2'
+    });
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("4");
 
-    addButton.click(); // Try to add '2' again
+    act(() => {
+      screen.getByTestId("add-favorite").click(); // Try to add '2' again
+    });
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("4"); // Should remain 4
   });
 
@@ -94,8 +101,9 @@ describe("FavoritesContext", () => {
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("3");
     expect(screen.getByTestId("is-favorite-1")).toHaveTextContent("true");
 
-    const removeButton = screen.getByTestId("remove-favorite");
-    removeButton.click();
+    act(() => {
+      screen.getByTestId("remove-favorite").click();
+    });
 
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("2");
     expect(screen.getByTestId("is-favorite-1")).toHaveTextContent("false");
@@ -110,13 +118,16 @@ describe("FavoritesContext", () => {
 
     expect(screen.getByTestId("is-favorite-3")).toHaveTextContent("true"); // '3' is in default favorites
 
-    const toggleButton = screen.getByTestId("toggle-favorite");
-    toggleButton.click(); // Remove '3'
+    act(() => {
+      screen.getByTestId("toggle-favorite").click(); // Remove '3'
+    });
 
     expect(screen.getByTestId("is-favorite-3")).toHaveTextContent("false");
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("2");
 
-    toggleButton.click(); // Add '3' back
+    act(() => {
+      screen.getByTestId("toggle-favorite").click(); // Add '3' back
+    });
 
     expect(screen.getByTestId("is-favorite-3")).toHaveTextContent("true");
     expect(screen.getByTestId("favorites-count")).toHaveTextContent("3");

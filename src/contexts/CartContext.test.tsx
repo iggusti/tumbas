@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { CartProvider, useCart } from "./CartContext";
 
 // Test component that uses the context
@@ -66,8 +66,9 @@ describe("CartContext", () => {
     expect(screen.getByTestId("cart-count")).toHaveTextContent("3");
 
     // Add new item
-    const addButton = screen.getByTestId("add-to-cart");
-    addButton.click();
+    act(() => {
+      screen.getByTestId("add-to-cart").click();
+    });
 
     expect(screen.getByTestId("cart-count")).toHaveTextContent("4");
   });
@@ -79,11 +80,10 @@ describe("CartContext", () => {
       </CartProvider>,
     );
 
-    // Initially item with productId '1' has quantity 2
-    // When we add 1 more, it should become 3
-    const addButton = screen.getByTestId("add-to-cart");
     // This adds to 'test-product', not '1', so cart count increases by 1
-    addButton.click();
+    act(() => {
+      screen.getByTestId("add-to-cart").click();
+    });
     expect(screen.getByTestId("cart-count")).toHaveTextContent("4");
   });
 
@@ -94,10 +94,10 @@ describe("CartContext", () => {
       </CartProvider>,
     );
 
-    const updateButton = screen.getByTestId("update-quantity");
-    updateButton.click();
+    act(() => {
+      screen.getByTestId("update-quantity").click();
+    });
 
-    // This should increase quantity of item with productId '1' from 2 to 3
     // Cart count should remain the same since we're just updating quantity
     expect(screen.getByTestId("cart-count")).toHaveTextContent("3");
   });
@@ -111,8 +111,9 @@ describe("CartContext", () => {
 
     expect(screen.getByTestId("cart-count")).toHaveTextContent("3");
 
-    const removeButton = screen.getByTestId("remove-item");
-    removeButton.click();
+    act(() => {
+      screen.getByTestId("remove-item").click();
+    });
 
     expect(screen.getByTestId("cart-count")).toHaveTextContent("2");
   });
@@ -124,8 +125,9 @@ describe("CartContext", () => {
       </CartProvider>,
     );
 
-    const toggleButton = screen.getByTestId("toggle-check");
-    toggleButton.click();
+    act(() => {
+      screen.getByTestId("toggle-check").click();
+    });
 
     // Cart count should remain the same, just checked status changes
     expect(screen.getByTestId("cart-count")).toHaveTextContent("3");
@@ -140,8 +142,9 @@ describe("CartContext", () => {
 
     expect(screen.getByTestId("cart-count")).toHaveTextContent("3");
 
-    const clearButton = screen.getByTestId("clear-cart");
-    clearButton.click();
+    act(() => {
+      screen.getByTestId("clear-cart").click();
+    });
 
     expect(screen.getByTestId("cart-count")).toHaveTextContent("0");
   });
@@ -155,8 +158,9 @@ describe("CartContext", () => {
 
     expect(screen.getByTestId("cart-count")).toHaveTextContent("3");
 
-    const clearCheckedButton = screen.getByTestId("clear-checked");
-    clearCheckedButton.click();
+    act(() => {
+      screen.getByTestId("clear-checked").click();
+    });
 
     // Since all default items are checked, this should clear all items
     expect(screen.getByTestId("cart-count")).toHaveTextContent("0");
