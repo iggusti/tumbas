@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { AddressProvider, useAddress, getAddressIcon } from "./AddressContext";
 
 // Test component that uses the context
@@ -82,8 +82,9 @@ describe("AddressContext", () => {
 
     expect(screen.getByTestId("addresses-count")).toHaveTextContent("2");
 
-    const addButton = screen.getByTestId("add-address");
-    addButton.click();
+    act(() => {
+      screen.getByTestId("add-address").click();
+    });
 
     expect(screen.getByTestId("addresses-count")).toHaveTextContent("3");
   });
@@ -99,8 +100,9 @@ describe("AddressContext", () => {
       "Rumah",
     );
 
-    const updateButton = screen.getByTestId("update-address");
-    updateButton.click();
+    act(() => {
+      screen.getByTestId("update-address").click();
+    });
 
     expect(screen.getByTestId("selected-address-label")).toHaveTextContent(
       "Updated Home",
@@ -116,8 +118,9 @@ describe("AddressContext", () => {
 
     expect(screen.getByTestId("addresses-count")).toHaveTextContent("2");
 
-    const deleteButton = screen.getByTestId("delete-address");
-    deleteButton.click();
+    act(() => {
+      screen.getByTestId("delete-address").click();
+    });
 
     expect(screen.getByTestId("addresses-count")).toHaveTextContent("1");
   });
@@ -131,8 +134,9 @@ describe("AddressContext", () => {
 
     expect(screen.getByTestId("selected-address-id")).toHaveTextContent("1");
 
-    const setDefaultButton = screen.getByTestId("set-default");
-    setDefaultButton.click();
+    act(() => {
+      screen.getByTestId("set-default").click();
+    });
 
     expect(screen.getByTestId("selected-address-id")).toHaveTextContent("2");
   });
@@ -146,8 +150,9 @@ describe("AddressContext", () => {
 
     expect(screen.getByTestId("selected-address-id")).toHaveTextContent("1");
 
-    const selectButton = screen.getByTestId("select-address");
-    selectButton.click();
+    act(() => {
+      screen.getByTestId("select-address").click();
+    });
 
     expect(screen.getByTestId("selected-address-id")).toHaveTextContent("2");
   });

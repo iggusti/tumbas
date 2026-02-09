@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { ProfileProvider, useProfile } from "./ProfileContext";
 
 // Test component that uses the context
@@ -43,8 +43,9 @@ describe("ProfileContext", () => {
       "Fatiha Barkah Mubyara",
     );
 
-    const updateButton = screen.getByTestId("update-profile");
-    updateButton.click();
+    act(() => {
+      screen.getByTestId("update-profile").click();
+    });
 
     expect(screen.getByTestId("profile-name")).toHaveTextContent(
       "Updated Name",
