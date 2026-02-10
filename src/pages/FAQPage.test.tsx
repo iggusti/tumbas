@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import FAQPage from "./FAQPage";
 
@@ -15,14 +15,14 @@ vi.mock("@/components/PageHeader", () => ({
 }));
 
 vi.mock("@/components/ui/accordion", () => ({
-  Accordion: ({ children }: any) => (
-    <div data-testid="accordion">{children}</div>
+  Accordion: ({ children, ...props }: any) => (
+    <div data-testid="accordion" {...props}>{children}</div>
   ),
   AccordionContent: ({ children }: any) => (
     <div data-testid="accordion-content">{children}</div>
   ),
-  AccordionItem: ({ children }: any) => (
-    <div data-testid="accordion-item">{children}</div>
+  AccordionItem: ({ children, ...props }: any) => (
+    <div data-testid="accordion-item" {...props}>{children}</div>
   ),
   AccordionTrigger: ({ children }: any) => (
     <button data-testid="accordion-trigger">{children}</button>
@@ -67,7 +67,7 @@ describe("FAQPage", () => {
     expect(screen.getByText("Pemesanan")).toBeInTheDocument();
     expect(screen.getByText("Pembayaran")).toBeInTheDocument();
     expect(screen.getByText("Pengiriman")).toBeInTheDocument();
-    expect(screen.getByText("Pengembalian")).toBeInTheDocument();
+    expect(screen.getByText("Produk")).toBeInTheDocument();
   });
 
   it("should render FAQ questions", () => {
@@ -77,15 +77,9 @@ describe("FAQPage", () => {
       </MemoryRouter>,
     );
 
-    expect(
-      screen.getByText("Bagaimana cara memesan produk?"),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("Metode pembayaran apa saja yang tersedia?"),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("Berapa lama waktu pengiriman?"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Bagaimana cara memesan produk?")).toBeInTheDocument();
+    expect(screen.getByText("Metode pembayaran apa saja yang tersedia?")).toBeInTheDocument();
+    expect(screen.getByText("Berapa lama waktu pengiriman?")).toBeInTheDocument();
   });
 
   it("should render accordion components", () => {
@@ -95,11 +89,12 @@ describe("FAQPage", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByTestId("accordion")).toBeInTheDocument();
-    expect(screen.getAllByTestId("accordion-item")).toHaveLength(4); // 4 categories
+    // 4 categories = 4 accordions, each with 3 items = 12 accordion items
+    expect(screen.getAllByTestId("accordion")).toHaveLength(4);
+    expect(screen.getAllByTestId("accordion-item")).toHaveLength(12);
   });
 
-  it("should expand accordion items when clicked", () => {
+  it("should render accordion triggers for each question", () => {
     render(
       <MemoryRouter>
         <FAQPage />
@@ -107,23 +102,17 @@ describe("FAQPage", () => {
     );
 
     const triggers = screen.getAllByTestId("accordion-trigger");
-    expect(triggers.length).toBeGreaterThan(0);
-
-    // Click first trigger
-    fireEvent.click(triggers[0]);
-
-    // Should show content
-    expect(screen.getByTestId("accordion-content")).toBeInTheDocument();
+    expect(triggers).toHaveLength(12);
   });
 
-  it("should render contact information", () => {
+  it("should render contact CTA", () => {
     render(
       <MemoryRouter>
         <FAQPage />
       </MemoryRouter>,
     );
 
-    expect(screen.getByText(/customer service|kontak/i)).toBeInTheDocument();
+    expect(screen.getByText("Hubungi Customer Service →")).toBeInTheDocument();
   });
 
   it("should have proper styling classes", () => {
@@ -134,6 +123,6 @@ describe("FAQPage", () => {
     );
 
     const mainContainer = container.firstChild as HTMLElement;
-    expect(mainContainer).toHaveClass("min-h-screen", "bg-background");
+    expect(mainContainer).toHaveClass("mobile-container");
   });
 });

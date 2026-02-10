@@ -13,6 +13,11 @@ vi.mock("@/components/PageHeader", () => ({
   ),
 }));
 
+vi.mock("lucide-react", () => {
+  const icon = (props: any) => <svg {...props} />;
+  return { Check: icon, Copy: icon, Gift: icon, Percent: icon };
+});
+
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
@@ -26,8 +31,7 @@ describe("PromoCodePage", () => {
         <PromoCodePage />
       </MemoryRouter>,
     );
-
-    expect(screen.getByTestId("page-header")).toHaveTextContent("Promo Codes");
+    expect(screen.getByTestId("page-header")).toHaveTextContent("Promo Code");
   });
 
   it("should render navigation link", () => {
@@ -36,7 +40,6 @@ describe("PromoCodePage", () => {
         <PromoCodePage />
       </MemoryRouter>,
     );
-
     expect(screen.getByTestId("nav-link")).toBeInTheDocument();
   });
 });

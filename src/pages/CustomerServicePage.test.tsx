@@ -14,27 +14,25 @@ vi.mock("@/components/PageHeader", () => ({
   ),
 }));
 
-// Mock lucide-react icons
-vi.mock("lucide-react", () => ({
-  Phone: () => <span>Phone</span>,
-  Mail: () => <span>Mail</span>,
-  MessageCircle: () => <span>MessageCircle</span>,
-  Clock: () => <span>Clock</span>,
-  ChevronRight: () => <span>ChevronRight</span>,
-  HelpCircle: () => <span>HelpCircle</span>,
-  FileText: () => <span>FileText</span>,
-  Package: () => <span>Package</span>,
-  CreditCard: () => <span>CreditCard</span>,
-  RotateCcw: () => <span>RotateCcw</span>,
-  ExternalLink: () => <span>ExternalLink</span>,
-  Send: () => <span>Send</span>,
-}));
+// Mock lucide-react with all icons used
+vi.mock("lucide-react", () => {
+  const icon = (props: any) => <svg {...props} />;
+  return {
+    ChevronRight: icon,
+    FileText: icon,
+    HelpCircle: icon,
+    Mail: icon,
+    MessageCircle: icon,
+    Phone: icon,
+    ShieldCheck: icon,
+  };
+});
 
 // Mock framer-motion
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+    a: ({ children, href, ...props }: any) => <a href={href} {...props}>{children}</a>,
   },
 }));
 
@@ -46,9 +44,7 @@ describe("CustomerServicePage", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByTestId("page-header")).toHaveTextContent(
-      "Customer Service",
-    );
+    expect(screen.getByTestId("page-header")).toHaveTextContent("Customer Service");
   });
 
   it("should render navigation link", () => {
@@ -61,14 +57,37 @@ describe("CustomerServicePage", () => {
     expect(screen.getByTestId("nav-link")).toBeInTheDocument();
   });
 
-  it("should render page content", () => {
+  it("should render welcome banner", () => {
     render(
       <MemoryRouter>
         <CustomerServicePage />
       </MemoryRouter>,
     );
 
-    // Page should render without errors
-    expect(screen.getByTestId("page-header")).toBeInTheDocument();
+    expect(screen.getByText("Halo, ada yang bisa kami bantu?")).toBeInTheDocument();
+  });
+
+  it("should render contact methods", () => {
+    render(
+      <MemoryRouter>
+        <CustomerServicePage />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText("Live Chat")).toBeInTheDocument();
+    expect(screen.getByText("Telepon")).toBeInTheDocument();
+    expect(screen.getByText("Email")).toBeInTheDocument();
+  });
+
+  it("should render help topics", () => {
+    render(
+      <MemoryRouter>
+        <CustomerServicePage />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText("Cara Pemesanan")).toBeInTheDocument();
+    expect(screen.getByText("FAQ")).toBeInTheDocument();
+    expect(screen.getByText("Kebijakan Pengembalian")).toBeInTheDocument();
   });
 });

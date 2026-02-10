@@ -22,16 +22,27 @@ vi.mock("@/components/EmptyState", () => ({
   ),
 }));
 
-vi.mock("@/components/ProductCard", () => ({
-  default: ({ name }: { name: string }) => (
-    <div data-testid="product-card">{name}</div>
-  ),
-}));
+vi.mock("lucide-react", () => {
+  const icon = (props: any) => <svg {...props} />;
+  return { Clock4: icon };
+});
 
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
   },
+}));
+
+vi.mock("@/contexts/RecentlyViewedContext", () => ({
+  useRecentlyViewed: () => ({ recentlyViewed: [] }),
+}));
+
+vi.mock("@/lib/formatters", () => ({
+  formatPrice: (price: number) => `Rp ${price.toLocaleString("id-ID")}`,
+}));
+
+vi.mock("@/data/products", () => ({
+  products: [],
 }));
 
 describe("RecentlyViewedPage", () => {
@@ -42,9 +53,7 @@ describe("RecentlyViewedPage", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByTestId("page-header")).toHaveTextContent(
-      "Recently Viewed",
-    );
+    expect(screen.getByTestId("page-header")).toHaveTextContent("Terakhir Dilihat");
   });
 
   it("should render navigation link", () => {
@@ -55,5 +64,15 @@ describe("RecentlyViewedPage", () => {
     );
 
     expect(screen.getByTestId("nav-link")).toBeInTheDocument();
+  });
+
+  it("should render empty state when no recently viewed", () => {
+    render(
+      <MemoryRouter>
+        <RecentlyViewedPage />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByTestId("empty-state")).toBeInTheDocument();
   });
 });
