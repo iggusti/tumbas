@@ -7,38 +7,34 @@ vi.mock("@/components/NavLink", () => ({
   default: () => <div data-testid="nav-link">NavLink</div>,
 }));
 
-vi.mock("@/components/PageHeader", () => ({
-  default: ({ title }: { title: string }) => (
-    <div data-testid="page-header">{title}</div>
-  ),
-}));
-
-vi.mock("@/components/EmptyState", () => ({
-  default: ({ title, description }: { title: string; description: string }) => (
-    <div data-testid="empty-state">
-      <h2>{title}</h2>
-      <p>{description}</p>
-    </div>
-  ),
-}));
+vi.mock("lucide-react", () => {
+  const icon = (props: any) => <svg {...props} />;
+  return { Bell: icon, Package: icon, Percent: icon };
+});
 
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    header: ({ children, ...props }: any) => <header {...props}>{children}</header>,
   },
 }));
 
+vi.mock("@/contexts/NotificationContext", () => ({
+  useNotification: () => ({
+    notifications: [],
+    markAsRead: vi.fn(),
+    hasUnreadNotifications: () => false,
+  }),
+}));
+
 describe("NotificationPage", () => {
-  it("should render page header with correct title", () => {
+  it("should render page title", () => {
     render(
       <MemoryRouter>
         <NotificationPage />
       </MemoryRouter>,
     );
-
-    expect(screen.getByTestId("page-header")).toHaveTextContent(
-      "Notifications",
-    );
+    expect(screen.getByText("Notifikasi")).toBeInTheDocument();
   });
 
   it("should render navigation link", () => {
@@ -47,7 +43,15 @@ describe("NotificationPage", () => {
         <NotificationPage />
       </MemoryRouter>,
     );
-
     expect(screen.getByTestId("nav-link")).toBeInTheDocument();
+  });
+
+  it("should render empty state when no notifications", () => {
+    render(
+      <MemoryRouter>
+        <NotificationPage />
+      </MemoryRouter>,
+    );
+    expect(screen.getByText("Belum ada notifikasi")).toBeInTheDocument();
   });
 });

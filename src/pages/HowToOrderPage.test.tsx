@@ -13,6 +13,11 @@ vi.mock("@/components/PageHeader", () => ({
   ),
 }));
 
+vi.mock("lucide-react", () => {
+  const icon = (props: any) => <svg {...props} />;
+  return { CheckCircle: icon, Clock: icon, CreditCard: icon, Package: icon, ShoppingCart: icon, Truck: icon };
+});
+
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
@@ -26,8 +31,7 @@ describe("HowToOrderPage", () => {
         <HowToOrderPage />
       </MemoryRouter>,
     );
-
-    expect(screen.getByTestId("page-header")).toHaveTextContent("How to Order");
+    expect(screen.getByTestId("page-header")).toHaveTextContent("Cara Pemesanan");
   });
 
   it("should render navigation link", () => {
@@ -36,7 +40,6 @@ describe("HowToOrderPage", () => {
         <HowToOrderPage />
       </MemoryRouter>,
     );
-
     expect(screen.getByTestId("nav-link")).toBeInTheDocument();
   });
 
@@ -46,7 +49,7 @@ describe("HowToOrderPage", () => {
         <HowToOrderPage />
       </MemoryRouter>,
     );
-
-    expect(screen.getByText(/order|pesan/i)).toBeInTheDocument();
+    expect(screen.getByText("Panduan Pemesanan")).toBeInTheDocument();
+    expect(screen.getByText("Pilih Produk")).toBeInTheDocument();
   });
 });

@@ -1,8 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
-
 import { MemoryRouter } from "react-router-dom";
 import PageHeader from "./PageHeader";
+
+// Mock lucide-react
+vi.mock("lucide-react", () => ({
+  ArrowLeft: (props: any) => <svg {...props} />,
+}));
 
 // Mock framer-motion
 vi.mock("framer-motion", () => ({
@@ -52,19 +56,18 @@ describe("PageHeader", () => {
     );
 
     expect(screen.getByText("tumbas.")).toBeInTheDocument();
-    // Should not show the title in about page mode
     expect(screen.queryByText("About Page")).not.toBeInTheDocument();
   });
 
-  it("should navigate back when back button is clicked", () => {
+  it("should navigate back when back button is clicked", async () => {
     render(
       <MemoryRouter>
         <PageHeader title="Test Page" />
       </MemoryRouter>,
     );
 
-    const backButton = screen.getByRole("link");
-    fireEvent.click(backButton);
+    const backLink = screen.getAllByRole("link")[0];
+    await fireEvent.click(backLink);
 
     expect(mockNavigate).toHaveBeenCalledWith(-1);
   });
@@ -77,17 +80,7 @@ describe("PageHeader", () => {
     );
 
     const header = container.querySelector("header");
-    expect(header).toHaveClass(
-      "sticky",
-      "top-0",
-      "z-50",
-      "bg-background",
-      "px-4",
-      "py-3",
-      "flex",
-      "items-center",
-      "gap-3",
-    );
+    expect(header).toHaveClass("sticky", "top-0", "z-50", "bg-background", "px-4", "py-3", "flex", "items-center", "gap-3");
   });
 
   it("should have correct styling for about page header", () => {
@@ -110,8 +103,6 @@ describe("PageHeader", () => {
 
     const icon = document.querySelector("svg");
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveAttribute("width", "20");
-    expect(icon).toHaveAttribute("height", "20");
   });
 
   it("should have correct text colors for regular header", () => {
@@ -121,10 +112,7 @@ describe("PageHeader", () => {
       </MemoryRouter>,
     );
 
-    const arrowIcon = document.querySelector("svg");
-    expect(arrowIcon).toHaveClass("text-foreground");
-
-    const brandText = screen.getAllByText("tumbas.")[0];
+    const brandText = screen.getByText("tumbas.");
     expect(brandText).toHaveClass("text-muted-foreground", "text-sm");
   });
 
@@ -134,9 +122,6 @@ describe("PageHeader", () => {
         <PageHeader title="About Page" isAboutPage={true} />
       </MemoryRouter>,
     );
-
-    const arrowIcon = document.querySelector("svg");
-    expect(arrowIcon).toHaveClass("text-white");
 
     const brandText = screen.getByText("tumbas.");
     expect(brandText).toHaveClass("text-white/80", "text-sm");

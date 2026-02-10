@@ -22,11 +22,43 @@ vi.mock("@/components/EmptyState", () => ({
   ),
 }));
 
+vi.mock("lucide-react", () => {
+  const icon = (props: any) => <svg {...props} />;
+  return { Package: icon };
+});
+
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
   },
 }));
+
+vi.mock("@/contexts/OrderContext", () => ({
+  useOrder: () => ({ orders: [] }),
+}));
+
+vi.mock("@/lib/formatters", () => ({
+  formatPrice: (p: number) => `Rp ${p}`,
+  formatDateShort: (d: string) => d,
+}));
+
+vi.mock("@/data/constants", () => ({
+  ORDER_STATUS_CONFIG: {},
+}));
+
+vi.mock("@/lib/product-utils", () => ({
+  getProductById: () => null,
+}));
+
+const mockNavigate = vi.fn();
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+    Link: ({ children, to, ...props }: any) => <a href={to} {...props}>{children}</a>,
+  };
+});
 
 describe("MyOrdersPage", () => {
   it("should render page header with correct title", () => {
@@ -35,8 +67,7 @@ describe("MyOrdersPage", () => {
         <MyOrdersPage />
       </MemoryRouter>,
     );
-
-    expect(screen.getByTestId("page-header")).toHaveTextContent("My Orders");
+    expect(screen.getByTestId("page-header")).toHaveTextContent("Pesanan Saya");
   });
 
   it("should render navigation link", () => {
@@ -45,7 +76,15 @@ describe("MyOrdersPage", () => {
         <MyOrdersPage />
       </MemoryRouter>,
     );
-
     expect(screen.getByTestId("nav-link")).toBeInTheDocument();
+  });
+
+  it("should show empty state when no orders", () => {
+    render(
+      <MemoryRouter>
+        <MyOrdersPage />
+      </MemoryRouter>,
+    );
+    expect(screen.getByTestId("empty-state")).toBeInTheDocument();
   });
 });

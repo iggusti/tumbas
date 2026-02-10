@@ -13,6 +13,11 @@ vi.mock("@/components/PageHeader", () => ({
   ),
 }));
 
+vi.mock("lucide-react", () => {
+  const icon = (props: any) => <svg {...props} />;
+  return { AlertCircle: icon, CheckCircle: icon, Clock: icon, Package: icon, XCircle: icon };
+});
+
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
@@ -26,10 +31,7 @@ describe("ReturnPolicyPage", () => {
         <ReturnPolicyPage />
       </MemoryRouter>,
     );
-
-    expect(screen.getByTestId("page-header")).toHaveTextContent(
-      "Return Policy",
-    );
+    expect(screen.getByTestId("page-header")).toHaveTextContent("Kebijakan Pengembalian");
   });
 
   it("should render navigation link", () => {
@@ -38,7 +40,6 @@ describe("ReturnPolicyPage", () => {
         <ReturnPolicyPage />
       </MemoryRouter>,
     );
-
     expect(screen.getByTestId("nav-link")).toBeInTheDocument();
   });
 });
